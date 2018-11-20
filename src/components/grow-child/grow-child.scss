@@ -1,0 +1,17 @@
+grow-child {
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  transition: opacity .3s ease;
+  display: block;
+  pointer-events: none;
+
+  &.active {
+    position: relative;
+    opacity: 1;
+    z-index: 5;
+    pointer-events: all;
+  }
+}

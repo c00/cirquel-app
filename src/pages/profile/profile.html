@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ 'profile.title' | translate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  
+  <form (submit)="add()" [formGroup]="form" [ngClass]="{ submitted: formSubmitted }" *ngIf="form" >
+    
+    <a class="button-image" [ngClass]="{ glow: !hasImage() }" (click)="showMediaSheet()" [style.background-image]="getImage()">
+      
+    </a>
+    
+    <ion-list>      
+      <ion-item>{{user?.userName}}</ion-item>
+      <ion-item>{{user?.email}}</ion-item>
+  
+      <button type="button" text-wrap ion-item (click)="share()"><ion-icon item-end name="share"></ion-icon>
+        {{ 'profile.share-url' | translate }}<span class="url">{{getShareUrl()}}</span>
+      </button>
+      
+    </ion-list>
+    
+  </form>
+  
+  
+  <hr>
+  <button type="button" ion-button block outline round (click)="logout()">{{ 'profile.logout-button' | translate }}</button>
+  
+</ion-content>

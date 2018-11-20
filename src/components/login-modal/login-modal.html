@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons right>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      {{ 'login-modal.title' | translate }}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content no-bounce >
+  <ion-slides #slides>
+    
+    <ion-slide padding>
+      <login (toSignup)="toSignup()" (done)="dismiss($event)"></login>
+    </ion-slide>
+    
+    <ion-slide padding>
+      <signup (toLogin)="toLogin()" (done)="dismiss($event)"></signup>
+    </ion-slide>
+    
+  </ion-slides>
+</ion-content>

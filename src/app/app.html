@@ -1,0 +1,41 @@
+<ion-menu [content]="content">  
+  <ion-content>
+    
+    <div class="menu-header" [style.backgroundImage]="getMenuBackground()" *ngIf="settings">
+      
+      <div tappable menuClose (click)="toProfile()" class="circle" [ngClass]="{ glow1: !settings.profileClicked }">
+        <img [src]="user?.imgBase | image : 'sm'">
+      </div>
+      
+      <div tappable (click)="selectCategory()" class="circle" [ngClass]="{ glow2: !settings.filterClicked }">
+        <img [src]="getIcon()">
+      </div>
+      
+      <h2 menuClose tappable (click)="toProfile()">{{getName()}}</h2>
+      <h3 tappable (click)="selectCategory()">{{ 'categories.' + settings.category.name | translate }}</h3>
+    </div>
+    
+    <ion-list>
+      <button menuClose ion-item (click)="openPage(p)" *ngFor="let p of pages" [ngClass]="{selected: p.selected}">
+        <ion-icon [name]="p.icon" item-start></ion-icon>
+        {{p.title | translate }}
+      </button>
+    </ion-list>
+  </ion-content>
+  <ion-footer>
+    <ion-list>
+      <button ion-item menuClose (click)="trainingMode()" [color]="rotated ? 'primary' : 'nothing'">
+        <ion-icon name="alarm" item-start></ion-icon>
+        {{ 'menu.training-mode' | translate }}
+      </button>
+      <button ion-item menuClose (click)="toSupport()">
+        <ion-icon name="bowtie" item-start></ion-icon>
+        {{ 'menu.support' | translate }}
+      </button>
+    </ion-list>
+  </ion-footer>
+  
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav #content swipeBackEnabled="false"></ion-nav>

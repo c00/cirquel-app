@@ -1,0 +1,96 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ item?.itemName.name }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content #content>
+  <div *ngIf="item" class="main-item">
+    <div class="image-container" [style.border-color]="getColor()">
+      <img *ngIf="item.resource.type === 'photo'" [src]="item.resource.imgBase | image : 'lg'" />
+      <video-player *ngIf="item.resource.type === 'video'" [resource]="item.resource"></video-player>
+    </div>
+
+    <vote *ngIf="voteBoxes.skill" type="skill" (onVote)="vote('skill', $event)" (onDismiss)="dismissVoteBox('skill')"></vote>
+    <vote *ngIf="voteBoxes.strength" type="strength" (onVote)="vote('strength', $event)" (onDismiss)="dismissVoteBox('strength')"></vote>
+    <vote *ngIf="voteBoxes.flexi" type="flexi" (onVote)="vote('flexi', $event)" (onDismiss)="dismissVoteBox('flexi')"></vote>
+    <name-vote *ngIf="voteBoxes.name" [item]="item" [selectedId]="votes?.name" (onDismiss)="dismissVoteBox('name')"
+      (onVote)="voteForName($event)"></name-vote>
+
+    <div padding>
+      <h3>{{ item.resource.type }} by: {{ item.author.userName }} <span *ngIf="item.venue">@ {{item.venue.name}}</span></h3>
+      <button ion-button clear class="float-right" (click)="voteForName(item.itemName)" *ngIf="votes?.popularNames.length > 0">
+        <ion-icon name="checkmark" class="icon-large" [color]="votes?.name === item.itemNameId ? 'primary' : 'grey2'"></ion-icon>
+      </button>
+      <h1 class="title">
+        <span class="float-right">
+          <button round ion-button clear icon-only (click)="share()">
+            <ion-icon name="share"></ion-icon>
+          </button>
+          <button round ion-button clear icon-only (click)="openMenu($event)">
+            <ion-icon name="more"></ion-icon>
+          </button>
+        </span>
+        {{item.itemName.name}}
+      </h1>
+      <h2 class="variation">{{item.itemName.variation}}</h2>
+
+      <!-- Loading spinner -->
+      <ion-spinner *ngIf="!votes && loggedIn"></ion-spinner>
+
+      <!-- Add your own name button -->
+      <button ion-button small round outline text-wrap *ngIf="votes?.popularNames.length === 0" (click)="voteFor('name')">
+        {{ 'item.no-names-button' | translate }}
+      </button>
+
+      <!-- Other names and skill buttons -->
+      <div *ngIf="votes">
+
+        <ion-list no-lines *ngIf="votes?.popularNames.length > 0">
+          <ion-list-header>
+            {{ 'item.popular-aka' | translate }}
+          </ion-list-header>
+
+          <ion-item *ngFor="let n of votes?.popularNames" text-wrap>
+            {{ n.displayName }}
+            <button ion-button item-end icon-only clear (click)="voteForName(n)">
+              <ion-icon name="checkmark" [color]="votes?.name === n.id ? 'primary' : 'grey2'"></ion-icon>
+            </button>
+          </ion-item>
+          <button ion-item (click)="voteFor('name')">
+            <i>{{ 'item.see-more' | translate }}</i>
+          </button>
+
+        </ion-list>
+
+        <button (click)="voteFor('skill')" class="vote-button" color="dark" round ion-button outline icon-left>{{
+          'item.skill-label' | translate }} {{item.skillLevel}}/5</button>
+        <button (click)="voteFor('flexi')" class="vote-button" color="dark" round ion-button outline icon-left>{{
+          'item.flexi-label' | translate }} {{item.flexiLevel}}/5</button>
+        <button (click)="voteFor('strength')" class="vote-button" color="dark" round ion-button outline icon-left>{{
+          'item.strength-label' | translate }} {{item.strengthLevel}}/5</button>
+      </div>
+
+      <p class="description">{{item.description}}</p>
+      <hr>
+      <button (click)="tryLove()" class="love-button" round ion-button outline [color]="item.iLoved ? 'danger' : 'grey2'"
+        icon-right>{{item.loves}}<ion-icon name="heart"></ion-icon></button>
+
+      <div class="author-bubble animate" tappable (click)="toAuthor()" [ngClass]="{ glow: !settings?.authorBubbleClicked }">
+        <img [src]="item.author.imgBase | image" />
+      </div>
+    </div>
+  </div>
+
+  <div class="related" *ngIf="relatedItems.length > 0">
+    <h1 class="related-title">{{ 'item.related-title' | translate }}</h1>
+    <item-list (nextPage)="loadNextPage($event)" [state]="state" [items]="relatedItems"></item-list>
+  </div>
+
+  <div class="related no-related" *ngIf="relatedItems.length === 0 && state !== 'loading'">
+    <h1 class="related-title">{{ 'item.no-related-items-title' | translate }}</h1>
+    <p>
+      {{'item.no-related-items' | translate }}
+    </p>
+  </div>
+</ion-content>

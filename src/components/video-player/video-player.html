@@ -1,0 +1,13 @@
+<!-- Todo turn off autoplay and turn on prepare for wifi connections. -->
+<div class="video-container">
+  <video preload="metadata" #video width="100%" [poster]="resource.imgBase | image : 'lg'" width="100%" tappable (tap)="togglePlay()" (startTouch)="startTouch()" (endTouch)="endTouch()" (touching)="seek($event)"></video>
+  <div class="big-button" [ngClass]="{ fade: state === 'playing' }">
+    <div *ngIf="state === 'not-started' || state === 'paused' || state === 'ended'" class="player-icon" [inlineSVG]="'player/play-button.svg'"></div>
+    <div *ngIf="state === 'playing'" class="player-icon" [inlineSVG]="'player/pause.svg'"></div>
+    <ion-spinner *ngIf="state === 'buffering'"></ion-spinner>
+  </div>
+</div>
+
+<ion-range disabled min="0" max="100" [(ngModel)]="progress" color="secondary"></ion-range>
+
+<p class="time">{{current | time}} / {{duration | time}}</p>

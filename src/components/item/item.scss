@@ -1,0 +1,35 @@
+item {
+    display: block;
+    
+    ion-card-content {
+        border-top: 6px solid color($colors, 'primary');
+        
+    }
+    
+    .author-bubble {
+        border: 1px solid color($colors, 'grey2');
+        border-radius: 50%;
+        padding: 2px;
+        float: right;
+        
+        img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+    }
+    
+    .love-button {
+        padding: 12px;
+    }
+    
+    .description {
+        margin: 8px 0;
+        
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+}

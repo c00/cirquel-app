@@ -1,0 +1,19 @@
+empty-placeholder {
+    display: block;
+    padding: 20px;
+    text-align: center;
+    color: color($colors, 'lighter');
+
+    .image {
+        max-width: 250px;
+        margin: auto;
+    }
+    
+    .grey {
+        svg {
+            .fill {
+                fill: color($colors, 'grey2');
+            }
+        }
+    }
+}

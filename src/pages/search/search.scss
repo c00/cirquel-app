@@ -1,0 +1,10 @@
+page-search {
+  .text-input {
+    input {
+      margin-left: 0;
+    }
+  }
+  .lighter {
+    color: color($colors, 'lighter');
+  }
+}

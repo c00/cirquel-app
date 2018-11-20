@@ -1,0 +1,20 @@
+page-add-item {
+    img.placeholder {
+        padding: 15%;
+    }
+
+    .lighter {
+        color: color($colors, 'lighter');
+    }
+
+    .submitted {
+        .card-md.media-missing {
+            border: 1px solid color($colors, 'danger');
+        }
+
+        .item-md.error .item-inner {
+            border-bottom: 1px solid color($colors, 'danger');
+        }
+    }
+    
+}

@@ -1,0 +1,95 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ 'search.title' | translate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <grower>
+    <grow-child [active]="!showSummary">
+      <form [formGroup]="form" padding>
+        <ion-list>
+
+          <!-- Name -->
+          <ion-item class="text-input">
+            <ion-input type="text" formControlName="name" [placeholder]="'search.name-placeholder' | translate"></ion-input>
+          </ion-item>
+
+          <!-- Venue -->
+          <ion-item tappable (click)="searchVenue('venue')">
+            <span *ngIf="form.get('venue').value">
+              {{ form.get('venue').value }}
+            </span>
+            <span *ngIf="!form.get('venue').value" class="lighter">
+              {{ 'search.venue-placeholder' | translate }}
+            </span>
+            <button *ngIf="form.get('venue').value" type="button" icon-only ion-button clear item-end (click)="clearVenue($event)">
+              <ion-icon color="dark" name="close"></ion-icon>
+            </button>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>{{ 'search.category-label' | translate }}</ion-label>
+            <ion-select interface="action-sheet" formControlName="category">
+              <ion-option value="all">{{ 'categories.all' | translate }}</ion-option>
+              <ion-option [value]="c.name" *ngFor="let c of categories">{{ 'categories.' + c.name | translate }}</ion-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label color="lighter">{{ 'search.skill-label' | translate }}</ion-label>
+            <span item-end>{{ 'skill-level.' + form.get('skillLevel').value | translate }}</span>
+          </ion-item>
+
+          <ion-item>
+            <ion-range min="0" max="5" step="1" [snaps]="true" formControlName="skillLevel">
+              <ion-icon range-left name="custom-skill-low"></ion-icon>
+              <ion-icon range-right name="custom-skill-high"></ion-icon>
+            </ion-range>
+          </ion-item>
+
+          <ion-item>
+            <ion-label color="lighter">{{ 'search.strength-label' | translate }}</ion-label>
+            <span item-end>{{ 'strength-level.' + form.get('strengthLevel').value | translate }}</span>
+          </ion-item>
+
+          <ion-item>
+            <ion-range min="0" max="5" step="1" [snaps]="true" formControlName="strengthLevel">
+              <ion-icon range-left name="custom-strength-low"></ion-icon>
+              <ion-icon range-right name="custom-strength-high"></ion-icon>
+            </ion-range>
+          </ion-item>
+
+          <ion-item>
+            <ion-label color="lighter">{{ 'search.flexi-label' | translate }}</ion-label>
+            <span item-end>{{ 'flexi-level.' + form.get('flexiLevel').value | translate }}</span>
+          </ion-item>
+
+          <ion-item>
+            <ion-range min="0" max="5" step="1" [snaps]="true" formControlName="flexiLevel">
+              <ion-icon range-left name="custom-flex-low"></ion-icon>
+              <ion-icon range-right name="custom-flex-high"></ion-icon>
+            </ion-range>
+          </ion-item>
+
+        </ion-list>
+
+        <button type="button" (click)="search()" ion-button block round icon-start>
+          <ion-icon name="search"></ion-icon>
+          {{ 'search.submit-button' | translate }}
+        </button>
+      </form>
+    </grow-child>
+    <grow-child [active]="showSummary">
+      <search-summary (onBack)="showSummary = false" [search]="form.value"></search-summary>
+    </grow-child>
+  </grower>
+
+  <!-- Results -->
+  <item-list (nextPage)="loadNextPage($event)" [state]="state" [items]="items"></item-list>
+
+</ion-content>

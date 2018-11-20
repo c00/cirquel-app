@@ -1,0 +1,11 @@
+<ion-content>
+  <ion-grid no-padding class="full-height">
+    <ion-row align-items-center class="full-height">
+      <div class="my-backdrop" tappable (click)="dismiss()"></div>
+      <ion-col>
+        <vote *ngIf="type !== 'name'" [type]="type" (onVote)="doVote($event)" (onDismiss)="dismiss()"></vote>
+        <name-vote *ngIf="type === 'name'" [item]="item" [selectedId]="vote" (onVote)="doVote($event)" (onDismiss)="dismiss()"></name-vote>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,17 @@
+<ion-card>
+  <ion-card-header text-wrap>
+    <button ion-button small icon-only color="light" round class="float-right close-button" (click)="dismiss()"><ion-icon name="close"></ion-icon></button>
+    {{ options.text | translate }}
+  </ion-card-header>
+  
+  <ion-item>
+    <ion-range min="1" max="5" step="1" [snaps]="true" [(ngModel)]="vote">
+      <ion-icon range-left [name]="options.iconLeft"></ion-icon>
+      <ion-icon range-right [name]="options.iconRight"></ion-icon>
+    </ion-range>
+  </ion-item>
+  
+  <ion-card-content>
+    <button ion-button round outline small block (click)="doVote()">{{ options.okButton | translate }}</button>
+  </ion-card-content>
+</ion-card>

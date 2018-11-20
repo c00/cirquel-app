@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <ion-searchbar #searchBar
+    [(ngModel)]="q"
+    (ionInput)="search($event)" 
+    [placeholder]="'search.placeholder' | translate"
+    
+    >
+  </ion-searchbar>
+</ion-navbar>
+</ion-header>
+<ion-content padding>
+  
+  <h4 class="state" *ngIf="state !== 'has-results'">
+    {{ 'search.' + modalFor + '.' + state | translate : {q:q} }}
+  </h4>
+  
+  <ion-list *ngIf="state === 'has-results'">
+    <button ion-item *ngFor="let i of items" (click)="choose(i)">
+      {{i.name}}
+    </button>
+  </ion-list>
+</ion-content>
+<ion-footer>
+  <button ion-button block round icon-start (click)="submit()">
+    <span *ngIf="q.length > 0">
+      <ion-icon name="checkmark"></ion-icon>
+      {{ 'item.submit-button' | translate }}
+    </span>
+    <span *ngIf="q.length === 0">
+      <ion-icon name="arrow-back"></ion-icon>
+      {{ 'item.back-button' | translate }}
+    </span>
+    
+  </button>
+</ion-footer>

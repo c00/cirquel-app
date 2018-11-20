@@ -1,0 +1,268 @@
+{
+    "title": "Cirquel",
+    "ok": "OK",
+    "cancel": "Cancel",
+    "categories": {
+        "silks": "Aerial Silk",
+        "hoop": "Aerial Hoop",
+        "trapeze": "Trapeze",
+        "acro": "Acro balance",
+        "cali": "Calisthenics",
+        "pole": "Pole",
+        "all": "All sports"
+    },
+    "skill-level": {
+        "0": "Any",
+        "1": "Beginner",
+        "2": "Decent",
+        "3": "Intermediate",
+        "4": "Skilled",
+        "5": "Advanced"
+    },
+    "strength-level": {
+        "0": "Any",
+        "1": "Pudding",
+        "2": "Fit",
+        "3": "Strong",
+        "4": "Super buff",
+        "5": "The Hulk"
+    },
+    "flexi-level": {
+        "0": "Any",
+        "1": "A rake",
+        "2": "Average",
+        "3": "Yogi",
+        "4": "Splits are easy",
+        "5": "Contortionist"
+    },
+    "user": {
+        "contributions": "Tricks:",
+        "follow-button": "Follow",
+        "coming-soon-message": "Following and messaging are still under development, but should be added shortly! Sorry about that!",
+        "coming-soon-title": "Coming soon!"
+    },
+    "loading": {
+        "title": "Hold on..."
+    },
+    "agreement": {
+        "title": "User agreement",
+        "intro": "Before using the app, you have to agree to the user agreement. Below are links to view the entire user agreement and privacy policy in detail. The important parts are as follows:",
+        "nice": "Be nice to each other.",
+        "posting": "Everything you post is public, including your screen name, for anyone who has the app installed. Your email address is NEVER shared with anyone.",
+        "collecting": "We don't collect any information from you for profit. No third parties have access to any information other than what's public.",
+        "behavior": "Inappropriate behavior will result in temporary or permanent disabling of your account.",
+        "ua-button": "Read the full User Agreement",
+        "pp-button": "Read the full Privacy Policy",
+        "accept-button": "Accept",
+        "decline-button": "Decline"
+    },
+    "posting-guidelines": {
+        "content": "It doesn't matter what you post, as long as it's relevant. You don't have to be a pro."
+    },
+    "end-of-stream": {
+        "title": "That's all we've got.",
+        "message": "Disappointed? Become the change you want to see in the world, and add your own! =)"
+    },
+    "empty": {
+        "title": "Nothing here!",
+        "message-all": "Unfortunately there's nothing to show here! Try broadening your search.",
+        "message-sport": "Unfortunately there's nothing to show here! Try a different sport category or adjust your search."
+    },
+    "category-modal": {
+        "title": "Select Category"
+    },
+    "item": {
+        "related-title": "Related tricks",
+        "no-related-items-title": "No similar tricks",
+        "no-related-items": "Unfortunately we currently have no similar tricks to this one. Disappointed? Add your own!",
+        "report": "Report Post",
+        "name-vote-button": "Vote for name",
+        "popular-aka": "Other popular names",
+        "see-more": "Other names...",
+        "skill-label": "Skill",
+        "flexi-label": "Flexibility",
+        "no-names-button": "Add a different name...",
+        "other-name-button": "Other...",
+        "name-vote-toast": "You're right. \"{{name}}\" is a much better name! Thanks for your vote!",
+        "strength-label": "Strength",
+        "aka": "Also known as: {{names}}",
+        "more": "and {{count}} more...",
+        "read-more": "More {{name}}",
+        "name-placeholder": "Enter a name...",
+        "variation-placeholder": "Variation name (optional)",
+        "description-placeholder": "Description (optional)",
+        "venue-placeholder": "Venue name (optional)",
+        "submit-button": "Save",
+        "back-button": "Back",
+        "media-missing": "I need a picture or video of some kind.",
+        "skill-question": "How hard is this trick?",
+        "strength-question": "How strong do you have to be for this trick?",
+        "flexi-question": "How flexible do you have to be for this trick?",
+        "name-question": "What should this trick be called?",
+        "add-name-title": "Trick name...",
+        "video-too-long": "The maximum length of video uploads is 1:30 minutes. Unfortunately, video processing is difficult and expensive. So we had to limit it... If you have an opinion about this, feel free to send us a message by clicking \"Support & Feedback\" in the menu.",
+        "video-too-long-title": "Video too long"
+    },
+    "menu": {
+        "title": "Menu",
+        "recent": "Recently added",
+        "dictionary": "Dictionary A-Z",
+        "search": "Search",
+        "favorites": "My favorites",
+        "logout": "Logout",
+        "support": "Support and Feedback",
+        "my-contributions": "My contributions",
+        "training-mode": "Training mode",
+        "not-logged-in": "Not logged in"
+    },
+    "favorites": {
+        "title": "My Favorites"
+    },
+    "search": {
+        "title": "Search the library",
+        "placeholder": "Type something...",
+        "search": {
+            "no-search": "Start typing and we'll start searching.",
+            "no-results": "Couldn't find anything...",
+            "searching": "...",
+            "error": "Something went wrong... Try again or report this error."
+        },
+        "name": {
+            "no-search": "Start typing and we'll give some suggestions.",
+            "no-results": "No suggestion for \"{{q}}\".",
+            "searching": "...",
+            "error": "Something went wrong... Try again or report this error."
+        },
+        "category-label": "Category",
+        "name-placeholder": "Search for text...",
+        "venue-placeholder": "Search for venue...",
+        "skill-label": "Skill level",
+        "strength-label": "Strength level",
+        "flexi-label": "Flexibility level",
+        "submit-button": "Search!",
+        "any-skill-level": "Any",
+        "summary": {
+            "with-name-and-all-cat": "Searching for '{{name}}' in all categories",
+            "with-name-and-cat": "Searching for '{{name}}' in '{{category}}'",
+            "venue": "At '{{venue}}'",
+            "with-cat": "Searching in category {{category}}",
+            "with-all-cat": "Searching in all categories",
+            "first-skill-skill": "For skill level {{skillLevel}}",
+            "first-skill-strength": "For strength level {{strengthLevel}}",
+            "first-skill-flexi": "For flexibility level {{flexiLevel}}",
+            "nth-skill-skill": "And skill level {{skillLevel}}",
+            "nth-skill-strength": "And strength level {{strengthLevel}}",
+            "nth-skill-flexi": "And flexibility level {{flexiLevel}}",
+            "back-button": "Change search"
+        }
+    },
+    "form": {
+        "email": "Your Email",
+        "public-name": "Your public name",
+        "password": "Your password",
+        "password-again": "Your password again",
+        "password-error": "Email or password incorrect.",
+        "weak-password": "Your password is too weak. Think outside the box.",
+        "password-mismatch": "The passwords don't match.",
+        "name-taken": "That name is already in use.",
+        "email-taken": "That email address is already registered."
+    },
+    "home": {
+        "title": "Home",
+        "results-for": "Showing results for: ",
+        "more-search-options": "More search options...",
+        "showing-recent": "Showing newest tricks",
+        "quick-search": "Quick search"
+    },
+    "login-modal": {
+        "title": "Login",
+        "reason-post": "To add tricks you need to log in first!"
+    },
+    "support-modal": {
+        "title": "Support and Feedback",
+        "report-title": "Report bad content",
+        "intro": "Found a bug? Have a remark? Use the form below to let us know!",
+        "name-placeholder": "Your name",
+        "email-placeholder": "Email address",
+        "subject-placeholder": "Summary",
+        "description-placeholder": "Type your message here. Try to be as specific as possible.",
+        "reason-label": "What's up?",
+        "submit-button": "Send!",
+        "form-incomplete": "Please fill out the whole form before submitting.",
+        "request-error": "Well, this is awkward... Something went wrong. Please just send an email to support@cirquelapp.com.",
+        "request-received": "Thank you for your message! If needed we will get in touch with you ASAP!",
+        "reason": {
+            "general": "General feedback",
+            "bug": "Found a bug!",
+            "support": "I need help!",
+            "content": "Inappropriate content",
+            "contribute": "I want to contribute!",
+            "compliment": "I want to say something nice"
+        },
+        "content-reason-label": "Why?",
+        "content-reason": {
+            "bad-language": "Inappropriate language",
+            "bad-media": "Inappropriate photo / video",
+            "copyright": "Copyright infringement",
+            "bullying": "Bullying",
+            "other": "Something else..."
+        }
+    },
+    "profile": {
+        "title": "My profile",
+        "media-title": "Add Profile Image",
+        "logout-button": "Log out",
+        "first-name-placeholder": "First name (optional)",
+        "last-name-placeholder": "Last name (optional)",
+        "submit-button": "Save!",
+        "image-updating": "Updating your image..",
+        "image-updated": "Done, you look amazing!",
+        "image-update-error": "Something went wrong. I swear it's not you, it's me! Please try again, or report this if it keeps happening!",
+        "share-url": "Share url: "
+    },
+    "trick": {
+        "title": "Post a trick",
+        "media": {
+            "title": "Add Media",
+            "photo": "Photo (from gallery)",
+            "video": "Video (from gallery)",
+            "youtube": "Youtube link",
+            "instagram": "Instagram link",
+            "camera": "Take picture",
+            "gallery": "Picture from gallery"
+        }
+    },
+    "dictionary": {
+        "title": "Dictionary"
+    },
+    "vote": {
+        "vote": "Vote"
+    },
+    "error": {
+        "login-required-to-post": "You can only add tricks if you are logged in.",
+        "login-required-to-love": "You have to log in before you can do that!",
+        "no-internet": "You're not connected to the internet. Get connected and try again.",
+        "server-error": "Something went wrong. Please try again. If this error continues, contact support.",
+        "timeout": "The connection is too slow. Please try again."
+    },
+    "video": {
+        "transcoding": "Preparing upload...",
+        "uploading": "Uploading video...",
+        "uploaded": "Upload done!",
+        "upload-error": "There was an error uploading your video... Please try again. If the error persists, do let us know!",
+        "upload-done": "It may take a few minutes for the video to be processed. When it's done, it will be automatically added to the library and be visible for you and others!",
+        "no-wifi": "It seems you're not connected to wifi. Charges may incur from your provider depending on your data plan. Do you want to upload now, or wait for wifi?",
+        "no-wifi-title": "Upload now?",
+        "ok-button": "Upload now",
+        "wait-button": "Wait for Wifi",
+        "done-button": "Awesome!",
+        "retry-button": "Retry",
+        "cancel-button": "Cancel",
+        "waiting-for-wifi": "Waiting for wifi..."
+    },
+    "share": {
+        "item-message": "Check out this trick on Cirquel: {{ itemName.displayName }}.",
+        "profile-message": "Check out '{{ userName }}' on Cirquel!",
+        "my-profile-message": "Check out my profile on Cirquel!"
+    }
+}

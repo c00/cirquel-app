@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ 'dictionary.title' | translate }}</ion-title>
+    
+  </ion-navbar>
+</ion-header>
+
+<ion-content #content>
+  
+  <empty-placeholder *ngIf="!loading && dict?.sections.length === 0"></empty-placeholder>
+  <loader *ngIf="loading"></loader>
+  
+  <ion-list *ngIf="dict"  [@slideIn]="dict.sections.length">
+    <ion-item-group *ngFor="let s of dict.sections">
+      <ion-item-divider>{{s.letter}}</ion-item-divider>
+      
+      <div>
+        <button (click)="searchFor(n)" ion-item *ngFor="let n of s.names">
+          <h2>{{ n.name }}</h2>
+          <p>{{ n.variation }}</p>
+        </button>
+      </div>
+    </ion-item-group>
+    
+  </ion-list>
+  
+  <ion-infinite-scroll (ionInfinite)="loadNextPage($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  
+</ion-content>

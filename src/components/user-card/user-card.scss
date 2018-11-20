@@ -1,0 +1,30 @@
+user-card {
+  //background: #fff;
+  display: block;
+  padding: 12px 0 0;
+
+  .author-image {
+    display: block;
+    margin: 12px auto;
+    text-align: center;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-size: cover;
+  }
+
+  h3, h4 {
+    text-align: center;
+    color: color($colors, 'dark');
+  }
+
+  h3 {
+    margin-bottom: 0;
+  }
+
+  h4 {
+    font-size: 1.3rem;
+    margin-top: 0;
+  }
+}

@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ 'favorites.title' | translate }}</ion-title>      
+  </ion-navbar>
+</ion-header>
+
+<ion-content #content>    
+  <upload-progress></upload-progress>
+  
+  <item-list (nextPage)="loadNextPage($event)" [state]="state" [items]="items"></item-list>
+  
+  <ion-fab right bottom>
+    <button ion-fab color="primary" (click)="add()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+  
+</ion-content>

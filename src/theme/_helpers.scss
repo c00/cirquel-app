@@ -1,0 +1,47 @@
+.valign > *, .valign > .button {
+  vertical-align: middle;
+}
+
+.float-right {
+  float: right;
+}
+
+.input-with-icon {
+  &.item-md ion-icon[item-start] + .item-inner {
+    margin-left: 0;
+  }
+}
+
+.item-md.validation-text {
+  color: color($colors, 'danger');
+}
+
+// LOGO
+.logo-container {
+  .logo-border {
+    width: 200px;
+    padding: 2px;
+    display: inline-block;
+    margin: 8px;
+  }
+  
+  &.margin {
+    margin: 0 0 16px; 
+  }
+}
+// END LOGO
+
+//TEXTAREA
+ion-textarea textarea.text-input-md {
+  margin-left: 0;
+  margin-right: 0;
+}
+// END TEXTAREA
+
+//Backdrops for popovers
+.backdrop-dark {
+  ion-backdrop {
+    transform: opacity .2s ease;
+    opacity: .5;
+  }
+}

@@ -1,0 +1,46 @@
+<div class="logo-container margin">
+    <img class="logo-border" src="assets/svg/silk-logo.svg" />
+</div>
+
+<form [formGroup]="form" (ngSubmit)="register()">
+    <ion-list>
+        
+        <ion-item class="input-with-icon">
+            <ion-icon color="grey2" bottom name="contact" item-start></ion-icon>
+            <ion-input type="text" [placeholder]="'form.public-name' | translate" formControlName="userName"></ion-input>
+        </ion-item>
+        
+        <ion-item class="input-with-icon">
+            <ion-icon color="grey2" bottom name="mail" item-start></ion-icon>
+            <ion-input type="email" [placeholder]="'form.email' | translate" formControlName="email"></ion-input>
+        </ion-item>
+        
+        <ion-item class="input-with-icon">
+            <ion-icon color="grey2" bottom name="star-outline" item-start></ion-icon>
+            <ion-input clearOnEdit="false" (ionBlur)="passwordBlurred = true" (ionFocus)="passwordBlurred = false" [placeholder]="'form.password' | translate" type="password" formControlName="password1"></ion-input>
+        </ion-item>
+        
+        <ion-item text-wrap class="validation-text" *ngIf="!form.get('password1').valid && form.get('password1').dirty && form.get('password1').errors.weakPassword && passwordBlurred">
+            {{'form.weak-password' | translate}}
+        </ion-item>
+        
+        <ion-item class="input-with-icon">
+            <ion-icon color="grey2" bottom name="star-outline" item-start></ion-icon>
+            <ion-input clearOnEdit="false" (ionBlur)="password2Blurred = true" [placeholder]="'form.password-again' | translate" type="password" formControlName="password2"></ion-input>
+        </ion-item>
+        <ion-item text-wrap class="validation-text" *ngIf="!form.get('password2').valid && form.get('password2').dirty && form.get('password2').errors.passwordDiff && password2Blurred">
+            {{'form.password-mismatch' | translate}}
+        </ion-item>
+        
+        <ion-item text-wrap class="validation-text" *ngIf="apiError">
+            {{ apiError | translate }}
+        </ion-item>
+
+    </ion-list>
+
+<button type="submit" round ion-button block [disabled]="form.invalid">
+    Signup
+</button>
+<hr>
+<button type="button" round ion-button block (click)="goLogin()">Back</button>
+</form>

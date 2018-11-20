@@ -1,0 +1,11 @@
+<!-- <pre>{{search|json}}</pre> -->
+<ion-card>
+  <ion-card-content>
+    <div *ngFor="let s of getSummary()">
+        {{ 'search.summary.' + s | translate: search }}
+    </div>
+
+    <button ion-button round small block outline (click)="onBack.emit()">{{'search.summary.back-button'|translate}}</button>
+    
+  </ion-card-content>
+</ion-card>

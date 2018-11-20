@@ -1,0 +1,18 @@
+upload-progress {
+
+    .loading-outer {
+        border: 1px solid color($colors, 'primary');
+        border-radius: 12px;
+        padding: 2px;
+    }
+
+    .loading-inner {
+        background-color: color($colors, 'secondary');
+        border-radius: 12px;
+        color: #fff;
+        text-align: center;
+        transition: width .2s ease;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+}

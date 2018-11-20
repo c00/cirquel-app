@@ -1,0 +1,29 @@
+<div class="logo-container margin">
+  <img class="logo-border" src="assets/svg/silk-logo.svg" />
+</div>
+
+<form [formGroup]="form" (ngSubmit)="login()">
+  <ion-list>
+    
+    <ion-item class="input-with-icon">
+      <ion-icon color="grey2" bottom name="mail" item-start></ion-icon>
+      <ion-input type="email" [placeholder]="'form.email' | translate" formControlName="email"></ion-input>
+    </ion-item>
+    
+    <ion-item class="input-with-icon">
+      <ion-icon color="grey2" bottom name="star-outline" item-start></ion-icon>
+      <ion-input clearOnEdit="false" [placeholder]="'form.password' | translate" type="password" formControlName="password"></ion-input>
+    </ion-item>
+    
+    <ion-item class="validation-text" *ngIf="passwordError">
+      {{'form.password-error' | translate}}
+    </ion-item>
+    
+  </ion-list>
+  
+  <button round type="submit" ion-button block [disabled]="form.invalid">
+    Login
+  </button>
+  <hr>
+  <button round type="button" color="secondary" ion-button block (click)="goSignup()">Signup</button>
+</form>

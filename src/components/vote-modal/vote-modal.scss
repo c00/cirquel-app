@@ -1,0 +1,33 @@
+vote-modal {
+    .content-ios, .content-md {
+        background-color: transparent;
+    }
+    
+    .full-height {
+        height: 100%;
+    }
+}
+
+.modal-sm {
+    &::before {
+        content: ' ';
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(#000, .4);
+    }
+
+    .my-backdrop {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+
+        background-color: transparent;
+    }
+    
+    ion-backdrop {
+        display: none;
+    }
+}

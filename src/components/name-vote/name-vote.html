@@ -1,0 +1,21 @@
+<ion-card>
+  <ion-card-header>
+    <button ion-button small icon-only color="light" round class="float-right close-button" (click)="dismiss()"><ion-icon name="close"></ion-icon></button>
+    {{ 'item.name-question' | translate }}
+  </ion-card-header>
+  
+  <ion-list>
+    <button ion-item *ngFor="let n of names" text-wrap (click)="doVote(n)">
+      <ion-icon [name]="getIcon(n)" item-start></ion-icon>
+      {{ n.displayName }}
+      
+    </button>
+    
+    <button ion-item (click)="newName()">
+      <ion-icon name="add" item-start></ion-icon>
+      <i>{{ 'item.other-name-button' | translate }}</i>
+    </button>
+    
+  </ion-list>
+  
+</ion-card>

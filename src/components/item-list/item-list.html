@@ -1,0 +1,13 @@
+<empty-placeholder *ngIf="state === 'empty'"></empty-placeholder>
+<loader *ngIf="state === 'loading'"></loader>
+
+<div class="item-container" [@slideIn]="items.length">
+  <item [item]="i" *ngFor="let i of items"></item>
+</div>
+
+
+<ion-infinite-scroll [enabled]="state === 'showing'" (ionInfinite)="loadNextPage($event)">
+  <ion-infinite-scroll-content></ion-infinite-scroll-content>
+</ion-infinite-scroll>
+
+<end-of-stream *ngIf="state === 'last'"></end-of-stream>

@@ -1,0 +1,35 @@
+<ion-card *ngIf="video.busy || show">
+  <ion-card-header>
+    {{ progress?.item.itemName.name }}
+  </ion-card-header>
+  <ion-card-content>
+    
+    
+    <p>
+      {{ progress?.message | translate }}
+    </p>
+    
+    <div class="loading-outer" *ngIf="!progress?.done">
+      <div [style.width.%]="progress?.progress" class="loading-inner">{{progress?.progress}}%</div>
+    </div>
+    
+    <div *ngIf="progress?.done && !progress?.error">
+      <p>
+        {{ 'video.upload-done' | translate }}
+      </p>
+      <button ion-button small round block (click)="show = false">{{ 'video.done-button' | translate }}</button>
+    </div>
+    
+    <div *ngIf="progress?.error">
+      <ion-row no-padding>
+        <ion-col>
+          <button ion-button small round block (click)="retry()">{{ 'video.retry-button' | translate }}</button>
+        </ion-col>
+        <ion-col>
+          <button color="light" ion-button small round block (click)="show = false">{{ 'video.cancel-button' | translate }}</button>
+        </ion-col>
+      </ion-row>
+    </div>
+    
+  </ion-card-content>
+</ion-card>

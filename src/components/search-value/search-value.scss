@@ -1,0 +1,22 @@
+search-value {
+    .searchbar-md {
+        padding: 0;
+
+        .searchbar-search-icon {
+            display: none;
+        }
+        .searchbar-input {
+            padding-left: 24px;
+            padding-right: 40px;
+        }
+    }
+
+    .state {
+        color: color($colors, 'lighter');
+        text-align: center;
+    }
+
+    ion-footer {
+        padding: 8px 16px;
+    }
+}

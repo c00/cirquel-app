@@ -1,0 +1,8 @@
+{
+  "name": "Cirque App",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular",
+  "pro_id": "com.covle.cirque.app"
+}

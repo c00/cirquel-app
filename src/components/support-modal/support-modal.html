@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons right>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      {{ (isReport ? 'support-modal.report-title' : 'support-modal.title') | translate }}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form (submit)="send()" [formGroup]="form" >
+    <ion-list>
+      <ion-item *ngIf="loggedIn">{{form.get('name').value}}</ion-item>
+      <ion-item *ngIf="loggedIn">{{form.get('email').value}}</ion-item>
+      
+      <ion-item *ngIf="!loggedIn">
+        <ion-input type="text" formControlName="name" [placeholder]="'support-modal.name-placeholder' | translate"></ion-input>
+      </ion-item>
+      
+      <ion-item *ngIf="!loggedIn">
+        <ion-input type="email" formControlName="email" [placeholder]="'support-modal.email-placeholder' | translate"></ion-input>
+      </ion-item>
+      
+      <ion-item *ngIf="!isReport">
+        <ion-input type="text" formControlName="subject" [placeholder]="'support-modal.subject-placeholder' | translate"></ion-input>
+      </ion-item>
+      
+      <ion-item *ngIf="!isReport">
+        <ion-label>{{ 'support-modal.reason-label' | translate }}</ion-label>
+        <ion-select interface="action-sheet" formControlName="reason">
+          <ion-option [value]="r" *ngFor="let r of reasons">{{ 'support-modal.reason.' + r | translate }}</ion-option>
+        </ion-select>
+      </ion-item>
+      
+      <ion-item *ngIf="form.get('reason').value === 'content'"> 
+        <ion-label>{{ 'support-modal.content-reason-label' | translate }}</ion-label>
+        <ion-select interface="action-sheet" formControlName="contentReason">
+          <ion-option [value]="r" *ngFor="let r of contentReasons">{{ 'support-modal.content-reason.' + r | translate }}</ion-option>
+        </ion-select>
+      </ion-item>
+      
+      <ion-item>
+        <ion-textarea formControlName="description" [placeholder]="'support-modal.description-placeholder' | translate" rows="6"></ion-textarea>
+      </ion-item>
+      
+    </ion-list>
+    
+    <button type="button" (click)="add()" ion-button block round icon-start>
+      <ion-icon name="checkmark"></ion-icon>
+      {{ 'support-modal.submit-button' | translate }}
+    </button>
+  </form>
+</ion-content>

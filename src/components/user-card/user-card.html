@@ -1,0 +1,18 @@
+<div class="author-image" [style.background-image]="getImage(author?.imgBase)"></div>
+<h3>{{author?.userName}}</h3>
+<h4>{{ 'user.contributions' | translate }} <ion-badge>{{ author?.contribCount }}</ion-badge></h4>
+<ion-row>
+  <ion-col text-left>
+    <button (click)="comingSoon()" ion-button round icon-left outline color="grey2">
+      <ion-icon name="person-add"></ion-icon> {{ 'user.follow-button' | translate }}
+    </button>
+  </ion-col>
+  <ion-col text-right>
+    <button (click)="comingSoon()" ion-button outline round icon-only color="grey2">
+      <ion-icon name="chatbubbles"></ion-icon>
+    </button>
+    <button (click)="share()" ion-button outline round icon-only color="secondary">
+      <ion-icon name="share"></ion-icon>
+    </button>
+  </ion-col>
+</ion-row>

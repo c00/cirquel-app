@@ -1,0 +1,15 @@
+agreement-modal {
+    .full-height {
+        height: 100%;
+    }
+    .content-md {
+        background-color: rgba(#000, .4);
+    }
+    .container {
+        padding: 12px;
+        background-color: color($colors, 'light');
+    }
+    ul {
+        padding-left: 20px;
+    }
+}

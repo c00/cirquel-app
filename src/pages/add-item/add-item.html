@@ -1,0 +1,110 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ 'trick.title' | translate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form (submit)="add()" [formGroup]="form" [ngClass]="{ submitted: formSubmitted }" >
+    <ion-card [ngClass]="{ 'media-missing': form.get('resourceLink').invalid }">
+      <a (click)="showMediaSheet()">
+        <img class="placeholder" [src]="getIcon()" *ngIf="form.get('resourceLink').invalid">
+        <img [src]="getImage()" *ngIf="form.get('resourceLink').valid">
+      </a>
+    </ion-card>
+    
+    <ion-list>      
+      <!-- Name -->
+      <button type="button" ion-item (click)="searchValue('name')" [ngClass]="{ 'error': form.get('name').invalid }">
+        <span *ngIf="form.get('name').value">
+          {{ form.get('name').value }}
+        </span>
+        <span *ngIf="!form.get('name').value" class="lighter">
+          {{ 'item.name-placeholder' | translate }}  
+        </span>        
+      </button>
+      
+      <!-- Variation -->
+      <ion-item tappable (click)="searchValue('variation')">
+        <span *ngIf="form.get('variation').value">
+          {{ form.get('variation').value }}
+        </span>
+        <span *ngIf="!form.get('variation').value" class="lighter">
+          {{ 'item.variation-placeholder' | translate }}
+        </span>
+        <button *ngIf="form.get('variation').value" type="button" icon-only ion-button clear item-end (click)="clearVariation($event)">
+          <ion-icon color="dark" name="close"></ion-icon>
+        </button>
+      </ion-item>
+      
+      <!-- Venue -->
+      <ion-item tappable (click)="searchValue('venue')">
+        <span *ngIf="form.get('venue').value">
+          {{ form.get('venue').value }}
+        </span>
+        <span *ngIf="!form.get('venue').value" class="lighter">
+          {{ 'item.venue-placeholder' | translate }}
+        </span>
+        <button *ngIf="form.get('venue').value" type="button" icon-only ion-button clear item-end (click)="clearVenue($event)">
+          <ion-icon color="dark" name="close"></ion-icon>
+        </button>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label>Category</ion-label>
+        <ion-select interface="action-sheet" formControlName="category">
+          <ion-option [value]="c.name" *ngFor="let c of categories">{{ 'categories.' + c.name | translate }}</ion-option>
+        </ion-select>
+      </ion-item>
+      
+      <ion-item>
+        <ion-textarea formControlName="description" [placeholder]="'item.description-placeholder' | translate" rows="3"></ion-textarea>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label color="lighter" >Add skill rating</ion-label>
+        <ion-toggle formControlName="addSkill"></ion-toggle>
+      </ion-item>
+      
+      <ion-item *ngIf="form.get('addSkill').value">
+        <ion-range min="1" max="5" step="1" [snaps]="true" formControlName="skillLevel">
+          <ion-icon range-left name="custom-skill-low"></ion-icon>
+          <ion-icon range-right name="custom-skill-high"></ion-icon>
+        </ion-range>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label color="lighter" >Add strength rating</ion-label>
+        <ion-toggle formControlName="addStrength"></ion-toggle>
+      </ion-item>
+      
+      <ion-item *ngIf="form.get('addStrength').value">
+        <ion-range min="1" max="5" step="1" [snaps]="true" formControlName="strengthLevel">
+          <ion-icon range-left name="custom-strength-low"></ion-icon>
+          <ion-icon range-right name="custom-strength-high"></ion-icon>
+        </ion-range>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label color="lighter" >Add flexibility rating</ion-label>
+        <ion-toggle formControlName="addFlexi"></ion-toggle>
+      </ion-item>
+      
+      <ion-item *ngIf="form.get('addFlexi').value">
+        <ion-range min="1" max="5" step="1" [snaps]="true" formControlName="flexiLevel">
+          <ion-icon range-left name="custom-flex-low"></ion-icon>
+          <ion-icon range-right name="custom-flex-high"></ion-icon>
+        </ion-range>
+      </ion-item>
+      
+    </ion-list>
+    
+    <button type="button" (click)="add()" ion-button block round icon-start>
+      <ion-icon name="checkmark"></ion-icon>
+      {{ 'item.submit-button' | translate }}
+    </button>
+  </form>
+</ion-content>

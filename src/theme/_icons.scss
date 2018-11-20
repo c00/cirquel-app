@@ -1,0 +1,34 @@
+ion-icon {
+    &[class*="custom-"] {
+        mask-size: contain;
+        mask-position: 50% 50%;
+        mask-repeat: no-repeat;
+        background: currentColor;
+        width: 1em;
+        height: 1em;
+    }
+    
+    &[class*="custom-skill-low"] {
+        mask-image: url(../assets/svg/skills/skill-low.svg);
+    }
+
+    &[class*="custom-skill-high"] {
+        mask-image: url(../assets/svg/skills/skill-high.svg);
+    }
+    &[class*="custom-strength-low"] {
+        mask-image: url(../assets/svg/skills/strength-low.svg);
+    }
+
+    &[class*="custom-strength-high"] {
+        mask-image: url(../assets/svg/skills/strength-high.svg);
+    }
+    &[class*="custom-flex-low"] {
+        mask-image: url(../assets/svg/skills/flex-low.svg);
+    }
+
+    &[class*="custom-flex-high"] {
+        mask-image: url(../assets/svg/skills/flex-high.svg);
+    }
+    
+    
+}

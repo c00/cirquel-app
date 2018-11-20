@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ 'item.add-name-title' | translate }}</ion-title>
+    
+    <ion-buttons end>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  
+  <form (submit)="add()" [formGroup]="form" [ngClass]="{ submitted: formSubmitted }" >    
+    <ion-list>      
+      <!-- Name -->
+      <button type="button" ion-item (click)="searchValue('name')" [ngClass]="{ 'error': form.get('name').invalid }">
+        <span *ngIf="form.get('name').value">
+          {{ form.get('name').value }}
+        </span>
+        <span *ngIf="!form.get('name').value" class="lighter">
+          {{ 'item.name-placeholder' | translate }}  
+        </span>        
+      </button>
+      
+      <!-- Variation -->
+      <button type="button" ion-item (click)="searchValue('variation')">
+        <span *ngIf="form.get('variation').value">
+          {{ form.get('variation').value }}
+        </span>
+        <span *ngIf="!form.get('variation').value" class="lighter">
+          {{ 'item.variation-placeholder' | translate }}
+        </span>
+      </button>
+      
+    </ion-list>
+    
+    <button ion-button block round icon-start [disabled]="form.invalid">
+      <ion-icon name="checkmark"></ion-icon>
+      {{ 'item.submit-button' | translate }}
+    </button>
+  </form>
+  
+  
+</ion-content>

@@ -1,0 +1,33 @@
+<ion-content padding>
+  
+  <ion-card>
+    <ion-card-content>
+      
+      <h1>
+        {{ 'agreement.title' | translate }}
+      </h1>
+      <p>{{ 'agreement.intro' |  translate }}</p>
+      <ul>
+        <li>{{ 'agreement.nice' | translate }}</li>
+        <li>{{ 'agreement.posting' | translate }}</li>
+        <li>{{ 'agreement.collecting' | translate }}</li>
+        <li>{{ 'agreement.behavior' | translate }}</li>
+      </ul>
+      
+      <button ion-button outline round small block (click)="toUA()">{{ 'agreement.ua-button' | translate }}</button>
+      <button ion-button outline round small block (click)="toPP()">{{ 'agreement.pp-button' | translate }}</button>
+      
+      <ion-row no-padding>
+        <ion-col >
+          <button ion-button round color="light" block (click)="decline()">{{ 'agreement.decline-button' | translate }}</button>
+          
+        </ion-col>
+        <ion-col >
+          <button ion-button round block (click)="accept()">{{ 'agreement.accept-button' | translate }}</button>
+        </ion-col>
+      </ion-row>
+      
+    </ion-card-content>
+  </ion-card>
+  
+</ion-content>

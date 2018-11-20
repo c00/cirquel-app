@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ 'category-modal.title' | translate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  
+  <ion-list>
+    <button ion-item (click)="viewCtrl.dismiss(all)">
+      <ion-avatar item-start>
+        <img [src]="'assets/svg/' + all.icon ">
+      </ion-avatar>
+      <h2>{{ 'categories.' + all.name | translate }}</h2>
+    </button>
+    
+    <button ion-item *ngFor="let c of categories" (click)="viewCtrl.dismiss(c)">
+      <ion-avatar item-start>
+        <img [src]="'assets/svg/' + c.icon ">
+      </ion-avatar>
+      <h2>{{ 'categories.' + c.name | translate }}</h2>
+    </button>
+  </ion-list>
+  
+</ion-content>

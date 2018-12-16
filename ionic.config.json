@@ -4,5 +4,6 @@
     "cordova": {}
   },
   "type": "ionic-angular",
-  "pro_id": "com.covle.cirque.app"
+  "pro_id": "com.covle.cirque.app",
+  "id": "com.covle.cirque.app"
 }

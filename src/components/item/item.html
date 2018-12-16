@@ -7,27 +7,37 @@
   <ion-card-content [style.border-color]="getColor()">
     <h2>
       <span class="float-right">
-        <button round ion-button clear icon-only (click)="share()"><ion-icon name="share"></ion-icon></button>
-        <button round ion-button clear icon-only (click)="openMenu($event)"><ion-icon name="more"></ion-icon></button>
+        <button round ion-button clear icon-only (click)="share()">
+          <ion-icon name="share"></ion-icon>
+        </button>
+        <button round ion-button clear icon-only (click)="openMenu($event)">
+          <ion-icon name="more"></ion-icon>
+        </button>
       </span>
-      
+
       {{item.itemName.name}}
-    </h2>  
+    </h2>
     <h3>{{item.itemName.variation}}</h3>
     <h3 *ngIf="item.otherNames?.length > 0">
 
-      {{ 'item.aka' | translate : { names: getAltNames() } }}<span *ngIf="item.otherNames?.length > showMaxAltNames">, <a (click)="voteDialog()">{{ 'item.more' | translate : {count: item.otherNames.length - showMaxAltNames } }}</a></span>
+      {{ 'item.aka' | translate : { names: getAltNames() } }}<span *ngIf="item.otherNames?.length > showMaxAltNames">,
+        <a (click)="voteDialog()">{{ 'item.more' | translate : {count: item.otherNames.length - showMaxAltNames } }}</a></span>
     </h3>
     <h3>{{ item.resource.type }} by: {{ item.author.userName }} <span *ngIf="item.venue">@ {{item.venue.name}}</span></h3>
     <p class="description">{{item.description}}</p>
-    <button (click)="more()" outline block color="secondary" small icon-end round ion-button>{{'item.read-more' | translate : item.itemName }} <ion-icon name="arrow-dropright-circle"></ion-icon></button>
+    <button (click)="more()" outline block color="secondary" small icon-end round ion-button>{{'item.read-more' |
+      translate : item.itemName }} <ion-icon name="arrow-dropright-circle"></ion-icon></button>
     <hr>
-    <button (click)="tryLove()" class="love-button" round ion-button outline [color]="item.iLoved ? 'danger' : 'grey2'" icon-right>{{item.loves}}<ion-icon name="heart"></ion-icon></button>
-    
+    <button (click)="tryLove()" class="love-button" round ion-button outline [color]="item.iLoved ? 'danger' : 'grey2'"
+      icon-right>
+      <span *ngIf="item.loves > 0">{{item.loves}}</span>
+      <ion-icon [style.padding-left]="item.loves ? '.4em' : 0" name="heart"></ion-icon>
+    </button>
+
 
     <div class="author-bubble animate" [ngClass]="{ glow: !settings?.authorBubbleClicked }" tappable (click)="toAuthor()">
-        <img [src]="item.author.imgBase | image" />
+      <img [src]="item.author.imgBase | image" />
     </div>
-    
+
   </ion-card-content>
 </ion-card>

@@ -74,7 +74,10 @@
       <p class="description">{{item.description}}</p>
       <hr>
       <button (click)="tryLove()" class="love-button" round ion-button outline [color]="item.iLoved ? 'danger' : 'grey2'"
-        icon-right>{{item.loves}}<ion-icon name="heart"></ion-icon></button>
+        icon-right>
+        <span *ngIf="item.loves > 0">{{item.loves}}</span>
+        <ion-icon [style.padding-left]="item.loves ? '.4em' : 0" name="heart"></ion-icon>
+      </button>
 
       <div class="author-bubble animate" tappable (click)="toAuthor()" [ngClass]="{ glow: !settings?.authorBubbleClicked }">
         <img [src]="item.author.imgBase | image" />

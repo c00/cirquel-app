@@ -36,3 +36,5 @@ UserInterfaceState.xcuserstate
 
 # Dev settings file
 src/environments/environment.dev.ts
+#Firebase
+google-services.json

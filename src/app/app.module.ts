@@ -5,9 +5,12 @@ import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Camera } from '@ionic-native/camera';
+import { Deeplinks } from '@ionic-native/deeplinks';
 import { File } from '@ionic-native/file';
 import { FileTransfer } from '@ionic-native/file-transfer';
+import { Firebase } from '@ionic-native/firebase';
 import { Network } from '@ionic-native/network';
+import { SocialSharing } from '@ionic-native/social-sharing';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { VideoEditor } from '@ionic-native/video-editor';
@@ -21,17 +24,22 @@ import { AgreementModalComponent } from '../components/agreement-modal/agreement
 import { ContextMenuComponent } from '../components/context-menu/context-menu';
 import { EmptyPlaceholderComponent } from '../components/empty-placeholder/empty-placeholder';
 import { EndOfStreamComponent } from '../components/end-of-stream/end-of-stream';
+import { GrowChildComponent } from '../components/grow-child/grow-child';
+import { GrowerComponent } from '../components/grower/grower';
+import { ItemListComponent } from '../components/item-list/item-list';
 import { ItemComponent } from '../components/item/item';
 import { LoaderComponent } from '../components/loader/loader';
 import { LoginModalComponent } from '../components/login-modal/login-modal';
 import { LoginComponent } from '../components/login/login';
 import { NameVoteComponent } from '../components/name-vote/name-vote';
 import { OtherNameModalComponent } from '../components/other-name-modal/other-name-modal';
+import { SearchSummaryComponent } from '../components/search-summary/search-summary';
 import { SearchValueComponent } from '../components/search-value/search-value';
 import { SelectCategoryModalComponent } from '../components/select-category-modal/select-category-modal';
 import { SignupComponent } from '../components/signup/signup';
 import { SupportModalComponent } from '../components/support-modal/support-modal';
 import { UploadProgressComponent } from '../components/upload-progress/upload-progress';
+import { UserCardComponent } from '../components/user-card/user-card';
 import { VideoPlayerComponent } from '../components/video-player/video-player';
 import { VoteModalComponent } from '../components/vote-modal/vote-modal';
 import { VoteComponent } from '../components/vote/vote';
@@ -58,13 +66,8 @@ import { UserService } from '../providers/user-service';
 import { UserSettingsProvider } from '../providers/user-settings';
 import { VideoService } from '../providers/video-service';
 import { MyApp } from './app.component';
-import { ItemListComponent } from '../components/item-list/item-list';
-import { UserCardComponent } from '../components/user-card/user-card';
-import { GrowerComponent } from '../components/grower/grower';
-import { GrowChildComponent } from '../components/grow-child/grow-child';
-import { SearchSummaryComponent } from '../components/search-summary/search-summary';
-import { Deeplinks } from '@ionic-native/deeplinks';
-import { SocialSharing } from '@ionic-native/social-sharing';
+import { PushService } from '../providers/push-service';
+import { AppVersion } from '@ionic-native/app-version';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -172,6 +175,9 @@ export function createTranslateLoader(http: HttpClient) {
     Network,
     Deeplinks,
     SocialSharing,
+    Firebase,
+    PushService,
+    AppVersion,
   ]
 })
 export class AppModule {}

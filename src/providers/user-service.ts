@@ -9,6 +9,7 @@ import { Store } from './store';
 import { RegisterCredentials, LoginCredentials } from '../model/Credentials';
 import { Platform } from 'ionic-angular';
 import { SupportRequest } from 'model/SupportRequest';
+import { PushService } from './push-service';
 
 @Injectable()
 export class UserService {
@@ -21,6 +22,7 @@ export class UserService {
   constructor(
     private api: ApiProvider,
     private store: Store,
+    private push: PushService,
     private platform: Platform,
   ) {
     this.platform.ready()
@@ -112,6 +114,7 @@ export class UserService {
     this.user = null;
     this.loggedIn = false;
     this.userChanged.emit(null);
+    this.push.stop();
     
     return this.store.remove('user')
   }
@@ -140,6 +143,7 @@ export class UserService {
     this.user = res.user;
     this.loggedIn = true;
     this.api.setToken(this.user.session.token);
+    this.push.start();
     
     this.saveUserToStorage(this.user);
     this.userChanged.emit(this.user);

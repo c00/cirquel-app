@@ -32,7 +32,7 @@ export class Store {
   * @param key
   * @returns {Promise<any>}
   */
-  public get(key): Promise<any>{
+  public get(key: string): Promise<any>{
     return this.storage.get(key)
     .then((value) => {
       if (value === null || value === undefined) {

@@ -68,3 +68,15 @@ If you can and want to help out in any capacity, contact me at `cirqueapp at cov
 - Social Media people to spread the word!
 - Creative folks (Please think if a good name for the project!)
 - Normal users, people who give feedback, think of new features, etc!
+
+# Android Build error (Firebase / Support library)
+
+Related: https://stackoverflow.com/questions/51747801/ionic-3-execution-failed-for-task-appprocessdebugmanifest
+
+Fix:
+
+1. Open `platforms/android/app/src/main/AndroidManifest.xml`
+2. Add the following namespace to the `<manifest>` tag `<manifest [...] xmlns:tools="http://schemas.android.com/tools">`
+3. Under `<Application>` add the following element: `<meta-data android:name="android.support.VERSION" android:value="26.1.0" tools:replace="android:value" />`
+
+Possibly do `cordova clean` to unfuck the current build.

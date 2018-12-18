@@ -115,5 +115,11 @@ ion-menu {
 /* Training mode! */
 .app-root {
     transition: transform .4s ease-in;
+}
 
+//helpers
+.va-middle {
+    > * {
+        vertical-align: middle;
+    }
 }

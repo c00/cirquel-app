@@ -5,7 +5,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { PhotoResource } from 'model/Resources';
 
 import { UserItemsResult, AdvancedSearchResult } from '../model/ApiResult';
-import { Dictionary, Item, ItemName, VoteInfo } from '../model/Item';
+import { Dictionary, Item, ItemName, VoteInfo, ItemInfo } from '../model/Item';
 import { Search } from '../model/Search';
 import { ApiProvider } from './api';
 import { UserSettingsProvider } from './user-settings';
@@ -140,8 +140,8 @@ export class ItemService {
     return this.api.post('u/vote', {itemId, type, vote});
   }
 
-  public getVoteInfo(itemId: number): Promise<VoteInfo> {
-    return this.api.get('u/vote-info/' + itemId);
+  public getItemInfo(itemId: number): Promise<ItemInfo> {
+    return this.api.get('u/item-info/' + itemId);
   }
 
   public love(itemId: number) {

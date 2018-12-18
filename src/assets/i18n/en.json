@@ -72,6 +72,10 @@
         "title": "Select Category"
     },
     "item": {
+        "first-love": "Be the first one to show some love!",
+        "love-name-single": "Loved by: {{name}}.",
+        "love-names-some": "Loved by: {{others}} and {{last}}.",
+        "love-names-many": "Loved by: {{names}} and {{count}} other.",
         "related-title": "Related tricks",
         "no-related-items-title": "No similar tricks",
         "no-related-items": "Unfortunately we currently have no similar tricks to this one. Disappointed? Add your own!",

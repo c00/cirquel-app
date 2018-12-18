@@ -9,6 +9,7 @@ import { AppVersion } from '@ionic-native/app-version';
 import { ApiProvider } from './api';
 import { Device } from '../model/Device';
 import { Store } from './store';
+import { PushNotification } from '../model/PushNotification';
 
 @Injectable()
 export class PushService {
@@ -16,7 +17,7 @@ export class PushService {
   tokenRefresh: Subscription;
   notificationOpen: Subscription;
   lastTokenSent: string;
-  updates = new EventEmitter<any>();
+  updates = new EventEmitter<PushNotification>();
 
   constructor(
     private zone: NgZone,

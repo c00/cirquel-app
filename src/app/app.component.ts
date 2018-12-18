@@ -20,6 +20,10 @@ import { SearchPage } from '../pages/search/search';
 import { UserItemsPage } from '../pages/user-items/user-items';
 import { UserService } from '../providers/user-service';
 import { UserSettingsProvider } from '../providers/user-settings';
+import { PushService } from '../providers/push-service';
+import { PushNotification, PushType } from '../model/PushNotification';
+import { DialogService } from '../providers/dialogs';
+import { ItemService } from '../providers/item-service';
 
 @Component({
   templateUrl: 'app.html'
@@ -49,7 +53,10 @@ export class MyApp {
     private menuCtrl: MenuController,
     private modalCtrl: ModalController,
     private ref: ElementRef,
+    private push: PushService,
     private deeplinks: Deeplinks,
+    private dialogs: DialogService,
+    private items: ItemService,
   ) {
     this.initializeApp();
   }
@@ -59,6 +66,7 @@ export class MyApp {
       this.splashScreen.hide();
       this.initUser();
       this.setupLanguage();
+      this.setupNotifications();
       this.userSettingsProvider.get()
       .then(s => {
         this.settings = s;
@@ -208,6 +216,35 @@ export class MyApp {
     });
     
     modal.present();
+  }
+
+  private setupNotifications() {
+    this.push.updates
+    .subscribe((n: PushNotification) => {
+      console.log("Notification!", n);
+
+      if (!n.tap) {
+        console.log("App already open. Maybe show thing on top?");
+        return;
+      }
+
+      //Navigate to the correct page
+      if (n.type = PushType.LOVE) {
+        this.dialogs.showLoader();
+        this.items.getItem(n.itemId)
+        .then((item) => {
+          this.dialogs.dismissLoader();
+          this.nav.push(ItemDetailPage, {item})
+        })
+        .catch((err) => {
+          this.dialogs.dismissLoader();
+          throw err;
+        });
+      }
+
+      //Else
+
+    });
   }
 }
 

@@ -11,14 +11,23 @@
       <video-player *ngIf="item.resource.type === 'video'" [resource]="item.resource"></video-player>
     </div>
 
-    <vote *ngIf="voteBoxes.skill" type="skill" (onVote)="vote('skill', $event)" (onDismiss)="dismissVoteBox('skill')"></vote>
-    <vote *ngIf="voteBoxes.strength" type="strength" (onVote)="vote('strength', $event)" (onDismiss)="dismissVoteBox('strength')"></vote>
-    <vote *ngIf="voteBoxes.flexi" type="flexi" (onVote)="vote('flexi', $event)" (onDismiss)="dismissVoteBox('flexi')"></vote>
-    <name-vote *ngIf="voteBoxes.name" [item]="item" [selectedId]="votes?.name" (onDismiss)="dismissVoteBox('name')"
-      (onVote)="voteForName($event)"></name-vote>
-
     <div padding>
-      <h3>{{ item.resource.type }} by: {{ item.author.userName }} <span *ngIf="item.venue">@ {{item.venue.name}}</span></h3>
+      <h3 class="va-middle">
+        <div class="author-bubble animate" tappable (click)="toAuthor()" [ngClass]="{ glow: !settings?.authorBubbleClicked }">
+          <img [src]="item.author.imgBase | image" />
+        </div>
+        <span>{{ item.author.userName }}</span>
+        <span *ngIf="item.venue">@ {{item.venue.name}}</span>
+      </h3>
+
+      <p class="va-middle">
+        <button (click)="tryLove()" class="love-button" round ion-button clear [color]="item.iLoved ? 'danger' : 'grey2'"
+          icon-only>
+          <ion-icon name="heart"></ion-icon>
+        </button>
+        <span>{{ getLoveText() }}</span>
+      </p>
+
       <button ion-button clear class="float-right" (click)="voteForName(item.itemName)" *ngIf="votes?.popularNames.length > 0">
         <ion-icon name="checkmark" class="icon-large" [color]="votes?.name === item.itemNameId ? 'primary' : 'grey2'"></ion-icon>
       </button>
@@ -73,17 +82,16 @@
 
       <p class="description">{{item.description}}</p>
       <hr>
-      <button (click)="tryLove()" class="love-button" round ion-button outline [color]="item.iLoved ? 'danger' : 'grey2'"
-        icon-right>
-        <span *ngIf="item.loves > 0">{{item.loves}}</span>
-        <ion-icon [style.padding-left]="item.loves ? '.4em' : 0" name="heart"></ion-icon>
-      </button>
 
-      <div class="author-bubble animate" tappable (click)="toAuthor()" [ngClass]="{ glow: !settings?.authorBubbleClicked }">
-        <img [src]="item.author.imgBase | image" />
-      </div>
+
     </div>
   </div>
+
+  <vote *ngIf="voteBoxes.skill" type="skill" (onVote)="vote('skill', $event)" (onDismiss)="dismissVoteBox('skill')"></vote>
+  <vote *ngIf="voteBoxes.strength" type="strength" (onVote)="vote('strength', $event)" (onDismiss)="dismissVoteBox('strength')"></vote>
+  <vote *ngIf="voteBoxes.flexi" type="flexi" (onVote)="vote('flexi', $event)" (onDismiss)="dismissVoteBox('flexi')"></vote>
+  <name-vote *ngIf="voteBoxes.name" [item]="item" [selectedId]="votes?.name" (onDismiss)="dismissVoteBox('name')"
+    (onVote)="voteForName($event)"></name-vote>
 
   <div class="related" *ngIf="relatedItems.length > 0">
     <h1 class="related-title">{{ 'item.related-title' | translate }}</h1>

@@ -3,7 +3,7 @@ import { ModalController, NavController, NavParams, InfiniteScroll } from 'ionic
 
 import { VoteModalComponent } from '../../components/vote-modal/vote-modal';
 import { VoteOptions } from '../../components/vote/vote';
-import { Item, ItemName, VoteInfo } from '../../model/Item';
+import { Item, ItemName, VoteInfo, ItemInfo } from '../../model/Item';
 import { DialogService } from '../../providers/dialogs';
 import { ItemService } from '../../providers/item-service';
 import { UserService } from '../../providers/user-service';
@@ -73,9 +73,10 @@ export class ItemDetailPage {
 
   public ionViewWillEnter() {
     if (this.loggedIn) {
-      this.itemService.getVoteInfo(this.item.id)
-        .then((votes) => {
-          this.votes = votes;
+      this.itemService.getItemInfo(this.item.id)
+        .then((result: ItemInfo) => {
+          this.votes = result.voteInfo;
+          this.item.loveNames = result.loveNames;
           this.askRandomQuestion();
         });
     }
@@ -92,6 +93,34 @@ export class ItemDetailPage {
     }
   }
 
+  public getLoveText(): string {
+    //Still loading?
+    if (!this.votes) return '';
+
+    //DEBUG
+    //todo rearrange html so it looks nicer
+    this.item.loveNames = ['co the long name man', 'dude', 'pete', 'phil'];
+    this.item.loves = 42;
+    //END DEBUG
+
+    if (!this.item.loveNames || this.item.loveNames.length === 0) {
+      return this.translate.instant('item.first-love');
+    }
+
+    const last = this.item.loveNames[this.item.loveNames.length - 1];
+    //If it's just 1 person
+    if (this.item.loveNames.length === 1) {
+      return this.translate.instant('item.love-name-single', { name: last });
+    }
+    //If it's less than 5 persons
+    if (this.item.loves < 5) {
+      const others = this.item.loveNames.slice(0, this.item.loveNames.length - 1);
+      return this.translate.instant('item.love-names-some', { last, others: others.join(', ') });
+    }
+    //If it's a lot
+    return this.translate.instant('item.love-names-many', { names: this.item.loveNames.join(', '), count: this.item.loves - this.item.loveNames.length });
+  }
+
   public toAuthor() {
     this.settingsProvider.set('authorBubbleClicked', true);
     this.navCtrl.push(UserItemsPage, { userName: this.item.author.userName });
@@ -101,24 +130,24 @@ export class ItemDetailPage {
     return CategoryHelper.getColor(this.item.category);
   }
 
-  public share(){
+  public share() {
     const settings = ENV;
     const message = `${this.translate.instant('share.item-message', this.item)}`;
     const subject = `${this.translate.instant('title')}`;
     const link = `${settings.shareRoot}item/${this.item.id}`;
     this.sharing.share(message, subject, undefined, link);
   }
-  
+
   public openMenu(event) {
     const items: ContextMenuItem[] = [
       { title: 'item.report', value: 'report' }
     ];
     this.dialogs.showPopover(items, '', true, event)
-    .then(res => {
-      if (res === 'report') {
-        this.modalCtrl.create(SupportModalComponent, { itemId: this.item.id, reason: 'content' }).present();
-      }
-    });
+      .then(res => {
+        if (res === 'report') {
+          this.modalCtrl.create(SupportModalComponent, { itemId: this.item.id, reason: 'content' }).present();
+        }
+      });
   }
 
   private askRandomQuestion() {

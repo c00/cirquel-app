@@ -72,15 +72,6 @@ export class ItemDetailPage {
   }
 
   public ionViewWillEnter() {
-    if (this.loggedIn) {
-      this.itemService.getItemInfo(this.item.id)
-        .then((result: ItemInfo) => {
-          this.votes = result.voteInfo;
-          this.item.loveNames = result.loveNames;
-          this.askRandomQuestion();
-        });
-    }
-
     //Load item.
     const itemId = this.navParams.get('itemId');
 
@@ -89,36 +80,49 @@ export class ItemDetailPage {
         .then((item: Item) => {
           this.item = item;
           this.search();
+          this.getInfo();
         });
+    } else {
+      this.getInfo();
     }
+  }
+
+  private getInfo() {
+    this.itemService.getItemInfo(this.item.id)
+    .then((result: ItemInfo) => {
+      this.item.loveAuthors = result.loveAuthors;
+      if (result.votes) {
+        this.votes = result.votes;
+        this.askRandomQuestion();
+      }
+    });
   }
 
   public getLoveText(): string {
     //Still loading?
-    if (!this.votes) return '';
+    if (!this.item.loveAuthors) return '';
 
-    //DEBUG
-    //todo rearrange html so it looks nicer
-    this.item.loveNames = ['co the long name man', 'dude', 'pete', 'phil'];
-    this.item.loves = 42;
-    //END DEBUG
+    const names: string[] = this.item.loveAuthors.map(a => {
+      if (this.userService.user && a.userName === this.userService.user.userName) return this.translate.instant('you');
+      return a.userName;
+    });
 
-    if (!this.item.loveNames || this.item.loveNames.length === 0) {
+    if (!names || names.length === 0) {
       return this.translate.instant('item.first-love');
     }
 
-    const last = this.item.loveNames[this.item.loveNames.length - 1];
+    const last = names[names.length - 1];
     //If it's just 1 person
-    if (this.item.loveNames.length === 1) {
+    if (names.length === 1) {
       return this.translate.instant('item.love-name-single', { name: last });
     }
     //If it's less than 5 persons
     if (this.item.loves < 5) {
-      const others = this.item.loveNames.slice(0, this.item.loveNames.length - 1);
-      return this.translate.instant('item.love-names-some', { last, others: others.join(', ') });
+      const others = names.slice(0, names.length - 1);
+      return this.translate.instant('item.love-names-some', { last: last, others: others.join(', ') });
     }
     //If it's a lot
-    return this.translate.instant('item.love-names-many', { names: this.item.loveNames.join(', '), count: this.item.loves - this.item.loveNames.length });
+    return this.translate.instant('item.love-names-many', { names: names.join(', '), count: this.item.loves - names.length });
   }
 
   public toAuthor() {

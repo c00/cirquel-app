@@ -16,7 +16,7 @@ export interface Item {
   strengthLevel?: number;
   flexiLevel?: number;
   loves: number;
-  loveNames?: string[];
+  loveAuthors?: Author[];
 
   otherNames: ItemName[];
   author?: Author;
@@ -89,6 +89,6 @@ export interface VoteInfo {
 }
 
 export interface ItemInfo {
-  voteInfo: VoteInfo;
-  loveNames: string[]
+  votes?: VoteInfo;
+  loveAuthors: Author[]
 }

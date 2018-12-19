@@ -141,7 +141,7 @@ export class ItemService {
   }
 
   public getItemInfo(itemId: number): Promise<ItemInfo> {
-    return this.api.get('u/item-info/' + itemId);
+    return this.api.get('item-info/' + itemId);
   }
 
   public love(itemId: number) {

@@ -12,6 +12,7 @@ import { UserService } from '../../providers/user-service';
 import { UserSettingsProvider } from '../../providers/user-settings';
 import { AddItemPage } from '../add-item/add-item';
 import { SearchPage } from '../search/search';
+import { ItemDetailPage } from '../item-detail/item-detail';
 
 @Component({
   selector: 'page-home',
@@ -76,6 +77,10 @@ export class HomePage {
     .then(items => {
       this.items = items;
       this.state = items.length === 0 ? PageState.EMPTY : PageState.SHOWING;
+
+      //DEBUG
+      const item = this.items.find(i => i.id === 46);
+      this.navCtrl.push(ItemDetailPage, {item});
     })
     .catch((err) => {
       this.state = PageState.ERROR;

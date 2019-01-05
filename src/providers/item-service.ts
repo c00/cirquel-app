@@ -4,8 +4,8 @@ import 'rxjs/add/operator/map';
 import { EventEmitter, Injectable } from '@angular/core';
 import { PhotoResource } from 'model/Resources';
 
-import { UserItemsResult, AdvancedSearchResult } from '../model/ApiResult';
-import { Dictionary, Item, ItemName, VoteInfo, ItemInfo } from '../model/Item';
+import { AdvancedSearchResult, UserItemsResult } from '../model/ApiResult';
+import { Dictionary, Item, ItemInfo, ItemName } from '../model/Item';
 import { Search } from '../model/Search';
 import { ApiProvider } from './api';
 import { UserSettingsProvider } from './user-settings';

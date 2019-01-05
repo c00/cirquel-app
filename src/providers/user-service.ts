@@ -110,29 +110,24 @@ export class UserService {
     return this.processLogout();
   }
   
-  private processLogout() {
+  private async processLogout() {
     this.user = null;
     this.loggedIn = false;
-    this.userChanged.emit(null);
     this.push.stop();
-    
-    return this.store.remove('user')
+    await this.store.remove('user')
+    this.userChanged.emit(null);
   }
   
-  public register(creds: RegisterCredentials): Promise<User> {
-    return this.api.post("register", creds)
-    .then((user) => {
-      this.processUserResponse(user);
-      return user;
-    });
+  public async register(creds: RegisterCredentials): Promise<User> {
+    const user = await this.api.post("register", creds);
+    this.processUserResponse(user);
+    return user;
   }
   
-  public login(creds: LoginCredentials): Promise<User> {
-    return this.api.post("login", creds)
-    .then((res) => {            
-      this.processUserResponse(res);
-      return res.user;
-    });
+  public async login(creds: LoginCredentials): Promise<User> {
+    const res = await this.api.post("login", creds);
+    this.processUserResponse(res);
+    return res.user;
   }
 
   public sendSupport(request: SupportRequest) {

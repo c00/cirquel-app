@@ -56,7 +56,10 @@ export class ProfilePage {
     }
 
     this.sub = this.userService.userChanged.subscribe((user) => {
-      if (!user) this.navCtrl.pop();
+      if (!user) {
+        this.navCtrl.pop();
+        return;
+      }
       this.user = user;
       this.form.get('imgBase').setValue(this.user.imgBase);
     });

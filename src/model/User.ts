@@ -12,6 +12,7 @@ export interface User {
     lastName?: string;
     role?: string;
     stub?: string;
+    enablePush?: boolean;
 }
 
 export interface Session {

@@ -49,6 +49,7 @@ export class ProfilePage {
     this.form = this.formBuilder.group({
       imgBase:   '',
       imgUri:    '',
+      enablePush: Boolean(this.user.enablePush)
     });
 
     if (this.user) {
@@ -144,5 +145,20 @@ export class ProfilePage {
     const subject = `${this.translate.instant('title')}`;
     const link = `${settings.shareRoot}@/${this.user.stub}`;
     this.sharing.share(message, subject, undefined, link);
+  }
+
+  public async togglePush() {
+    const oldState = Boolean(this.user.enablePush);
+    const newState = Boolean(this.form.get('enablePush').value);
+
+    if (newState !== oldState) {
+      this.user.enablePush = newState;
+      console.log("We should switch");
+      this.userService.enablePush(newState)
+      .catch(() => {
+        this.form.get('enablePush').setValue(oldState);
+        this.user.enablePush = oldState;
+      });
+    }
   }
 }

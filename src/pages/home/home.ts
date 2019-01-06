@@ -12,7 +12,6 @@ import { UserService } from '../../providers/user-service';
 import { UserSettingsProvider } from '../../providers/user-settings';
 import { AddItemPage } from '../add-item/add-item';
 import { SearchPage } from '../search/search';
-import { ItemDetailPage } from '../item-detail/item-detail';
 
 @Component({
   selector: 'page-home',

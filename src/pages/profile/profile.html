@@ -8,27 +8,35 @@
 </ion-header>
 
 <ion-content padding>
-  
-  <form (submit)="add()" [formGroup]="form" [ngClass]="{ submitted: formSubmitted }" *ngIf="form" >
-    
+  <form (submit)="add()" [formGroup]="form" [ngClass]="{ submitted: formSubmitted }" *ngIf="form">
+
     <a class="button-image" [ngClass]="{ glow: !hasImage() }" (click)="showMediaSheet()" [style.background-image]="getImage()">
-      
     </a>
-    
-    <ion-list>      
+
+    <ion-list>
       <ion-item>{{user?.userName}}</ion-item>
       <ion-item>{{user?.email}}</ion-item>
-  
-      <button type="button" text-wrap ion-item (click)="share()"><ion-icon item-end name="share"></ion-icon>
+
+      <button type="button" text-wrap ion-item (click)="share()">
+        <ion-icon item-end name="share"></ion-icon>
         {{ 'profile.share-url' | translate }}<span class="url">{{getShareUrl()}}</span>
       </button>
-      
+
+      <ion-item>
+        <ion-label>
+          <h3>{{'profile.push' | translate }}</h3>
+            <p text-wrap>{{'profile.push-description' | translate }}</p>
+        </ion-label>
+        <ion-checkbox (ionChange)="togglePush()" item-end formControlName="enablePush"></ion-checkbox>
+      </ion-item>
+
+
     </ion-list>
-    
+
   </form>
-  
-  
+
+
   <hr>
   <button type="button" ion-button block outline round (click)="logout()">{{ 'profile.logout-button' | translate }}</button>
-  
+
 </ion-content>

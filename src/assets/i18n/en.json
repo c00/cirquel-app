@@ -222,7 +222,9 @@
         "image-updating": "Updating your image..",
         "image-updated": "Done, you look amazing!",
         "image-update-error": "Something went wrong. I swear it's not you, it's me! Please try again, or report this if it keeps happening!",
-        "share-url": "Share url: "
+        "share-url": "Share url: ",
+        "push": "Recieve Notifications",
+        "push-description": "For new Loves, new Messages, etc. No spam, I promise."
     },
     "trick": {
         "title": "Post a trick",

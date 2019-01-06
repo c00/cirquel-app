@@ -149,8 +149,6 @@ export class ItemComponent implements OnChanges {
       .then(res => {
         if (res === 'report') {
           this.modalCtrl.create(SupportModalComponent, { itemId: this.item.id, reason: 'content' }).present();
-        } else if (res === 'unfollow') {
-          this.follow(false);
         }
       });
     }

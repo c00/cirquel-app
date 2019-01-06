@@ -12,6 +12,7 @@ import { UserService } from '../../providers/user-service';
 import { UserSettingsProvider } from '../../providers/user-settings';
 import { AddItemPage } from '../add-item/add-item';
 import { SearchPage } from '../search/search';
+import { Cache } from '../../providers/cache';
 
 @Component({
   selector: 'page-home',
@@ -32,6 +33,7 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
     private navParams: NavParams,
+    public cache: Cache,
     private dialogs: DialogService,
     private itemService: ItemService,
     private userService: UserService,

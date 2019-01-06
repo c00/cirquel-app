@@ -48,8 +48,8 @@ export class SocialService {
   }
 
   private async subscribe(userName: string) {
-    const sub = await this.api.post('u/follow', { userName });
-    this.cache.userSubscriptions.push(sub);
+    const response = await this.api.post('u/follow', { userName });
+    this.cache.userSubscriptions.push(response.sub);
   }
 
   private async unsubscribe(userName: string) {

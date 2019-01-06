@@ -23,4 +23,6 @@ export interface UserSettings {
     filterClicked: boolean;
     //Has the user ever clicked the author pic on an item?
     authorBubbleClicked: boolean;
+    //Have we seen the following thingymajic before?
+    subsBannerShown: boolean;
 }

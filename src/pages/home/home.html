@@ -16,6 +16,7 @@
 
 <ion-content #content>
   <upload-progress></upload-progress>
+  <subs-banner *ngIf="cache.userSubscriptions.length > 0"></subs-banner>
   
   <ion-card>    
     <ion-card-content *ngIf="showSearchSummary">

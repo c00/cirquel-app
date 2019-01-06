@@ -81,6 +81,7 @@ export class UserSettingsProvider {
       profileClicked: false,
       filterClicked: false,
       authorBubbleClicked: false,
+      subsBannerShown: false,
     };
   }
 }

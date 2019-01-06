@@ -1,0 +1,15 @@
+<!-- <ion-card>
+    <ion-card-content> -->
+<div class="subs-container">
+  <p class="onboarding" *ngIf="showOnboarding">
+    {{ 'subs-banner.onboarding' | translate }}
+  </p>
+  <ion-slides slidesPerView="4">
+    <ion-slide *ngFor="let sub of cache.userSubscriptions" tappable (click)="toAuthor(sub.followee)">
+      <avatar [image]="sub.followee.imgBase" size="50"></avatar>
+      <span class="username">{{sub.followee.userName}}</span>
+    </ion-slide>
+  </ion-slides>
+</div>
+<!-- </ion-card-content>
+</ion-card> -->

@@ -1,0 +1,19 @@
+subs-banner {
+  .subs-container {
+    margin-top: 8px;
+  }
+  .onboarding {
+    font-weight: 100;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+
+  .username {
+    display: block;
+    margin: 2px 4px 0;
+    font-size: .8em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

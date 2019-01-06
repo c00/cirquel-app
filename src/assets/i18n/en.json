@@ -284,5 +284,8 @@
         "toast": {
             "love": "{{userName}} just loved your trick '{{trickName}}!'"
         }
+    },
+    "subs-banner": {
+        "onboarding": "Users you are following"
     }
 }

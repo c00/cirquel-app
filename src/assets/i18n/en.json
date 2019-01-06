@@ -268,5 +268,10 @@
         "item-message": "Check out this trick on Cirquel: {{ itemName.displayName }}.",
         "profile-message": "Check out '{{ userName }}' on Cirquel!",
         "my-profile-message": "Check out my profile on Cirquel!"
+    },
+    "notification": {
+        "toast": {
+            "love": "{{userName}} just loved your trick '{{trickName}}!'"
+        }
     }
 }

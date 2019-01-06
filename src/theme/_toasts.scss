@@ -1,0 +1,12 @@
+ion-toast {
+  &.white {
+    .toast-wrapper {
+      background-color: #fff;
+      border-bottom: solid 1px rgba(color($colors, 'dark'), .3);
+      
+    }
+    .toast-message, .toast-button {
+      color: color($colors, 'dark');
+    }
+  }
+}

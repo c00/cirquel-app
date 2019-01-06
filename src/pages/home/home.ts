@@ -79,8 +79,9 @@ export class HomePage {
       this.state = items.length === 0 ? PageState.EMPTY : PageState.SHOWING;
 
       //DEBUG
-      const item = this.items.find(i => i.id === 46);
-      this.navCtrl.push(ItemDetailPage, {item});
+      //this.dialogs.showToastWithButton("Bluuuuuueee");
+      /* const item = this.items.find(i => i.id === 46);
+      this.navCtrl.push(ItemDetailPage, {item}); */
     })
     .catch((err) => {
       this.state = PageState.ERROR;

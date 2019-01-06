@@ -86,6 +86,40 @@ export class DialogService {
       toast.present();
     }); 
   }
+
+  public async showToastWithButton(message: string, params?: any, buttonText?: string){
+    if (!buttonText) buttonText = "ok";
+
+    //Build message
+    let body: any = {
+      message: this.translate.instant(message, params),
+      duration: 2000,
+      position: 'top',
+      cssClass: 'white',
+      showCloseButton: true,
+      closeButtonText: this.translate.instant(buttonText),
+    };    
+    
+    return new Promise((resolve, reject) => {
+      let toast = this.toast.create(body);
+      
+      toast.onWillDismiss((_null, role) => {
+        switch (role) {
+          case 'close':
+          resolve('button');
+          break;
+          case 'backdrop':
+          resolve('timedout');
+          break;
+          case 'custom':
+          resolve('custom');
+          break;
+        }
+      });
+      
+      toast.present();
+    }); 
+  }
   
   
   public showToast(message: string, milliseconds?: number, params?: any){

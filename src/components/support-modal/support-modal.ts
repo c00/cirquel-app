@@ -60,7 +60,7 @@ export class SupportModalComponent {
     }
 
     userService.ready()
-    .then(() => userService.isLoggedIn())
+    .then(() => userService.isLoggedInWithReject())
     .then(() => {
       this.loggedIn = true;
       this.form.get('email').setValue(this.userService.user.email);

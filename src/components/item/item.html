@@ -35,9 +35,16 @@
     </button>
 
 
-    <div class="author-bubble animate" [ngClass]="{ glow: !settings?.authorBubbleClicked }" tappable (click)="toAuthor()">
-      <img [src]="item.author.imgBase | image" />
-    </div>
+    <span class="buttons-right">
+      <button *ngIf="!item.author.following" class="button" (click)="follow()" ion-button round icon-only clear color="secondary">
+        <ion-icon name="person-add"></ion-icon>
+      </button>
+
+      <div class="author-bubble animate" [ngClass]="{ glow: !settings?.authorBubbleClicked }" tappable (click)="toAuthor()">
+        <img [src]="item.author.imgBase | image" />
+      </div>
+    </span>
+
 
   </ion-card-content>
 </ion-card>

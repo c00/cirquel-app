@@ -10,6 +10,8 @@ import { RegisterCredentials, LoginCredentials } from '../model/Credentials';
 import { Platform } from 'ionic-angular';
 import { SupportRequest } from 'model/SupportRequest';
 import { PushService } from './push-service';
+import { SessionResult } from '../model/ApiResult';
+import { Cache } from './cache';
 
 @Injectable()
 export class UserService {
@@ -20,6 +22,7 @@ export class UserService {
   private verifyQ: Promise<void>;
 
   constructor(
+    private cache: Cache,
     private api: ApiProvider,
     private store: Store,
     private push: PushService,
@@ -65,7 +68,7 @@ export class UserService {
   }
   //endregion
 
-  public ready(): Promise<void> {
+  public ready(): Promise<any> {
     if (!this.verifyQ) {
       this.verifyQ = this.getUserFromStorage()
         .then(() => this.checkSession())
@@ -82,8 +85,9 @@ export class UserService {
 
   /**
    * This is purely a check function to make chaining promises easy.
+   * @deprecated
    */
-  public isLoggedIn(): Promise<void> {
+  public isLoggedInWithReject(): Promise<void> {
     if (this.loggedIn) return Promise.resolve();
 
     return Promise.reject("not_logged_in");
@@ -93,7 +97,7 @@ export class UserService {
     return this.api.get('check-session\\' + this.user.session.token)
       .then((res) => {
         this.processUserResponse(res);
-        return res.user;
+        return res;
       })
       .catch(error => {
         const code = (error && error.statusCode) ? error.statusCode : 999;
@@ -115,7 +119,11 @@ export class UserService {
     this.loggedIn = false;
     this.push.stop();
     await this.store.remove('user')
+    this.api.delete('u/session');
+    this.api.clearHeaders();
+    this.cache.clear();
     this.userChanged.emit(null);
+    
   }
 
   public async register(creds: RegisterCredentials): Promise<User> {
@@ -134,11 +142,12 @@ export class UserService {
     return this.api.post('support', request);
   }
 
-  private processUserResponse(res) {
+  private processUserResponse(res: SessionResult) {
     this.user = res.user;
     this.loggedIn = true;
     this.api.setToken(this.user.session.token);
     this.push.start();
+    this.cache.userSubscriptions = res.subscriptions;``
 
     this.saveUserToStorage(this.user);
     this.userChanged.emit(this.user);

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { Item, ItemName } from '../../model/Item';
 import { ItemService } from '../../providers/item-service';
 import { DialogService } from '../../providers/dialogs';
@@ -15,12 +15,13 @@ import { UserSettingsProvider } from '../../providers/user-settings';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { TranslateService } from '@ngx-translate/core';
 import { ENV } from '@app/env';
+import { SocialService } from '../../providers/social-service';
 
 @Component({
   selector: 'item',
   templateUrl: 'item.html'
 })
-export class ItemComponent {
+export class ItemComponent implements OnChanges {
   
   @Input() item: Item;
   showMaxAltNames = 2;
@@ -34,9 +35,14 @@ export class ItemComponent {
     private modalCtrl: ModalController,
     private settingsProvider: UserSettingsProvider,
     private sharing: SocialSharing,
+    private social: SocialService,
     private translate: TranslateService,
     ) {
       this.settingsProvider.get().then(s => this.settings = s);
+    }
+
+    public ngOnChanges() {
+      if (this.item) this.social.setFollowing(this.item.author);
     }
     
     public toAuthor() {
@@ -67,7 +73,7 @@ export class ItemComponent {
     
     public tryLove() {
       
-      this.userService.isLoggedIn()
+      this.userService.isLoggedInWithReject()
       .catch(() => this.dialogs.showLoginModal())
       .then(() => {
         //Logged in.
@@ -100,10 +106,20 @@ export class ItemComponent {
     
     public more() {
       this.navCtrl.push(ItemDetailPage, {item: this.item});
-      /* let q = this.item.itemName.name;
-      if (this.item.itemName.variation) q += " " + this.item.itemName.variation;
+
       //todo find out if we are at root, and if not, pop before pushing.
-      this.navCtrl.push(HomePage, { q }); */
+    }
+
+    public async follow() {
+      this.dialogs.showToast('user.follow-toast', 4000, {user: this.item.author.userName});
+      this.item.author.following = true;
+      try {
+        await this.social.follow(this.item.author.userName, true);
+      } catch (err) {
+        this.dialogs.showToast('user.follow-error-toast', 2500, {user: this.item.author.userName});
+        this.item.author.following = false;
+        throw err;
+      }  
     }
     
     public voteDialog() {
@@ -133,6 +149,8 @@ export class ItemComponent {
       .then(res => {
         if (res === 'report') {
           this.modalCtrl.create(SupportModalComponent, { itemId: this.item.id, reason: 'content' }).present();
+        } else if (res === 'unfollow') {
+          this.follow(false);
         }
       });
     }

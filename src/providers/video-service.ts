@@ -126,7 +126,7 @@ export class VideoService {
     //Check if we are on wifi / cell so we don't kill their connection.
     //unknown, ethernet, wifi, 2g, 3g, 4g, cellular, none
     if (this.network.type !== 'wifi' && this.network.type !== 'ethernet'){
-      this.dialogs.showConfirm('video.no-wifi', 'video.no-wifi-title', 'video.ok-button', 'video.wait-button')
+      this.dialogs.showConfirmDeprecated('video.no-wifi', 'video.no-wifi-title', 'video.ok-button', 'video.wait-button')
       .then(() => {
         this.upload.start(videoUri, prepResult);    
       })

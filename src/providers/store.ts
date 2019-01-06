@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
-import {Storage} from "@ionic/storage";
+import { Storage } from "@ionic/storage";
 
 @Injectable()
 export class Store {
-  
+
   constructor(
     private storage: Storage
   ) {
@@ -12,19 +12,19 @@ export class Store {
       console.log("Storage ready. Driver: " + this.storage.driver);
     });
   }
-  
-  private tryParse(value: string){
+
+  private tryParse(value: string) {
     try {
       return JSON.parse(value);
     } catch (e) {
       return value
     }
   }
-  
-  public remove(key){
+
+  public remove(key: string) {
     return this.storage.remove(key);
   }
-  
+
   //region storage
   /**
   * Returns a promise with the value stored at 'key'.
@@ -32,23 +32,21 @@ export class Store {
   * @param key
   * @returns {Promise<any>}
   */
-  public get(key: string): Promise<any>{
-    return this.storage.get(key)
-    .then((value) => {
-      if (value === null || value === undefined) {
-        throw new Error("no_value_for_key");
-      } else {
-        return this.tryParse(value);
-      }
-    });
+  public async get(key: string): Promise<any> {
+    const value = await this.storage.get(key);
+    if (value === null || value === undefined) {
+      throw new Error("no_value_for_key");
+    }
+
+    return this.tryParse(value);
   }
-  
-  public set(key: string, value: any){
+
+  public async set(key: string, value: any) {
     //to string
     if (typeof value === 'object') value = JSON.stringify(value);
-    
+
     return this.storage.set(key, value);
   }
   //endregion
-  
+
 }

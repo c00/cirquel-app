@@ -36,10 +36,17 @@
         "5": "Contortionist"
     },
     "user": {
+        "unfollow-confirm": "Unfollow {{name}}?",
+        "unfollow-confirm-message": "You will no longer receive notifications when they post new tricks!",
+        "unfollow-ok": "Unfollow",
+        "unfollow-cancel": "Keep following",
         "contributions": "Tricks:",
         "follow-button": "Follow",
+        "following-button": "Following",
         "coming-soon-message": "Following and messaging are still under development, but should be added shortly! Sorry about that!",
-        "coming-soon-title": "Coming soon!"
+        "coming-soon-title": "Coming soon!",
+        "follow-toast": "Following {{user}}!",
+        "follow-error-toast": "Something went wrong... Try again or report this!"
     },
     "loading": {
         "title": "Hold on..."
@@ -112,7 +119,8 @@
         "recent": "Recently added",
         "dictionary": "Dictionary A-Z",
         "search": "Search",
-        "favorites": "My favorites",
+        "favorites": "Saved tricks",
+        "subs": "Following",
         "logout": "Logout",
         "support": "Support and Feedback",
         "my-contributions": "My contributions",
@@ -247,6 +255,7 @@
     "error": {
         "login-required-to-post": "You can only add tricks if you are logged in.",
         "login-required-to-love": "You have to log in before you can do that!",
+        "login-required-to-follow": "You have to log in before you can follow other users!",
         "no-internet": "You're not connected to the internet. Get connected and try again.",
         "server-error": "Something went wrong. Please try again. If this error continues, contact support.",
         "timeout": "The connection is too slow. Please try again."

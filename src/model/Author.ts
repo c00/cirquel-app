@@ -3,4 +3,5 @@ export interface Author {
     imgBase: string;
     contribCount: number;
     stub?: string;
+    following?: boolean;
 }

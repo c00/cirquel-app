@@ -61,10 +61,16 @@ export class PushService {
 
   }
 
-  public stop() {
+  public async stop() {
+    if (!this.platform.is('cordova')) {
+      console.warn("Cordova not available");
+      return;
+    }
+    
     this.lastTokenSent = null;
     if (this.notificationOpen) this.notificationOpen.unsubscribe();
     if (this.tokenRefresh) this.tokenRefresh.unsubscribe();
+    await this.fb.unregister();
   }
 
   private checkPermissions(): Promise<any> {
@@ -99,7 +105,8 @@ export class PushService {
       .then((uuid) => device.uuid = uuid)
       .then(() => this.api.post('u/device', device))
       .then((d: Device) => {
-        this.store.set('uuid', d.uuid)    
+        this.store.set('uuid', d.uuid)  
+        this.api.setUUID(d.uuid);  
       })
       .catch(err => {
         //Reset token just in case

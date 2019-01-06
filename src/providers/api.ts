@@ -1,12 +1,12 @@
-import { Headers, Http, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
+import { Headers, Http, Response } from '@angular/http';
 import { ENV } from '@app/env';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { Platform } from 'ionic-angular';
-
-import { DialogService } from './dialogs';
 import { Observable } from 'rxjs/Rx';
+
 import { SimpleCache } from '../model/SimpleCache';
+import { DialogService } from './dialogs';
 
 
 @Injectable()
@@ -29,7 +29,6 @@ export class ApiProvider {
     private http: Http
   ) {
     
-    
   }
   
   
@@ -39,13 +38,23 @@ export class ApiProvider {
     this.headers = new Headers();
     this.headers.append('X-Auth-Token', token);
   }
+
+  public setUUID(uuid: string) {
+    const header = 'X-Device-Uuid';
+    if (this.headers.has(header)){
+      this.headers.set(header, uuid);
+    } else {
+      this.headers.append(header, uuid);
+    }
+  }
   
   public getToken() {
     return this.token;
   }
   
-  public clearToken() {
+  public clearHeaders() {
     this.token = undefined;
+    this.headers = new Headers();
   }
   
   public getSecuredImageUrl(filename: string, size: string) {

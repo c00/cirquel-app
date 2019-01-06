@@ -5,12 +5,21 @@ item {
         border-top: 6px solid color($colors, 'primary');
         
     }
+
+    .buttons-right {
+        float: right;
+
+        .button {
+            display: inline-block;
+        }
+    }
     
     .author-bubble {
         border: 1px solid color($colors, 'grey2');
         border-radius: 50%;
         padding: 2px;
-        float: right;
+        display: inline-block;
+        vertical-align: middle;
         
         img {
             width: 40px;

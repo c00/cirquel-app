@@ -18,6 +18,7 @@ import { ContextMenuItem } from '../../components/context-menu/context-menu';
 import { SupportModalComponent } from '../../components/support-modal/support-modal';
 import { TranslateService } from '@ngx-translate/core';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { SocialService } from '../../providers/social-service';
 
 @Component({
   selector: 'page-item-detail',
@@ -55,6 +56,7 @@ export class ItemDetailPage {
     private translate: TranslateService,
     private sharing: SocialSharing,
     private settingsProvider: UserSettingsProvider,
+    private social: SocialService,
   ) {
     this.item = navParams.get('item');
     this.settingsProvider.get().then(s => this.settings = s);
@@ -63,7 +65,7 @@ export class ItemDetailPage {
   }
 
   public ionViewCanEnter() {
-    return this.userService.isLoggedIn()
+    return this.userService.isLoggedInWithReject()
       .then(() => this.loggedIn = true)
       .catch(() => {
         //Note, if this returns false, the view will not load.
@@ -89,13 +91,13 @@ export class ItemDetailPage {
 
   private getInfo() {
     this.itemService.getItemInfo(this.item.id)
-    .then((result: ItemInfo) => {
-      this.item.loveAuthors = result.loveAuthors;
-      if (result.votes) {
-        this.votes = result.votes;
-        this.askRandomQuestion();
-      }
-    });
+      .then((result: ItemInfo) => {
+        this.item.loveAuthors = result.loveAuthors;
+        if (result.votes) {
+          this.votes = result.votes;
+          this.askRandomQuestion();
+        }
+      });
   }
 
   public getLoveText(): string {
@@ -215,8 +217,7 @@ export class ItemDetailPage {
   }
 
   public tryLove() {
-
-    this.userService.isLoggedIn()
+    this.userService.isLoggedInWithReject()
       .catch(() => this.dialogs.showLoginModal())
       .then(() => {
         //Logged in.
@@ -225,7 +226,17 @@ export class ItemDetailPage {
       .catch(() => {
         this.dialogs.showToast("error.login-required-to-love", 3000);
       });
-
+  }
+  public async follow() {
+    this.dialogs.showToast('user.follow-toast', 4000, {user: this.item.author.userName});
+    this.item.author.following = true;
+    try {
+      await this.social.follow(this.item.author.userName, true);
+    } catch (err) {
+      this.dialogs.showToast('user.follow-error-toast', 2500, {user: this.item.author.userName});
+      this.item.author.following = false;
+      throw err;
+    }  
   }
 
   public voteFor(type) {

@@ -168,24 +168,30 @@ export class DialogService {
     });    
   }
   
-  public showConfirm(message: string, title: string, okButton?: string, cancelButton?: string) : Promise<any> {
+  public async showConfirmDeprecated(message: string, title: string, okButton?: string, cancelButton?: string) : Promise<any> {
+    const result = await this.showConfirm(message, title, okButton, cancelButton);
+    if (!result) throw new Error("Dialog rejected");
+    return true;    
+  }
+
+  public async showConfirm(message: string, title: string, okButton?: string, cancelButton?: string, params?: any) : Promise<any> {
     
     return new Promise<any>((resolve, reject) => {
       if (!okButton) okButton = 'ok';
       if (!cancelButton) cancelButton = 'cancel';
       
       let alert = this.alertCtrl.create({
-        title: this.translate.instant(title),
-        subTitle: this.translate.instant(message),
+        title: this.translate.instant(title, params),
+        subTitle: this.translate.instant(message, params),
         buttons: [
           {
-            text: this.translate.instant(cancelButton),
+            text: this.translate.instant(cancelButton, params),
             role: 'cancel',
-            handler: () => { reject(); }
+            handler: () => { resolve(false); }
           },
           {
-            text: this.translate.instant(okButton),
-            handler: () => { resolve(); }
+            text: this.translate.instant(okButton, params),
+            handler: () => { resolve(true); }
           }
         ]
       });
@@ -215,7 +221,7 @@ export class DialogService {
     
   }
   
-  public showLoginModal(): Promise<User> {     
+  public showLoginModal(): Promise<User> {
     return new Promise<User>((resolve, reject) => { 
       let modal = this.modalCtrl.create(LoginModalComponent); 
       

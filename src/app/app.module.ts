@@ -68,6 +68,8 @@ import { VideoService } from '../providers/video-service';
 import { MyApp } from './app.component';
 import { PushService } from '../providers/push-service';
 import { AppVersion } from '@ionic-native/app-version';
+import { SocialService } from '../providers/social-service';
+import { Cache } from '../providers/cache';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -177,6 +179,8 @@ export function createTranslateLoader(http: HttpClient) {
     SocialSharing,
     Firebase,
     PushService,
+    SocialService,
+    Cache,
     AppVersion,
   ]
 })

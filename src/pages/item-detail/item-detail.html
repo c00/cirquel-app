@@ -18,6 +18,10 @@
         </div>
         <span>{{ item.author.userName }}</span>
         <span *ngIf="item.venue">@ {{item.venue.name}}</span>
+        <button *ngIf="!item.author.following" class="button" (click)="follow()" ion-button round icon-only clear color="secondary" class="float-right">
+          <ion-icon name="person-add"></ion-icon>
+        </button>
+
       </h3>
 
       <ion-row class="va-middle" no-padding align-items-center>

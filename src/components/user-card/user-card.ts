@@ -6,7 +6,6 @@ import { ENV } from '../../environments/environment';
 import { Author } from '../../model/Author';
 import { ImagePipe } from '../../pipes/image/image';
 import { DialogService } from '../../providers/dialogs';
-import { SocialService } from '../../providers/social-service';
 import { UserService } from '../../providers/user-service';
 
 @Component({
@@ -22,7 +21,6 @@ export class UserCardComponent implements OnChanges {
     private dialogs: DialogService,
     private sharing: SocialSharing,
     private translate: TranslateService,
-    private social: SocialService,
     private userService: UserService,
   ) {
 
@@ -30,7 +28,6 @@ export class UserCardComponent implements OnChanges {
 
   public ngOnChanges() {
     if (this.author) {
-      this.author.following = this.social.isFollowing(this.author.userName);
       this.isMe = (this.author.userName === this.userService.user.userName);
     }
   }

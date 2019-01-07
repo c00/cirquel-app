@@ -1,21 +1,21 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Item, ItemName } from '../../model/Item';
-import { ItemService } from '../../providers/item-service';
-import { DialogService } from '../../providers/dialogs';
-import { UserService } from '../../providers/user-service';
-import { NavController, ModalController } from 'ionic-angular';
-import { ItemDetailPage } from '../../pages/item-detail/item-detail';
-import { CategoryHelper } from '../../model/Category';
-import { VoteModalComponent } from '../vote-modal/vote-modal';
-import { ContextMenuItem } from '../context-menu/context-menu';
-import { SupportModalComponent } from '../support-modal/support-modal';
-import { UserItemsPage } from '../../pages/user-items/user-items';
-import { UserSettings } from '../../model/UserSettings';
-import { UserSettingsProvider } from '../../providers/user-settings';
+import { ENV } from '@app/env';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { TranslateService } from '@ngx-translate/core';
-import { ENV } from '@app/env';
-import { SocialService } from '../../providers/social-service';
+import { ModalController, NavController } from 'ionic-angular';
+
+import { CategoryHelper } from '../../model/Category';
+import { Item, ItemName } from '../../model/Item';
+import { UserSettings } from '../../model/UserSettings';
+import { ItemDetailPage } from '../../pages/item-detail/item-detail';
+import { UserItemsPage } from '../../pages/user-items/user-items';
+import { DialogService } from '../../providers/dialogs';
+import { ItemService } from '../../providers/item-service';
+import { UserService } from '../../providers/user-service';
+import { UserSettingsProvider } from '../../providers/user-settings';
+import { ContextMenuItem } from '../context-menu/context-menu';
+import { SupportModalComponent } from '../support-modal/support-modal';
+import { VoteModalComponent } from '../vote-modal/vote-modal';
 
 @Component({
   selector: 'item',
@@ -35,7 +35,6 @@ export class ItemComponent implements OnChanges {
     private modalCtrl: ModalController,
     private settingsProvider: UserSettingsProvider,
     private sharing: SocialSharing,
-    private social: SocialService,
     private translate: TranslateService,
     ) {
       this.settingsProvider.get().then(s => this.settings = s);

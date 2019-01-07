@@ -61,7 +61,6 @@ export class FollowButtonComponent implements OnChanges, OnDestroy {
       const newState = await this.social.follow(this.author.userName, this.author.following);
       this.author.following = newState;
       this.following = newState;
-      console.log("new statr", newState);
     } catch (err) {
       this.author.following = oldState;
       this.following = oldState;

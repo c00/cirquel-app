@@ -3,6 +3,6 @@
 </button>
 <button *ngIf="showFullButton" (click)="follow()" ion-button round icon-left outline color="primary">
   <ion-icon name="person-add"></ion-icon>
-  <span *ngIf="!author.following">{{ 'user.follow-button' | translate }}</span>
-  <span *ngIf="author.following">{{ 'user.following-button' | translate }}</span>
+  <span *ngIf="!following">{{ 'user.follow-button' | translate }}</span>
+  <span *ngIf="following">{{ 'user.following-button' | translate }}</span>
 </button>

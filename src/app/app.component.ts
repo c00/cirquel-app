@@ -236,7 +236,7 @@ export class MyApp {
               this.dialogs.dismissLoader();
               throw err;
             });
-        } else if (n.type === PushType.TYPE_NEW_ITEM_FROM_SUB) {
+        } else if (n.type === PushType.NEW_ITEM_FROM_SUB) {
           console.log(n);
           this.dialogs.showLoader();
           this.items.getItem(n.itemId)
@@ -249,6 +249,7 @@ export class MyApp {
               throw err;
             });
         } else {
+          //todo add video processed route.
           console.warn("Unknown notification type", n)
         }
 

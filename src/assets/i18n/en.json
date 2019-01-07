@@ -284,7 +284,8 @@
     "notification": {
         "toast": {
             "love": "{{userName}} just loved your trick '{{trickName}}!'",
-            "new-from-sub": "{{userName}} just posted a new trick called {{trickName}}!"
+            "new-from-sub": "{{userName}} just posted a new trick called {{trickName}}!",
+            "video-processed": "Your video is done processing!"
         }
     },
     "subs-banner": {

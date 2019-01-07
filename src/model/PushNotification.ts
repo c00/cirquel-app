@@ -1,7 +1,8 @@
 export const PushType = {
   LOVE: 'love',
   FOLLOW: 'follow',
-  TYPE_NEW_ITEM_FROM_SUB: 'new-from-sub'
+  NEW_ITEM_FROM_SUB: 'new-from-sub',
+  VIDEO_PROCESSED: 'video-processed'
 }
 
 export interface PushNotification {

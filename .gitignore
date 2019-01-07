@@ -38,3 +38,4 @@ UserInterfaceState.xcuserstate
 src/environments/environment.dev.ts
 #Firebase
 google-services.json
+GoogleService-Info.plist

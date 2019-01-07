@@ -12,7 +12,7 @@ import { UserSettingsProvider } from './user-settings';
 
 @Injectable()
 export class ItemService {
-  
+
   public itemAdded = new EventEmitter<Item>();
   public searchComplete = new EventEmitter<Item[]>();
 
@@ -20,7 +20,7 @@ export class ItemService {
     private api: ApiProvider,
     private userSettingsProvider: UserSettingsProvider,
   ) {
-    
+
   }
 
   /**
@@ -50,86 +50,96 @@ export class ItemService {
   }
 
   private getCategoryName() {
-    const c =this.userSettingsProvider.getCategorySync();
+    const c = this.userSettingsProvider.getCategorySync();
     if (!c || c.name === 'all') return null;
     return c.name;
   }
 
   public search(q: string) {
     const url = UrlBuilder.new('search')
-    .addParam('q', q)
-    .addParam('category', this.getCategoryName())
-    .toString();
+      .addParam('q', q)
+      .addParam('category', this.getCategoryName())
+      .toString();
 
     return this.api.cacheGet(url);
   }
 
-  public advancedSearch(s: Search) : Promise<AdvancedSearchResult>
-  {
+  public advancedSearch(s: Search): Promise<AdvancedSearchResult> {
     const url = UrlBuilder.new('advanced-search')
-    .addParams(s)
-    .toString();
+      .addParams(s)
+      .toString();
 
     return this.api.cacheGet(url);
   }
 
-  public getItems(page: number){
+  public getItems(page: number) {
     const url = UrlBuilder.new('items')
-    .addParam('page', String(page))
-    .addParam('category', this.getCategoryName())
-    .toString();
+      .addParam('page', String(page))
+      .addParam('category', this.getCategoryName())
+      .toString();
 
     return this.api.get(url)
-    .then(result => {
-      this.searchComplete.emit(result);
-      return result;
-    });
+      .then(result => {
+        this.searchComplete.emit(result);
+        return result;
+      });
   }
 
-  public getFavorites(page: number){
+  public async getSubsItems(page: number) {
+    const s: Search = {
+      category: this.getCategoryName(),
+      page,
+      subsOnly: true
+    };
+
+    const result = await  this.advancedSearch(s);
+    return result;
+  }
+
+  public getFavorites(page: number) {
     const url = UrlBuilder.new('u/favorites')
-    .addParam('page', String(page))
-    .addParam('category', this.getCategoryName())
-    .toString();
+      .addParam('page', String(page))
+      .addParam('category', this.getCategoryName())
+      .toString();
 
     return this.api.get(url)
-    .then(result => {
-      this.searchComplete.emit(result);
-      return result;
-    });
+      .then(result => {
+        this.searchComplete.emit(result);
+        return result;
+      });
   }
 
-  public getDictionary(page: number): Promise<Dictionary>  {
+  public getDictionary(page: number): Promise<Dictionary> {
     const url = UrlBuilder.new('dictionary')
-    .addParam('page', String(page))
-    .addParam('category', this.getCategoryName())
-    .toString();
+      .addParam('page', String(page))
+      .addParam('category', this.getCategoryName())
+      .toString();
 
     return this.api.cacheGet(url)
-    .then((names: ItemName[]) => {
-      return Dictionary.fromItemNames(names);
-    });
+      .then((names: ItemName[]) => {
+        return Dictionary.fromItemNames(names);
+      });
   }
-  
+
   public postImage(fileUri: string): Promise<PhotoResource> {
     return this.api.postImage('u/image', fileUri)
-    .catch(err => {
-      console.warn("error in postImage", err);
-      if (err === 'cordova_not_available') {
-        //Create a resource just for testing
-        return { imgBase: "test-silk", type: "photo", extension: "jpg", id: -1 };
-      }
+      .catch(err => {
+        console.warn("error in postImage", err);
+        if (err === 'cordova_not_available') {
+          //Create a resource just for testing
+          return { imgBase: "test-silk", type: "photo", extension: "jpg", id: -1 };
+        }
 
-      throw new Error(err);
-    });
+        throw new Error(err);
+      });
   }
 
   public postItem(item: Item) {
     return this.api.post('u/item', item)
-    .then(item => {
-      this.itemAdded.emit(item);
-      return item;
-    });
+      .then(item => {
+        this.itemAdded.emit(item);
+        return item;
+      });
   }
 
   public voteForName(name: ItemName) {
@@ -137,7 +147,7 @@ export class ItemService {
   }
 
   public vote(type, itemId, vote) {
-    return this.api.post('u/vote', {itemId, type, vote});
+    return this.api.post('u/vote', { itemId, type, vote });
   }
 
   public getItemInfo(itemId: number): Promise<ItemInfo> {
@@ -146,19 +156,19 @@ export class ItemService {
 
   public love(itemId: number) {
 
-    return this.api.post('u/love', {id: itemId});
+    return this.api.post('u/love', { id: itemId });
   }
 
   public unlove(itemId: number) {
     return this.api.delete('u/love/' + itemId);
   }
-  
+
 }
 
 export class UrlBuilder {
   params: { key: string, value: string }[] = [];
 
-  constructor(private base: string) {}
+  constructor(private base: string) { }
 
   static new(base: string): UrlBuilder {
     const u = new UrlBuilder(base);
@@ -180,13 +190,13 @@ export class UrlBuilder {
     return this;
   }
 
-  public addParam(key: string, value: string): UrlBuilder {
+  public addParam(key: string, value: string | number): UrlBuilder {
     if (value === null || value === undefined || value === '') return this;
 
     key = key.trim();
     value = String(value).trim();
-    
-    this.params.push({key, value});
+
+    this.params.push({ key, value });
     return this;
   }
 
@@ -197,7 +207,7 @@ export class UrlBuilder {
 
     let pairs = [];
     for (let p of this.params) {
-      pairs.push( encodeURIComponent(p.key) + '=' + encodeURIComponent(p.value));
+      pairs.push(encodeURIComponent(p.key) + '=' + encodeURIComponent(p.value));
     }
 
     string += '?' + pairs.join('&');

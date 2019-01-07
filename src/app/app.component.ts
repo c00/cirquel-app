@@ -24,6 +24,7 @@ import { ItemService } from '../providers/item-service';
 import { PushService } from '../providers/push-service';
 import { UserService } from '../providers/user-service';
 import { UserSettingsProvider } from '../providers/user-settings';
+import { SubsPage } from '../pages/subs/subs';
 
 @Component({
   templateUrl: 'app.html'
@@ -35,8 +36,9 @@ export class MyApp {
   pages: MenuItem[] = [
     { id: 1, icon: "time", title: 'menu.recent', component: HomePage, isRoot: true, selected: true },
     { id: 2, icon: "bookmark", title: 'menu.dictionary', component: DictionaryPage, isRoot: true, selected: false },
-    { id: 3, icon: "heart", title: 'menu.favorites', component: FavoritesPage, isRoot: true, selected: false },
-    { id: 4, icon: "contact", title: 'menu.my-contributions', component: UserItemsPage, isRoot: false, selected: false, data: { mine: true } },
+    { id: 6, icon: "person-add", title: 'menu.subs', component: SubsPage, isRoot: true, selected: false, requireLogin: true },
+    { id: 3, icon: "heart", title: 'menu.favorites', component: FavoritesPage, isRoot: true, selected: false, requireLogin: true },
+    { id: 4, icon: "contact", title: 'menu.my-contributions', component: UserItemsPage, isRoot: false, selected: false, data: { mine: true }, requireLogin: true },
     { id: 5, icon: "search", title: 'menu.search', component: SearchPage, isRoot: true, selected: false },
   ];
   settings: UserSettings;
@@ -135,10 +137,20 @@ export class MyApp {
     }
   }
 
-  public openPage(page) {
+  public async openPage(page: MenuItem) {
     if (!page) {
       console.warn("No page. Defaulting to home.");
       page = this.pages[0];
+    }
+    if (page.requireLogin && !this.userService.loggedIn) {
+      try {
+        await this.dialogs.showLoginModal();
+      } catch (err) {
+        //Not logged in.
+        this.dialogs.showToast("error.login-required", 3000);
+        return;
+      }
+      
     }
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
@@ -268,11 +280,12 @@ export class MyApp {
 }
 
 export interface MenuItem {
-  id: number;
+  id?: number;
   title: string;
   component: any;
   data?: any;
   isRoot: boolean;
   selected: boolean;
   icon: string;
+  requireLogin?: boolean;
 }

@@ -121,12 +121,15 @@
         "dictionary": "Dictionary A-Z",
         "search": "Search",
         "favorites": "Saved tricks",
-        "subs": "Following",
+        "subs": "People following",
         "logout": "Logout",
         "support": "Support and Feedback",
         "my-contributions": "My contributions",
         "training-mode": "Training mode",
         "not-logged-in": "Not logged in"
+    },
+    "subs": {
+        "title": "People following"
     },
     "favorites": {
         "title": "My Favorites"
@@ -254,6 +257,7 @@
         "vote": "Vote"
     },
     "error": {
+        "login-required": "You need to log in for that.",
         "login-required-to-post": "You can only add tricks if you are logged in.",
         "login-required-to-love": "You have to log in before you can do that!",
         "login-required-to-follow": "You have to log in before you can follow other users!",

@@ -4,4 +4,5 @@ export interface Author {
     contribCount: number;
     stub?: string;
     following?: boolean;
+    followers: number;
 }

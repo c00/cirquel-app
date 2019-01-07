@@ -1,6 +1,17 @@
 <div class="author-image" [style.background-image]="getImage(author?.imgBase)"></div>
 <h3>{{author?.userName}}</h3>
-<h4>{{ 'user.contributions' | translate }} <ion-badge>{{ author?.contribCount }}</ion-badge></h4>
+<ion-row>
+  <ion-col text-center>
+    {{ 'user.contributions' | translate }} <ion-badge>{{ author?.contribCount }}</ion-badge>
+  </ion-col>
+  <ion-col text-center>
+    {{ 'user.followers' | translate }} <ion-badge>{{ author?.followers }}</ion-badge>
+  </ion-col>
+</ion-row>
+<!-- <h4>
+  {{ 'user.contributions' | translate }} <ion-badge>{{ author?.contribCount }}</ion-badge>
+  {{ 'user.followers' | translate }} <ion-badge>{{ author?.followers }}</ion-badge>
+</h4> -->
 <ion-row *ngIf="author && !isMe">
   <ion-col text-left>
     <follow-button buttonStyle="full" [author]="author"></follow-button>

@@ -1,6 +1,7 @@
 export const PushType = {
   LOVE: 'love',
-  FOLLOW: 'follow'
+  FOLLOW: 'follow',
+  TYPE_NEW_ITEM_FROM_SUB: 'new-from-sub'
 }
 
 export interface PushNotification {

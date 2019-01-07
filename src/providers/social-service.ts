@@ -62,6 +62,13 @@ export class SocialService {
 
   private async subscribe(userName: string) {
     const response = await this.api.post('u/follow', { userName });
+
+    const sub = this.cache.userSubscriptions.find(s => s.followee.userName === userName);
+    if (sub) {
+      console.warn("That's weird, we already have that sub... Not adding it again!");
+      return;
+    }
+    
     this.cache.userSubscriptions.push(response.sub);
   }
 

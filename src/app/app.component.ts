@@ -220,13 +220,12 @@ export class MyApp {
       .subscribe((n: PushNotification) => {
 
         if (!n.tap) {
-          this.showNotificationToast(n)
-          console.log(n);
+          this.showNotificationToast(n);
           return;
         }
 
         //Navigate to the correct page
-        if (n.type = PushType.LOVE) {
+        if (n.type === PushType.LOVE) {
           this.dialogs.showLoader();
           this.items.getItem(n.itemId)
             .then((item) => {
@@ -237,6 +236,20 @@ export class MyApp {
               this.dialogs.dismissLoader();
               throw err;
             });
+        } else if (n.type === PushType.TYPE_NEW_ITEM_FROM_SUB) {
+          console.log(n);
+          this.dialogs.showLoader();
+          this.items.getItem(n.itemId)
+            .then((item) => {
+              this.dialogs.dismissLoader();
+              this.nav.push(ItemDetailPage, { item })
+            })
+            .catch((err) => {
+              this.dialogs.dismissLoader();
+              throw err;
+            });
+        } else {
+          console.warn("Unknown notification type", n)
         }
 
         //Else

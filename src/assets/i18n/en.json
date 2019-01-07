@@ -41,6 +41,7 @@
         "unfollow-ok": "Unfollow",
         "unfollow-cancel": "Keep following",
         "contributions": "Tricks:",
+        "followers": "Followers:",
         "follow-button": "Follow",
         "following-button": "Following",
         "coming-soon-message": "Following and messaging are still under development, but should be added shortly! Sorry about that!",
@@ -282,7 +283,8 @@
     },
     "notification": {
         "toast": {
-            "love": "{{userName}} just loved your trick '{{trickName}}!'"
+            "love": "{{userName}} just loved your trick '{{trickName}}!'",
+            "new-from-sub": "{{userName}} just posted a new trick called {{trickName}}!"
         }
     },
     "subs-banner": {

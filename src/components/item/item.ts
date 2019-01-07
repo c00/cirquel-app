@@ -42,7 +42,7 @@ export class ItemComponent implements OnChanges {
     }
 
     public ngOnChanges() {
-      if (this.item) this.social.setFollowing(this.item.author);
+      //if (this.item) this.social.setFollowing(this.item.author);
     }
     
     public toAuthor() {
@@ -108,18 +108,6 @@ export class ItemComponent implements OnChanges {
       this.navCtrl.push(ItemDetailPage, {item: this.item});
 
       //todo find out if we are at root, and if not, pop before pushing.
-    }
-
-    public async follow() {
-      this.dialogs.showToast('user.follow-toast', 4000, {user: this.item.author.userName});
-      this.item.author.following = true;
-      try {
-        await this.social.follow(this.item.author.userName, true);
-      } catch (err) {
-        this.dialogs.showToast('user.follow-error-toast', 2500, {user: this.item.author.userName});
-        this.item.author.following = false;
-        throw err;
-      }  
     }
     
     public voteDialog() {

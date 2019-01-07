@@ -29,7 +29,6 @@ export class UserCardComponent implements OnChanges {
   }
 
   public ngOnChanges() {
-    console.log(this.author);
     if (this.author) {
       this.author.following = this.social.isFollowing(this.author.userName);
       this.isMe = (this.author.userName === this.userService.user.userName);
@@ -47,24 +46,6 @@ export class UserCardComponent implements OnChanges {
 
   public comingSoon() {
     this.dialogs.showAlert('user.coming-soon-message', 'user.coming-soon-title');
-  }
-
-  public async follow() {
-    const oldState = this.author.following;
-    const newState = !oldState;
-
-    if (!newState) {
-      const result = await this.dialogs.showConfirm('user.unfollow-confirm-message', 'user.unfollow-confirm', 'user.unfollow-ok', 'user.unfollow-cancel', {name: this.author.userName});
-      if (!result) return;
-    }
-
-    this.author.following = newState;
-    try {
-      await this.social.follow(this.author.userName, newState);
-    } catch (err) {
-      this.author.following = oldState;
-      throw err;
-    }  
   }
 
   public share() {

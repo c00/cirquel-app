@@ -3,11 +3,8 @@
 <h4>{{ 'user.contributions' | translate }} <ion-badge>{{ author?.contribCount }}</ion-badge></h4>
 <ion-row *ngIf="author && !isMe">
   <ion-col text-left>
-    <button (click)="follow()" ion-button round icon-left outline color="primary">
-      <ion-icon name="person-add"></ion-icon> 
-      <span *ngIf="!author?.following">{{ 'user.follow-button' | translate }}</span>
-      <span *ngIf="author?.following">{{ 'user.following-button' | translate }}</span>
-    </button>
+    <follow-button buttonStyle="full" [author]="author"></follow-button>
+    
   </ion-col>
   <ion-col text-right>
     <button (click)="comingSoon()" ion-button outline round icon-only color="grey2">

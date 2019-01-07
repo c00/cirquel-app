@@ -18,9 +18,7 @@
         </div>
         <span>{{ item.author.userName }}</span>
         <span *ngIf="item.venue">@ {{item.venue.name}}</span>
-        <button *ngIf="!item.author.following" class="button" (click)="follow()" ion-button round icon-only clear color="secondary" class="float-right">
-          <ion-icon name="person-add"></ion-icon>
-        </button>
+        <follow-button [author]="item.author"></follow-button>
 
       </h3>
 

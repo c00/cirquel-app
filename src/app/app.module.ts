@@ -72,6 +72,7 @@ import { SocialService } from '../providers/social-service';
 import { Cache } from '../providers/cache';
 import { SubsBannerComponent } from '../components/subs-banner/subs-banner';
 import { AvatarComponent } from '../components/avatar/avatar';
+import { FollowButtonComponent } from '../components/follow-button/follow-button';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -116,6 +117,7 @@ export function createTranslateLoader(http: HttpClient) {
     SearchValueComponent,
     SubsBannerComponent,
     AvatarComponent,
+    FollowButtonComponent,
     VoteModalComponent,
   ],
   imports: [

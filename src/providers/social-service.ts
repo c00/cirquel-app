@@ -37,14 +37,27 @@ export class SocialService {
     } catch (err) {
       //not logged in
       this.dialogs.showToast("error.login-required-to-follow", 3000);
-      return;
+      throw err;
     }
 
-    if (newState) {
-      await this.subscribe(userName);
-    } else {
-      await this.unsubscribe(userName);
+    //Are you sure?
+    if (!newState) {
+      const result = await this.dialogs.showConfirm('user.unfollow-confirm-message', 'user.unfollow-confirm', 'user.unfollow-ok', 'user.unfollow-cancel', {name: userName});
+      if (!result) return true;
     }
+
+    try {
+      if (newState) {
+        this.dialogs.showToast('user.follow-toast', 4000, {user: userName});
+        await this.subscribe(userName);
+      } else {
+        await this.unsubscribe(userName);
+      }
+    } catch (err) {
+      this.dialogs.showToast('user.follow-error-toast', 2500, {user: userName});
+      throw err;
+    }
+    return newState;    
   }
 
   private async subscribe(userName: string) {

@@ -1,24 +1,23 @@
 import { Component } from '@angular/core';
-import { ModalController, NavController, NavParams, InfiniteScroll } from 'ionic-angular';
+import { ENV } from '@app/env';
+import { SocialSharing } from '@ionic-native/social-sharing';
+import { TranslateService } from '@ngx-translate/core';
+import { InfiniteScroll, ModalController, NavController, NavParams } from 'ionic-angular';
+import { Search } from 'model/Search';
+import { UserSettings } from 'model/UserSettings';
 
+import { ContextMenuItem } from '../../components/context-menu/context-menu';
+import { SupportModalComponent } from '../../components/support-modal/support-modal';
 import { VoteModalComponent } from '../../components/vote-modal/vote-modal';
 import { VoteOptions } from '../../components/vote/vote';
-import { Item, ItemName, VoteInfo, ItemInfo } from '../../model/Item';
+import { CategoryHelper } from '../../model/Category';
+import { Item, ItemInfo, ItemName, VoteInfo } from '../../model/Item';
+import { PageState } from '../../model/PageState';
+import { UserItemsPage } from '../../pages/user-items/user-items';
 import { DialogService } from '../../providers/dialogs';
 import { ItemService } from '../../providers/item-service';
 import { UserService } from '../../providers/user-service';
-import { UserItemsPage } from '../../pages/user-items/user-items';
 import { UserSettingsProvider } from '../../providers/user-settings';
-import { UserSettings } from 'model/UserSettings';
-import { PageState } from '../../model/PageState';
-import { Search } from 'model/Search';
-import { CategoryHelper } from '../../model/Category';
-import { ENV } from '@app/env';
-import { ContextMenuItem } from '../../components/context-menu/context-menu';
-import { SupportModalComponent } from '../../components/support-modal/support-modal';
-import { TranslateService } from '@ngx-translate/core';
-import { SocialSharing } from '@ionic-native/social-sharing';
-import { SocialService } from '../../providers/social-service';
 
 @Component({
   selector: 'page-item-detail',
@@ -56,7 +55,6 @@ export class ItemDetailPage {
     private translate: TranslateService,
     private sharing: SocialSharing,
     private settingsProvider: UserSettingsProvider,
-    private social: SocialService,
   ) {
     this.item = navParams.get('item');
     this.settingsProvider.get().then(s => this.settings = s);
@@ -226,17 +224,6 @@ export class ItemDetailPage {
       .catch(() => {
         this.dialogs.showToast("error.login-required-to-love", 3000);
       });
-  }
-  public async follow() {
-    this.dialogs.showToast('user.follow-toast', 4000, {user: this.item.author.userName});
-    this.item.author.following = true;
-    try {
-      await this.social.follow(this.item.author.userName, true);
-    } catch (err) {
-      this.dialogs.showToast('user.follow-error-toast', 2500, {user: this.item.author.userName});
-      this.item.author.following = false;
-      throw err;
-    }  
   }
 
   public voteFor(type) {

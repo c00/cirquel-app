@@ -25,6 +25,7 @@ import { PushService } from '../providers/push-service';
 import { UserService } from '../providers/user-service';
 import { UserSettingsProvider } from '../providers/user-settings';
 import { SubsPage } from '../pages/subs/subs';
+import { ForgotPasswordModalComponent } from '../components/forgot-password-modal/forgot-password-modal';
 
 @Component({
   templateUrl: 'app.html'

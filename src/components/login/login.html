@@ -4,26 +4,32 @@
 
 <form [formGroup]="form" (ngSubmit)="login()">
   <ion-list>
-    
+
     <ion-item class="input-with-icon">
       <ion-icon color="grey2" bottom name="mail" item-start></ion-icon>
       <ion-input type="email" [placeholder]="'form.email' | translate" formControlName="email"></ion-input>
     </ion-item>
-    
+
     <ion-item class="input-with-icon">
       <ion-icon color="grey2" bottom name="star-outline" item-start></ion-icon>
       <ion-input clearOnEdit="false" [placeholder]="'form.password' | translate" type="password" formControlName="password"></ion-input>
     </ion-item>
-    
+
     <ion-item class="validation-text" *ngIf="passwordError">
       {{'form.password-error' | translate}}
     </ion-item>
-    
+
   </ion-list>
-  
+
   <button round type="submit" ion-button block [disabled]="form.invalid">
-    Login
+    {{'form.login-button' | translate}}
   </button>
   <hr>
-  <button round type="button" color="secondary" ion-button block (click)="goSignup()">Signup</button>
+  <button round type="button" color="secondary" ion-button block (click)="goSignup()">
+    {{'form.to-signup-button' | translate}}
+  </button>
 </form>
+
+<div text-right>
+  <a class="forgot-password-link" (click)="resetPassword()">{{'form.forgot-password' | translate }}</a>
+</div>

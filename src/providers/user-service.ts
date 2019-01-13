@@ -141,6 +141,10 @@ export class UserService {
     return res.user;
   }
 
+  public async requestPasswordReset(email: string) {
+    return this.api.post('password-reset-token', { email });
+  }
+
   public sendSupport(request: SupportRequest) {
     return this.api.post('support', request);
   }

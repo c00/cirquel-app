@@ -2,6 +2,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import * as zxcvbn from 'zxcvbn';
 import { UserService } from '../../providers/user-service';
+import { ModalController } from 'ionic-angular';
+import { ForgotPasswordModalComponent } from '../forgot-password-modal/forgot-password-modal';
 
 @Component({
   selector: 'signup',
@@ -18,6 +20,7 @@ export class SignupComponent {
   constructor(
     formBuilder: FormBuilder,
     private userService: UserService,
+    private modalCtrl: ModalController,
   ) {
     this.form = formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -53,13 +56,18 @@ export class SignupComponent {
       this.done.emit(user);
     })
     .catch(err => {
-      this.apiError = "form." + err.data.reason;
+      this.apiError = err.data.reason;
       console.error(err);
     });
   }
   
   public goLogin(){
     this.toLogin.emit();
+  }
+
+  public resetPassword() {
+    const modal = this.modalCtrl.create(ForgotPasswordModalComponent);
+    modal.present();
   }
   
 }

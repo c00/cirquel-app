@@ -1,7 +1,9 @@
 signup {
     .validation-text {
         color: color($colors, 'danger');
+        
+        ion-icon[item-start] + .item-inner {
+            margin-left: 0
+        }
     }
-
-
 }

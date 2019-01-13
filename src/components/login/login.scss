@@ -2,4 +2,11 @@ login {
     .validation-text {
         color: color($colors, 'danger');
     }
+
+    .forgot-password-link {
+        padding: 12px;
+        margin-top: 8px;
+        font-size: .7em;
+        display: inline-block;
+    }
 }

@@ -181,7 +181,19 @@
         "weak-password": "Your password is too weak. Think outside the box.",
         "password-mismatch": "The passwords don't match.",
         "name-taken": "That name is already in use.",
-        "email-taken": "That email address is already registered."
+        "email-taken": "That email address is already registered.",
+        "forgot-password": "Forgot password?",
+        "reset-button": "Reset password",
+        "signup-button": "Sign up",
+        "to-signup-button": "Sign up",
+        "login-button": "Login",
+        "back-button": "Back"
+    },
+    "forgot-password-modal": {
+        "title": "Reset password",
+        "submit": "Submit",
+        "sent-message": "An email is on its way to you! Check your email inbox.",
+        "explanation": "Fill out your email below and we will send you a link to reset your password!"
     },
     "home": {
         "title": "Home",

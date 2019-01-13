@@ -74,6 +74,7 @@ import { SubsBannerComponent } from '../components/subs-banner/subs-banner';
 import { AvatarComponent } from '../components/avatar/avatar';
 import { FollowButtonComponent } from '../components/follow-button/follow-button';
 import { SubsPage } from '../pages/subs/subs';
+import { ForgotPasswordModalComponent } from '../components/forgot-password-modal/forgot-password-modal';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -115,6 +116,7 @@ export function createTranslateLoader(http: HttpClient) {
     SelectCategoryModalComponent,
     SupportModalComponent,
     AgreementModalComponent,
+    ForgotPasswordModalComponent,
     OtherNameModalComponent,
     SearchValueComponent,
     SubsBannerComponent,
@@ -151,6 +153,7 @@ export function createTranslateLoader(http: HttpClient) {
     ProfilePage,
     SearchPage,
     AddItemPage,
+    ForgotPasswordModalComponent,
     DictionaryPage,
     FavoritesPage,
     SubsPage,

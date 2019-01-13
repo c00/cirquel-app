@@ -31,7 +31,7 @@ export class ItemService {
   public searchValue(q: string, on: string) {
     q = encodeURIComponent(q.trim());
     const urls = {
-      name: "u/trick-name",
+      name: "trick-name",
       variation: "u/variation",
       venue: "venue-name",
     };

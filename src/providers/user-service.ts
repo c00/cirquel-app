@@ -12,6 +12,7 @@ import { SupportRequest } from 'model/SupportRequest';
 import { PushService } from './push-service';
 import { SessionResult } from '../model/ApiResult';
 import { Cache } from './cache';
+import { UserSettingsProvider } from './user-settings';
 
 @Injectable()
 export class UserService {
@@ -27,6 +28,7 @@ export class UserService {
     private store: Store,
     private push: PushService,
     private platform: Platform,
+    private usProvider: UserSettingsProvider,
   ) {
     this.platform.ready()
       .then(() => this.init());
@@ -76,6 +78,9 @@ export class UserService {
           //User is not verified.
           console.warn(res);
 
+          //Set lastPageId to recent if the session is expired/invalid.
+          if (res === 401) this.usProvider.set('lastPageId', 1);
+
           //Don't reject the promise, the promise only cares whether the checking process is complete.
         });
     }
@@ -93,21 +98,19 @@ export class UserService {
     return Promise.reject("not_logged_in");
   }
 
-  private checkSession(): Promise<any> {
-    return this.api.get('check-session\\' + this.user.session.token)
-      .then((res) => {
-        this.processUserResponse(res);
-        return res;
-      })
-      .catch(error => {
-        const code = (error && error.statusCode) ? error.statusCode : 999;
-
-        if (code === 401) {
-          this.logout();
-        }
-
-        return Promise.reject(code);
-      });
+  private async checkSession(): Promise<any> {
+    try {
+      const res = await this.api.get('check-session\\' + this.user.session.token);
+      this.processUserResponse(res);
+      return res;
+    }
+    catch (error) {
+      const code = (error && error.statusCode) ? error.statusCode : 999;
+      if (code === 401) {
+        this.logout();
+      }
+      return Promise.reject(code);
+    }
   }
 
   public logout(): Promise<any> {

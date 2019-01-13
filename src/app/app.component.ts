@@ -18,14 +18,13 @@ import { HomePage } from '../pages/home/home';
 import { ItemDetailPage } from '../pages/item-detail/item-detail';
 import { ProfilePage } from '../pages/profile/profile';
 import { SearchPage } from '../pages/search/search';
+import { SubsPage } from '../pages/subs/subs';
 import { UserItemsPage } from '../pages/user-items/user-items';
 import { DialogService } from '../providers/dialogs';
 import { ItemService } from '../providers/item-service';
 import { PushService } from '../providers/push-service';
 import { UserService } from '../providers/user-service';
 import { UserSettingsProvider } from '../providers/user-settings';
-import { SubsPage } from '../pages/subs/subs';
-import { ForgotPasswordModalComponent } from '../components/forgot-password-modal/forgot-password-modal';
 
 @Component({
   templateUrl: 'app.html'

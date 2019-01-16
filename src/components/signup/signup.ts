@@ -56,8 +56,8 @@ export class SignupComponent {
       this.done.emit(user);
     })
     .catch(err => {
-      this.apiError = err.data.reason;
       console.error(err);
+      this.apiError = err.data.reason;
     });
   }
   

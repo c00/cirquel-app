@@ -12,6 +12,7 @@ export class CategoryHelper {
         { name: 'acro',    icon: 'acro.svg',    color: '#FF5722', },
         { name: 'cali',    icon: 'cali.svg',    color: '#3F51B5', },
         { name: 'pole',    icon: 'pole.svg',    color: '#4CAF50', },
+        /* { name: 'hammocks',    icon: 'all.svg',    color: '#ffc107', }, */
     ];
 
     static all: Category = { name: 'all', icon: 'all.svg', color: '#2196F3', };

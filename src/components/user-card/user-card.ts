@@ -28,7 +28,7 @@ export class UserCardComponent implements OnChanges {
 
   public ngOnChanges() {
     if (this.author) {
-      this.isMe = (this.author.userName === this.userService.user.userName);
+      this.isMe = (this.userService.user && this.author.userName === this.userService.user.userName);
     }
   }
 

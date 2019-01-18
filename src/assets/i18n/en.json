@@ -9,6 +9,9 @@
         "acro": "Acro balance",
         "cali": "Calisthenics",
         "pole": "Pole",
+        "hammocks": "Aerial Hammocks",
+        "straps": "Aerial Straps",
+        "chains" : "Aerial Chains",
         "all": "All sports"
     },
     "skill-level": {

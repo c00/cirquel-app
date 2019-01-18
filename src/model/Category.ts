@@ -12,7 +12,9 @@ export class CategoryHelper {
         { name: 'acro',    icon: 'acro.svg',    color: '#FF5722', },
         { name: 'cali',    icon: 'cali.svg',    color: '#3F51B5', },
         { name: 'pole',    icon: 'pole.svg',    color: '#4CAF50', },
-        /* { name: 'hammocks',    icon: 'all.svg',    color: '#ffc107', }, */
+        { name: 'hammocks',    icon: 'hammock.svg',    color: '#FFC107', },
+        { name: 'straps',    icon: 'straps.svg',    color: '#00BCD4', },
+        { name: 'chains',    icon: 'chains.svg',    color: '#455A64', },
     ];
 
     static all: Category = { name: 'all', icon: 'all.svg', color: '#2196F3', };

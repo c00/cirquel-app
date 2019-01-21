@@ -15,6 +15,7 @@ export class CategoryHelper {
         { name: 'hammocks',    icon: 'hammock.svg',    color: '#FFC107', },
         { name: 'straps',    icon: 'straps.svg',    color: '#00BCD4', },
         { name: 'chains',    icon: 'chains.svg',    color: '#455A64', },
+        { name: 'exercises',    icon: 'exercises.svg',    color: '#607D8B', },
     ];
 
     static all: Category = { name: 'all', icon: 'all.svg', color: '#2196F3', };

@@ -17,7 +17,7 @@ export class PushService {
   tokenRefresh: Subscription;
   notificationOpen: Subscription;
   lastTokenSent: string;
-  updates = new EventEmitter<PushNotification>();
+  updates = new EventEmitter<PushNotification>(); 
 
   constructor(
     private zone: NgZone,
@@ -54,6 +54,7 @@ export class PushService {
 
     //New notifications
     this.notificationOpen = this.fb.onNotificationOpen().subscribe((n) => {
+      this.fb.setBadgeNumber(0);
       this.zone.run(() => {
         this.updates.emit(n);
       });

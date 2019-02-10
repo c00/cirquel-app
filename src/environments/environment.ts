@@ -4,5 +4,5 @@ export const ENV: Environment = {
     mode: 'Production',
     api: 'https://api.cirquelapp.com/',
     itemImgRoot: 'https://images.cirquelapp.com/',
-    shareRoot: 'https://library.cirquelapp.com/'
+    shareRoot: 'https://cirquelapp.com/'
 }

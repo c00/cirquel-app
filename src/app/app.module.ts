@@ -20,7 +20,6 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { InlineSVGModule } from 'ng-inline-svg';
-import { MarkdownModule } from 'ngx-markdown';
 
 import { AgreementModalComponent } from '../components/agreement-modal/agreement-modal';
 import { AnnouncementModalComponent } from '../components/announcement-modal/announcement-modal';
@@ -152,7 +151,6 @@ const PAGES_AND_MODALS = [
     }),
     IonicStorageModule.forRoot(),
     ReactiveFormsModule,
-    MarkdownModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -13,7 +13,8 @@
 
 </ion-header>
 <ion-content padding>
-  <markdown [data]="a.content"></markdown>
+  <!-- {{a.content}} -->
+  <div [innerHtml]="getContent()"></div>
 </ion-content>
 <ion-footer>
   <button ion-button color="secondary" block (click)="close()">{{ 'announcement.close-button' | translate }}</button>

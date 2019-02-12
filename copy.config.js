@@ -22,5 +22,9 @@ module.exports = {
     copyVideoJs: {
       src: ['{{ROOT}}/node_modules/shaka-player/dist/shaka-player.compiled.js', '{{ROOT}}/node_modules/shaka-player/dist/shaka-player.compiled.map' ],
       dest: '{{BUILD}}'
+    },
+    copyMarkdownLib: {
+      src: ['{{ROOT}}/node_modules/marked/lib/marked.js'],
+      dest: '{{BUILD}}'
     }
   }

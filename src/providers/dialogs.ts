@@ -226,9 +226,7 @@ export class DialogService {
       let modal = this.modalCtrl.create(LoginModalComponent); 
       
       modal.onDidDismiss((user: User) => { 
-        console.log("modal dismissed");
         if (user) return resolve(user); 
-        
         return reject(); 
       }); 
       

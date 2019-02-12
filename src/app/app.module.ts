@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppVersion } from '@ionic-native/app-version';
 import { Camera } from '@ionic-native/camera';
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { File } from '@ionic-native/file';
@@ -19,11 +20,16 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { InlineSVGModule } from 'ng-inline-svg';
+import { MarkdownModule } from 'ngx-markdown';
 
 import { AgreementModalComponent } from '../components/agreement-modal/agreement-modal';
+import { AnnouncementModalComponent } from '../components/announcement-modal/announcement-modal';
+import { AvatarComponent } from '../components/avatar/avatar';
 import { ContextMenuComponent } from '../components/context-menu/context-menu';
 import { EmptyPlaceholderComponent } from '../components/empty-placeholder/empty-placeholder';
 import { EndOfStreamComponent } from '../components/end-of-stream/end-of-stream';
+import { FollowButtonComponent } from '../components/follow-button/follow-button';
+import { ForgotPasswordModalComponent } from '../components/forgot-password-modal/forgot-password-modal';
 import { GrowChildComponent } from '../components/grow-child/grow-child';
 import { GrowerComponent } from '../components/grower/grower';
 import { ItemListComponent } from '../components/item-list/item-list';
@@ -37,6 +43,7 @@ import { SearchSummaryComponent } from '../components/search-summary/search-summ
 import { SearchValueComponent } from '../components/search-value/search-value';
 import { SelectCategoryModalComponent } from '../components/select-category-modal/select-category-modal';
 import { SignupComponent } from '../components/signup/signup';
+import { SubsBannerComponent } from '../components/subs-banner/subs-banner';
 import { SupportModalComponent } from '../components/support-modal/support-modal';
 import { UploadProgressComponent } from '../components/upload-progress/upload-progress';
 import { UserCardComponent } from '../components/user-card/user-card';
@@ -52,47 +59,54 @@ import { ItemDetailPage } from '../pages/item-detail/item-detail';
 import { ListPage } from '../pages/list/list';
 import { ProfilePage } from '../pages/profile/profile';
 import { SearchPage } from '../pages/search/search';
+import { SubsPage } from '../pages/subs/subs';
 import { UserItemsPage } from '../pages/user-items/user-items';
 import { ImagePipe } from '../pipes/image/image';
 import { TimePipe } from '../pipes/time/time';
+import { AnnouncementService } from '../providers/announcement-service';
 import { ApiProvider } from '../providers/api';
+import { Cache } from '../providers/cache';
 import { DialogService } from '../providers/dialogs';
 import { ItemService } from '../providers/item-service';
 import { NativeImageProvider } from '../providers/native-image';
+import { PushService } from '../providers/push-service';
 import { ResourceService } from '../providers/resource-service';
+import { SocialService } from '../providers/social-service';
 import { Store } from '../providers/store';
 import { UploadProvider } from '../providers/upload';
 import { UserService } from '../providers/user-service';
 import { UserSettingsProvider } from '../providers/user-settings';
 import { VideoService } from '../providers/video-service';
 import { MyApp } from './app.component';
-import { PushService } from '../providers/push-service';
-import { AppVersion } from '@ionic-native/app-version';
-import { SocialService } from '../providers/social-service';
-import { Cache } from '../providers/cache';
-import { SubsBannerComponent } from '../components/subs-banner/subs-banner';
-import { AvatarComponent } from '../components/avatar/avatar';
-import { FollowButtonComponent } from '../components/follow-button/follow-button';
-import { SubsPage } from '../pages/subs/subs';
-import { ForgotPasswordModalComponent } from '../components/forgot-password-modal/forgot-password-modal';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
+const PAGES_AND_MODALS = [
+  HomePage,
+  ListPage,
+  ProfilePage,
+  SearchPage,
+  SubsPage,
+  AddItemPage,
+  DictionaryPage,
+  FavoritesPage,
+  ItemDetailPage,
+  UserItemsPage,
+  LoginModalComponent,
+  SelectCategoryModalComponent,
+  SupportModalComponent,
+  AgreementModalComponent,
+  ForgotPasswordModalComponent,
+  OtherNameModalComponent,
+  VoteModalComponent,
+  AnnouncementModalComponent,
+];
+
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    ListPage,
-    ProfilePage,
-    SearchPage,
-    SubsPage,
-    AddItemPage,
-    DictionaryPage,
-    FavoritesPage,
-    ItemDetailPage,
-    UserItemsPage,
     ItemComponent,
     ItemListComponent,
     SearchSummaryComponent,
@@ -112,17 +126,11 @@ export function createTranslateLoader(http: HttpClient) {
     UploadProgressComponent,
     LoginComponent,
     SignupComponent,
-    LoginModalComponent,
-    SelectCategoryModalComponent,
-    SupportModalComponent,
-    AgreementModalComponent,
-    ForgotPasswordModalComponent,
-    OtherNameModalComponent,
     SearchValueComponent,
     SubsBannerComponent,
     AvatarComponent,
     FollowButtonComponent,
-    VoteModalComponent,
+    ...PAGES_AND_MODALS
   ],
   imports: [
     BrowserModule,
@@ -143,35 +151,20 @@ export function createTranslateLoader(http: HttpClient) {
       }
     }),
     IonicStorageModule.forRoot(),
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
+    MarkdownModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    ListPage,
-    ProfilePage,
-    SearchPage,
-    AddItemPage,
-    ForgotPasswordModalComponent,
-    DictionaryPage,
-    FavoritesPage,
-    SubsPage,
-    ItemDetailPage,
-    UserItemsPage,
-    LoginModalComponent,
-    SelectCategoryModalComponent,
-    SupportModalComponent,
-    AgreementModalComponent,
-    OtherNameModalComponent,
     SearchValueComponent,
-    VoteModalComponent,
     ContextMenuComponent,
+    ...PAGES_AND_MODALS,
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     ApiProvider,
     DialogService,
     FileTransfer,
@@ -185,6 +178,7 @@ export function createTranslateLoader(http: HttpClient) {
     NativeImageProvider,
     VideoEditor,
     VideoService,
+    AnnouncementService,
     File,
     Network,
     Deeplinks,
@@ -196,4 +190,4 @@ export function createTranslateLoader(http: HttpClient) {
     AppVersion,
   ]
 })
-export class AppModule {}
+export class AppModule { }

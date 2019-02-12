@@ -25,6 +25,8 @@ import { ItemService } from '../providers/item-service';
 import { PushService } from '../providers/push-service';
 import { UserService } from '../providers/user-service';
 import { UserSettingsProvider } from '../providers/user-settings';
+import { AnnouncementService } from '../providers/announcement-service';
+import { AnnouncementModalComponent } from '../components/announcement-modal/announcement-modal';
 
 @Component({
   templateUrl: 'app.html'
@@ -59,6 +61,7 @@ export class MyApp {
     private deeplinks: Deeplinks,
     private dialogs: DialogService,
     private items: ItemService,
+    private as: AnnouncementService,
   ) {
     this.initializeApp();
   }
@@ -69,22 +72,28 @@ export class MyApp {
     this.initUser();
     this.setupLanguage();
     this.setupNotifications();
+    this.setupDeeplinks();
 
     this.settings = await this.userSettingsProvider.get();
-    this.initSettings();
+    await this.initSettings();
+
+    console.log("Init complete");
+    //todo add announcement modal here?
+    this.as.newAnnouncement.subscribe((announcement) => {
+      if (!announcement) return;
+
+      //Show announcement modal
+      this.modalCtrl.create(AnnouncementModalComponent, {announcement}).present();
+    })
+    
+  }
+
+  private async initSettings() {
+    //Navigate to the last opened page.
     if (this.settings.lastPageId) {
       this.openPage(this.getPage(this.settings.lastPageId));
     } else {
       this.openPage(this.getPage(1));
-    }
-
-    this.setupDeeplinks();
-  }
-
-  private initSettings() {
-    //User agreement
-    if (!this.settings.userAgreement) {
-      this.modalCtrl.create(AgreementModalComponent, {}, { enableBackdropDismiss: false }).present();
     }
 
     //Open menu
@@ -94,6 +103,17 @@ export class MyApp {
       this.userSettingsProvider.save();
     }
 
+    //Show user agreement
+    if (!this.settings.userAgreement) {
+      return new Promise((resolve, reject) => {
+        const modal = this.modalCtrl.create(AgreementModalComponent, {}, { enableBackdropDismiss: false });
+        modal.onDidDismiss(() => {
+          resolve();
+        });
+        modal.present();
+      });
+    } 
+    return;
   }
 
   private initUser() {

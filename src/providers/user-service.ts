@@ -13,6 +13,7 @@ import { PushService } from './push-service';
 import { SessionResult } from '../model/ApiResult';
 import { Cache } from './cache';
 import { UserSettingsProvider } from './user-settings';
+import { AnnouncementService } from './announcement-service';
 
 @Injectable()
 export class UserService {
@@ -28,6 +29,7 @@ export class UserService {
     private store: Store,
     private push: PushService,
     private platform: Platform,
+    private as: AnnouncementService,
     private usProvider: UserSettingsProvider,
   ) {
     this.platform.ready()
@@ -154,7 +156,8 @@ export class UserService {
     this.loggedIn = true;
     this.api.setToken(this.user.session.token);
     this.push.start();
-    this.cache.userSubscriptions = res.subscriptions;``
+    this.cache.userSubscriptions = res.subscriptions;
+    if (res.announcements) this.as.processAnouncements(res.announcements);
 
     this.saveUserToStorage(this.user);
     this.userChanged.emit(this.user);

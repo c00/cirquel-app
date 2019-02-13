@@ -1,6 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ENV } from '@app/env';
-import { Images } from '../../model/Resources';
 
 @Pipe({
   name: 'localImage',

@@ -62,7 +62,7 @@
     "marked": "^0.6.0",
     "ng-inline-svg": "6",
     "rxjs": "5.5.11",
-    "shaka-player": "^2.4.3",
+    "shaka-player": "^2.4.6",
     "sw-toolbox": "3.6.0",
     "typescript-debounce-decorator": "^0.0.17",
     "zone.js": "0.8.26",

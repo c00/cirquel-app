@@ -14,6 +14,13 @@ export class VideoPlayerComponent {
   @ViewChild('video') videoRef: ElementRef;
   videoEl: HTMLVideoElement;
   shakaPlayer; //Shaka Player, for playing DASH (no IOS)
+  shakaSettings: any = {
+    streaming: {
+      bufferingGoal: 10, //Target amount
+      rebufferingGoal: 2, //Minimum amount before play
+      bufferBehind: 30 // Amount to keep in cache.
+    }
+  };
   //Statuses
   buffering = true;
   state = 'not-started'; //not-started buffering, playing, paused, ended
@@ -28,6 +35,7 @@ export class VideoPlayerComponent {
   //For Shaka, we don't load until someone clicks the play button.
   //todo preload on wifi? Make configurable
   preloaded = false;
+  
   
   constructor(
     private rs: ResourceService,
@@ -98,18 +106,22 @@ export class VideoPlayerComponent {
   }
 
   private setupShaka() {
+    console.log("Shaka setup");
     //Setup Shaka for playing HLS and DASH
     return this.rs.ready().then(shaka => {
       // Create a Shaka Player instance.
       this.shakaPlayer = new shaka.Player(this.videoEl);
+      console.log("player", this.shakaPlayer);
+      this.shakaPlayer.configure(this.shakaSettings)
       
       // Listen for error events.
       this.shakaPlayer.addEventListener('error', (err) => console.error(err));
+      console.log(shaka);
       return shaka;
     })
     .then(() => {
       // Don't do this, because it uses up fucktons of bandwidth
-      //return this.shakaPlayer.load(this.resource.dashUri);
+      return this.shakaPlayer.load(this.resource.dashUri);
     })
     .catch((err) => {
       console.error(err);
@@ -151,7 +163,6 @@ export class VideoPlayerComponent {
     if (!this.seekState.wasPaused) this.videoEl.play();
   }
   
-
   public togglePlay() {
     //Start loading the video if we hadn't.
     if (!this.preloaded) {

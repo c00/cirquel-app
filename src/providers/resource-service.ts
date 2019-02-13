@@ -20,8 +20,9 @@ export class ResourceService {
     // So let's not bother.    
     if (!platform.is('ios')) {
       this.shakaPromise = new Promise((resolve, reject) => {
-        if (document.readyState === "complete") resolve(this.setupShaka());
-        document.addEventListener('DOMContentLoaded', () => resolve(this.setupShaka()) );
+        platform.ready().then(() => {
+          resolve(this.setupShaka());
+        })
       });
     } else {
       this.shakaPromise = Promise.resolve();

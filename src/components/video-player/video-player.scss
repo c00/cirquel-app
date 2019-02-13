@@ -1,6 +1,10 @@
 video-player {
     position: relative;
     display: block;
+
+    .range-md.range-disabled .range-knob {
+        outline: none;
+    }
     
     .video-container {
         position: relative;

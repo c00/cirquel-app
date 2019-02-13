@@ -77,8 +77,6 @@ export class MyApp {
     this.settings = await this.userSettingsProvider.get();
     await this.initSettings();
 
-    console.log("Init complete");
-    //todo add announcement modal here?
     this.as.newAnnouncement.subscribe((announcement) => {
       if (!announcement) return;
 

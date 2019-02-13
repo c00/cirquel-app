@@ -106,17 +106,14 @@ export class VideoPlayerComponent {
   }
 
   private setupShaka() {
-    console.log("Shaka setup");
     //Setup Shaka for playing HLS and DASH
     return this.rs.ready().then(shaka => {
       // Create a Shaka Player instance.
       this.shakaPlayer = new shaka.Player(this.videoEl);
-      console.log("player", this.shakaPlayer);
       this.shakaPlayer.configure(this.shakaSettings)
       
       // Listen for error events.
       this.shakaPlayer.addEventListener('error', (err) => console.error(err));
-      console.log(shaka);
       return shaka;
     })
     .then(() => {

@@ -71,22 +71,22 @@ export class PushService {
     this.lastTokenSent = null;
     if (this.notificationOpen) this.notificationOpen.unsubscribe();
     if (this.tokenRefresh) this.tokenRefresh.unsubscribe();
-    await this.fb.unregister();
+    
   }
 
-  private checkPermissions(): Promise<any> {
-    if (!this.platform.is('ios')) return Promise.resolve();
+  private async checkPermissions(): Promise<any> {
+    if (!this.platform.is('ios')) return;
 
-    return this.fb.hasPermission()
-      .then((data) => {
-        if (!data.isEnabled) {
-          return this.fb.grantPermission();
-        }
-      })
-      .catch((err) => {
-        console.log("Something went wrong trying to get permissions for push notifications.");
-        throw err;
-      });
+    try {
+      const data = await this.fb.hasPermission();
+      if (!data.isEnabled) {
+        return this.fb.grantPermission();
+      }
+    }
+    catch (err) {
+      console.log("Something went wrong trying to get permissions for push notifications.");
+      throw err;
+    }
   }
 
   private sendToken(token: string) {

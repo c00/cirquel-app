@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { TranslateService } from '@ngx-translate/core';
-import { NavController, NavParams, normalizeURL } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { Subscription } from 'rxjs';
 
 import { ContextMenuItem } from '../../components/context-menu/context-menu';
 import { ENV } from '../../environments/environment';
 import { User } from '../../model/User';
 import { ImagePipe } from '../../pipes/image/image';
+import { LocalImagePipe } from '../../pipes/image/localImage';
 import { DialogService } from '../../providers/dialogs';
 import { NativeImageProvider } from '../../providers/native-image';
 import { UserService } from '../../providers/user-service';
@@ -81,7 +82,8 @@ export class ProfilePage {
       url = this.form.get('imgUri').value;
       
       //Fix for IOS file url stuff
-      url = normalizeURL(url);
+      const li = new LocalImagePipe();
+      url = li.transform(url);
   
     } else if (this.form.get('imgBase').value) {
       const p = new ImagePipe();

@@ -12,7 +12,7 @@
     <ion-card [ngClass]="{ 'media-missing': form.get('resourceLink').invalid }">
       <a (click)="showMediaSheet()">
         <img class="placeholder" [src]="getIcon()" *ngIf="form.get('resourceLink').invalid">
-        <img [src]="getImage()" *ngIf="form.get('resourceLink').valid">
+        <img [src]="this.form.get('resourceLink').value | localImage" *ngIf="form.get('resourceLink').valid">
       </a>
     </ion-card>
     

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalController, NavController, NavParams, normalizeURL } from 'ionic-angular';
+import { ModalController, NavController, NavParams } from 'ionic-angular';
 import { Subscription } from 'rxjs';
 
 import { ContextMenuItem } from '../../components/context-menu/context-menu';
@@ -14,8 +14,8 @@ import { DialogService } from '../../providers/dialogs';
 import { ItemService } from '../../providers/item-service';
 import { NativeImageProvider } from '../../providers/native-image';
 import { UserService } from '../../providers/user-service';
-import { VideoService } from '../../providers/video-service';
 import { UserSettingsProvider } from '../../providers/user-settings';
+import { VideoService } from '../../providers/video-service';
 
 @Component({
   selector: 'page-add-item',
@@ -100,11 +100,6 @@ export class AddItemPage {
     .catch(() => {
       console.log("canceled");
     })
-  }
-  
-  public getImage() {
-    let link = this.form.get('resourceLink').value;
-    return normalizeURL(link);
   }
   
   private getPicture(type: string, fromCamera: boolean) {

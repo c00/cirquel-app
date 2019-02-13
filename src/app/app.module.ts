@@ -77,6 +77,7 @@ import { UserService } from '../providers/user-service';
 import { UserSettingsProvider } from '../providers/user-settings';
 import { VideoService } from '../providers/video-service';
 import { MyApp } from './app.component';
+import { LocalImagePipe } from '../pipes/image/localImage';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -113,6 +114,7 @@ const PAGES_AND_MODALS = [
     UserCardComponent,
     ImagePipe,
     TimePipe,
+    LocalImagePipe,
     ContextMenuComponent,
     EmptyPlaceholderComponent,
     EndOfStreamComponent,

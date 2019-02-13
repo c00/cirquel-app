@@ -78,6 +78,7 @@ import { UserSettingsProvider } from '../providers/user-settings';
 import { VideoService } from '../providers/video-service';
 import { MyApp } from './app.component';
 import { LocalImagePipe } from '../pipes/image/localImage';
+import { CommentComponent } from '../components/comment/comment';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -117,6 +118,7 @@ const PAGES_AND_MODALS = [
     LocalImagePipe,
     ContextMenuComponent,
     EmptyPlaceholderComponent,
+    CommentComponent,
     EndOfStreamComponent,
     VoteComponent,
     LoaderComponent,

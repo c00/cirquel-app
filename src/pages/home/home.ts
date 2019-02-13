@@ -13,6 +13,7 @@ import { UserSettingsProvider } from '../../providers/user-settings';
 import { AddItemPage } from '../add-item/add-item';
 import { SearchPage } from '../search/search';
 import { Cache } from '../../providers/cache';
+import { ItemDetailPage } from '../item-detail/item-detail';
 
 @Component({
   selector: 'page-home',
@@ -80,9 +81,8 @@ export class HomePage {
       this.state = items.length === 0 ? PageState.EMPTY : PageState.SHOWING;
 
       //DEBUG
-      //this.dialogs.showToastWithButton("Bluuuuuueee");
-      /* const item = this.items.find(i => i.id === 46);
-      this.navCtrl.push(ItemDetailPage, {item}); */
+      const item = this.items.find(i => i.id === 151);
+      this.navCtrl.push(ItemDetailPage, {item});
     })
     .catch((err) => {
       this.state = PageState.ERROR;

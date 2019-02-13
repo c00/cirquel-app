@@ -1,0 +1,29 @@
+<ion-item text-wrap class="comment">
+  <ion-avatar item-start>
+    <img [src]="comment.imgBase | image">
+  </ion-avatar>
+  <h2>{{comment.author.userName}}</h2>
+  <p>{{comment.text}} <span class="date">- {{comment.date | date}}</span></p>
+
+  <div class="bottom-row" text-right>
+    <button ion-button clear>
+      <span *ngIf="comment.loves > 0">{{comment.loves}}</span>
+      <ion-icon [style.padding-left]="comment.loves ? '.4em' : 0" *ngIf="!comment.iLoved" name="heart-outline">
+      </ion-icon>
+      <ion-icon [style.padding-left]="comment.loves ? '.4em' : 0" *ngIf="comment.iLoved" name="heart"></ion-icon>
+    </button>
+    <!-- Is top level comment? -->
+    <button *ngIf="comment.isTopLevelComment" ion-button clear icon-only>
+      <ion-icon name="ios-undo"></ion-icon>
+    </button>
+
+    <button ion-button clear icon-only (click)="openMenu($event)">
+      <ion-icon name="more"></ion-icon>
+    </button>
+  </div>
+  <div class="more-row" *ngIf="comment.commentCount > 0">
+    <button block ion-button clear>{{ 'comment.read-more' | translate : comment }}</button>
+  </div>
+
+
+</ion-item>

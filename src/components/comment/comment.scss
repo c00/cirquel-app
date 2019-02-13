@@ -1,0 +1,17 @@
+comment {
+  
+  ion-avatar {
+    align-self: flex-start;
+  }
+
+  .date {
+    font-size: .8em;
+    color: color($colors, 'lighter');
+  }
+
+  .bottom-row {
+    > * {
+      vertical-align: middle;
+    }
+  }
+}

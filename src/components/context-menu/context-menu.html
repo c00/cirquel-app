@@ -3,7 +3,7 @@
   <ion-list-header *ngIf="title">
     {{ title | translate }}
   </ion-list-header>
-  <button icon-start ion-item (click)="close(i.value)" *ngFor="let i of items"><ion-icon [name]="i.icon"></ion-icon>{{i.title | translate }}</button>
+  <button icon-start ion-item (click)="close(i.value)" *ngFor="let i of items"><ion-icon [name]="i.icon"></ion-icon> {{i.title | translate }}</button>
 
 
   <hr *ngIf="!hideCancel">

@@ -6,6 +6,10 @@
   float: right;
 }
 
+.clear {
+  clear: both;
+}
+
 .input-with-icon {
   &.item-md ion-icon[item-start] + .item-inner {
     margin-left: 0;

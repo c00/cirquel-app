@@ -59,6 +59,11 @@
     "announcement": {
         "close-button": "Close"
     },
+    "comment": {
+        "read-more": "Read {{commentCount}} more comments",
+        "downvote": "Unhelpful",
+        "report": "Report comment"
+    },
     "agreement": {
         "title": "User agreement",
         "intro": "Before using the app, you have to agree to the user agreement. Below are links to view the entire user agreement and privacy policy in detail. The important parts are as follows:",

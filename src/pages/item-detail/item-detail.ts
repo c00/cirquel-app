@@ -3,16 +3,17 @@ import { ENV } from '@app/env';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { TranslateService } from '@ngx-translate/core';
 import { InfiniteScroll, ModalController, NavController, NavParams } from 'ionic-angular';
-import { Search } from 'model/Search';
-import { UserSettings } from 'model/UserSettings';
 
 import { ContextMenuItem } from '../../components/context-menu/context-menu';
 import { SupportModalComponent } from '../../components/support-modal/support-modal';
 import { VoteModalComponent } from '../../components/vote-modal/vote-modal';
 import { VoteOptions } from '../../components/vote/vote';
 import { CategoryHelper } from '../../model/Category';
+import { Comment } from '../../model/Comment';
 import { Item, ItemInfo, ItemName, VoteInfo } from '../../model/Item';
 import { PageState } from '../../model/PageState';
+import { Search } from '../../model/Search';
+import { UserSettings } from '../../model/UserSettings';
 import { UserItemsPage } from '../../pages/user-items/user-items';
 import { DialogService } from '../../providers/dialogs';
 import { ItemService } from '../../providers/item-service';
@@ -87,15 +88,26 @@ export class ItemDetailPage {
     }
   }
 
-  private getInfo() {
-    this.itemService.getItemInfo(this.item.id)
-      .then((result: ItemInfo) => {
-        this.item.loveAuthors = result.loveAuthors;
-        if (result.votes) {
-          this.votes = result.votes;
-          this.askRandomQuestion();
-        }
-      });
+  private async getInfo() {
+
+    const info: ItemInfo = await this.itemService.getItemInfo(this.item.id);
+    this.item.loveAuthors = info.loveAuthors;
+    if (info.votes) {
+      this.votes = info.votes;
+      this.askRandomQuestion();
+    }
+
+    if (info.comments) this.item.comments = info.comments;
+
+    //debugging purposes
+    this.item.comments = [];
+    this.item.comments.push(Comment.generateComment());
+    this.item.comments.push(Comment.generateComment());
+    this.item.comments.push(Comment.generateComment());
+    this.item.comments.push(Comment.generateComment());
+    console.log(this.item);
+
+
   }
 
   public getLoveText(): string {

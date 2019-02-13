@@ -1,6 +1,7 @@
 import { Author } from './Author';
 import { BaseResource } from './Resources';
 import { Venue } from './Venue';
+import { Comment } from './Comment';
 
 export interface Item {
   id?: number;
@@ -25,6 +26,7 @@ export interface Item {
   itemName: ItemName;
   
   iLoved?: boolean; 
+  comments?: Comment[];
 }
 
 export interface ItemName {
@@ -90,5 +92,6 @@ export interface VoteInfo {
 
 export interface ItemInfo {
   votes?: VoteInfo;
-  loveAuthors: Author[]
+  loveAuthors: Author[];
+  comments?: Comment[];
 }

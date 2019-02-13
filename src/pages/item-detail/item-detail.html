@@ -13,7 +13,8 @@
 
     <div padding>
       <h3 class="va-middle">
-        <div class="author-bubble animate" tappable (click)="toAuthor()" [ngClass]="{ glow: !settings?.authorBubbleClicked }">
+        <div class="author-bubble animate" tappable (click)="toAuthor()"
+          [ngClass]="{ glow: !settings?.authorBubbleClicked }">
           <img [src]="item.author.imgBase | image" />
         </div>
         <span>{{ item.author.userName }}</span>
@@ -24,8 +25,8 @@
 
       <ion-row class="va-middle" no-padding align-items-center>
         <ion-col col-auto>
-          <button (click)="tryLove()" class="love-button" round ion-button clear [color]="item.iLoved ? 'danger' : 'grey2'"
-            icon-only>
+          <button (click)="tryLove()" class="love-button" round ion-button clear
+            [color]="item.iLoved ? 'danger' : 'grey2'" icon-only>
             <ion-icon name="heart"></ion-icon>
           </button>
         </ion-col>
@@ -36,8 +37,10 @@
 
       </ion-row>
 
-      <button ion-button clear class="float-right" (click)="voteForName(item.itemName)" *ngIf="votes?.popularNames.length > 0">
-        <ion-icon name="checkmark" class="icon-large" [color]="votes?.name === item.itemNameId ? 'primary' : 'grey2'"></ion-icon>
+      <button ion-button clear class="float-right" (click)="voteForName(item.itemName)"
+        *ngIf="votes?.popularNames.length > 0">
+        <ion-icon name="checkmark" class="icon-large" [color]="votes?.name === item.itemNameId ? 'primary' : 'grey2'">
+        </ion-icon>
       </button>
       <h1 class="title">
         <span class="float-right">
@@ -56,7 +59,8 @@
       <ion-spinner *ngIf="!votes && loggedIn"></ion-spinner>
 
       <!-- Add your own name button -->
-      <button ion-button small round outline text-wrap *ngIf="votes?.popularNames.length === 0" (click)="voteFor('name')">
+      <button ion-button small round outline text-wrap *ngIf="votes?.popularNames.length === 0"
+        (click)="voteFor('name')">
         {{ 'item.no-names-button' | translate }}
       </button>
 
@@ -89,15 +93,22 @@
       </div>
 
       <p class="description">{{item.description}}</p>
-      <hr>
+      <hr class="clear">
+
+      <ion-list class="comments-list">
+        <comment *ngFor="let c of item?.comments" [comment]="c"></comment>
+      </ion-list>
 
 
     </div>
   </div>
 
-  <vote *ngIf="voteBoxes.skill" type="skill" (onVote)="vote('skill', $event)" (onDismiss)="dismissVoteBox('skill')"></vote>
-  <vote *ngIf="voteBoxes.strength" type="strength" (onVote)="vote('strength', $event)" (onDismiss)="dismissVoteBox('strength')"></vote>
-  <vote *ngIf="voteBoxes.flexi" type="flexi" (onVote)="vote('flexi', $event)" (onDismiss)="dismissVoteBox('flexi')"></vote>
+  <vote *ngIf="voteBoxes.skill" type="skill" (onVote)="vote('skill', $event)" (onDismiss)="dismissVoteBox('skill')">
+  </vote>
+  <vote *ngIf="voteBoxes.strength" type="strength" (onVote)="vote('strength', $event)"
+    (onDismiss)="dismissVoteBox('strength')"></vote>
+  <vote *ngIf="voteBoxes.flexi" type="flexi" (onVote)="vote('flexi', $event)" (onDismiss)="dismissVoteBox('flexi')">
+  </vote>
   <name-vote *ngIf="voteBoxes.name" [item]="item" [selectedId]="votes?.name" (onDismiss)="dismissVoteBox('name')"
     (onVote)="voteForName($event)"></name-vote>
 

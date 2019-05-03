@@ -9,12 +9,12 @@ import { Camera } from '@ionic-native/camera';
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { File } from '@ionic-native/file';
 import { FileTransfer } from '@ionic-native/file-transfer';
-import { Firebase } from '@ionic-native/firebase';
 import { Network } from '@ionic-native/network';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { VideoEditor } from '@ionic-native/video-editor';
+import { FCM } from '@ionic-native/fcm';
 import { IonicStorageModule } from '@ionic/storage';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -183,7 +183,7 @@ const PAGES_AND_MODALS = [
     Network,
     Deeplinks,
     SocialSharing,
-    Firebase,
+    FCM,
     PushService,
     SocialService,
     Cache,

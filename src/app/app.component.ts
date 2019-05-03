@@ -249,7 +249,7 @@ export class MyApp {
     this.push.updates
       .subscribe((n: PushNotification) => {
 
-        if (!n.tap) {
+        if (!n.wasTapped) {
           this.showNotificationToast(n);
           return;
         }

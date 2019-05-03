@@ -6,7 +6,7 @@ export const PushType = {
 }
 
 export interface PushNotification {
-  tap: boolean;
+  wasTapped: boolean;
   userId: number;
   itemId?: number;
   type: string;

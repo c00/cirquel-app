@@ -77,3 +77,14 @@ Then extract the zip file: `resources/android/ic_notification.zip` to `platforms
 
 Then pray to whatever god you believe in, and build.
 todo: Automate this stuff so that it's not longer a manual action.
+
+## Android Debug Manifest for local development
+Android doesn't allow unsecured http connections anymore, which makes local testing a but difficult. [Link](https://stackoverflow.com/a/54355253/1686932)
+Create `platforms/android/app/src/debug/AndroidManifest.xml` and paste the following in it:
+```
+<?xml version='1.0' encoding='utf-8'?>
+<manifest android:hardwareAccelerated="true" android:versionCode="600" android:versionName="0.6.0" package="com.cirquelapp.app" xmlns:android="http://schemas.android.com/apk/res/android">
+    <application android:usesCleartextTraffic="true" android:hardwareAccelerated="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:supportsRtl="true">
+    </application>
+</manifest>
+```

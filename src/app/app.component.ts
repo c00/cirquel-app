@@ -248,8 +248,9 @@ export class MyApp {
   private setupNotifications() {
     this.push.updates
       .subscribe((n: PushNotification) => {
+        console.log("Trying to deal", n);
 
-        if (!n.tap) {
+        if (!n.wasTapped) {
           this.showNotificationToast(n);
           return;
         }

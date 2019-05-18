@@ -21,7 +21,7 @@ export class ContextMenuComponent {
     this.hideCancel = navParams.get('hideCancel');
   }
 
-  public close(value) {
+  public close(value: string) {
     this.viewCtrl.dismiss(value);
   }
 

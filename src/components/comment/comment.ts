@@ -17,15 +17,15 @@ export class CommentComponent {
 
   }
 
-  public openMenu(event) {
+  public async openMenu(e: MouseEvent) {
     const items: ContextMenuItem[] = [
       { title: 'comment.downvote', value: 'downvote', icon: 'thumbs-down' },
       { title: 'comment.report', value: 'report', icon: 'ios-warning-outline' },
     ];
-    this.dialogs.showPopover(items, '', true, event)
-      .then(res => {
-        console.log("res", res);
-      });
+    const res = await this.dialogs.showPopover(items, '', true, e)
+      
+    console.log("res", res);
+      
   }
 
 

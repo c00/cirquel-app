@@ -212,7 +212,7 @@ export class DialogService {
       
       let p = this.popCtrl.create(ContextMenuComponent, data);
       
-      p.onWillDismiss(value => {
+      p.onWillDismiss((value: string) => {
         resolve(value);
       });
       

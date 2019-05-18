@@ -34,7 +34,7 @@ export class PushService {
    * To be called on user Login.
    * Will start listening for device ID changes and push notifications.
    */
-  public start() {
+  public async start() {
     if (!this.platform.is('cordova')) {
       console.warn("Cordova not available");
       return;
@@ -45,7 +45,10 @@ export class PushService {
     this.checkPermissions();
 
     //Get token initially
-    this.fcm.getToken().then(token => { this.sendToken(token); });
+    
+    const token = await this.fcm.getToken();
+    this.sendToken(token);
+    
 
     //Refreshes
     this.tokenRefresh = this.fcm.onTokenRefresh().subscribe(token => {
@@ -54,6 +57,7 @@ export class PushService {
 
     //New notifications
     this.notificationOpen = this.fcm.onNotification().subscribe((n: PushNotification) => {
+      console.log("Received notification", n);
       //this.fcm.setBadgeNumber(0);
       this.zone.run(() => {
         this.updates.emit(n);
@@ -90,7 +94,7 @@ export class PushService {
     } */
   }
 
-  private sendToken(token: string) {
+  private async sendToken(token: string) {
     if (token === this.lastTokenSent) return;
 
     this.lastTokenSent = token;
@@ -101,20 +105,18 @@ export class PushService {
       appVersion: null
     };
 
-    return this.appVersion.getVersionNumber()
-      .then((versionNumber) => device.appVersion = versionNumber)
-      .then(() => this.getUUID())
-      .then((uuid) => device.uuid = uuid)
-      .then(() => this.api.post('u/device', device))
-      .then((d: Device) => {
-        this.store.set('uuid', d.uuid)  
-        this.api.setUUID(d.uuid);  
-      })
-      .catch(err => {
-        //Reset token just in case
-        this.lastTokenSent = null;
-        throw err;
-      });
+    try {
+      device.appVersion = await this.appVersion.getVersionNumber();
+      device.uuid = await this.getUUID();
+      const d = await this.api.post('u/device', device);
+      this.store.set('uuid', d.uuid);
+      this.api.setUUID(d.uuid);
+    }
+    catch (err) {
+      //Reset token just in case
+      this.lastTokenSent = null;
+      throw err;
+    }
   }
 
   private getUUID() {

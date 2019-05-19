@@ -9,7 +9,6 @@ import { SupportModalComponent } from '../../components/support-modal/support-mo
 import { VoteModalComponent } from '../../components/vote-modal/vote-modal';
 import { VoteOptions } from '../../components/vote/vote';
 import { CategoryHelper } from '../../model/Category';
-import { Comment } from '../../model/Comment';
 import { Item, ItemInfo, ItemName, VoteInfo } from '../../model/Item';
 import { PageState } from '../../model/PageState';
 import { Search } from '../../model/Search';
@@ -57,32 +56,25 @@ export class ItemDetailPage {
     private sharing: SocialSharing,
     private settingsProvider: UserSettingsProvider,
   ) {
+    this.loggedIn = this.userService.loggedIn;
     this.item = navParams.get('item');
     this.settingsProvider.get().then(s => this.settings = s);
 
     if (this.item) this.search();
   }
 
-  public ionViewCanEnter() {
-    return this.userService.isLoggedInWithReject()
-      .then(() => this.loggedIn = true)
-      .catch(() => {
-        //Note, if this returns false, the view will not load.
-        this.loggedIn = false;
-      });
-  }
+  /* public async ionViewCanEnter() {
+    this.loggedIn = this.userService.loggedIn;
+  } */
 
-  public ionViewWillEnter() {
+  public async ionViewWillEnter() {
     //Load item.
     const itemId = this.navParams.get('itemId');
 
     if (itemId && !this.item) {
-      return this.itemService.getItem(itemId)
-        .then((item: Item) => {
-          this.item = item;
-          this.search();
-          this.getInfo();
-        });
+      this.item = await this.itemService.getItem(itemId);
+      this.search();
+      this.getInfo();
     } else {
       this.getInfo();
     }
@@ -98,16 +90,8 @@ export class ItemDetailPage {
     }
 
     if (info.comments) this.item.comments = info.comments;
-
-    //debugging purposes
-    this.item.comments = [];
-    this.item.comments.push(Comment.generateComment());
-    this.item.comments.push(Comment.generateComment());
-    this.item.comments.push(Comment.generateComment());
-    this.item.comments.push(Comment.generateComment());
     console.log(this.item);
-
-
+    //todo something about large amounts of comments.
   }
 
   public getLoveText(): string {

@@ -1,4 +1,7 @@
 comment {
+  .comment-text {
+    white-space: pre-wrap;
+  }
   
   ion-avatar {
     align-self: flex-start;
@@ -6,6 +9,7 @@ comment {
 
   .date {
     font-size: .8em;
+    white-space: nowrap;
     color: color($colors, 'lighter');
   }
 

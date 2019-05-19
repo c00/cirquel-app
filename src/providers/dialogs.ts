@@ -227,7 +227,7 @@ export class DialogService {
       
       modal.onDidDismiss((user: User) => { 
         if (user) return resolve(user); 
-        return reject(); 
+        return reject("not-logged-in"); 
       }); 
       
       modal.present();  

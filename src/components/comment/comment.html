@@ -1,19 +1,19 @@
 <ion-item text-wrap class="comment">
   <ion-avatar item-start>
-    <img [src]="comment.imgBase | image">
+    <img [src]="comment.author.imgBase | image">
   </ion-avatar>
   <h2>{{comment.author.userName}}</h2>
-  <p>{{comment.text}} <span class="date">- {{comment.date | date}}</span></p>
+  <p class="comment-text">{{comment.text}} <span class="date">{{comment.created | timeAgo}}</span></p>
 
   <div class="bottom-row" text-right>
-    <button ion-button clear>
-      <span *ngIf="comment.loves > 0">{{comment.loves}}</span>
-      <ion-icon [style.padding-left]="comment.loves ? '.4em' : 0" *ngIf="!comment.iLoved" name="heart-outline">
+    <button ion-button clear (click)="tryVote()">
+      <span *ngIf="comment.upvotes > 0">{{comment.upvotes}}</span>
+      <ion-icon [style.padding-left]="comment.upvotes ? '.4em' : 0" *ngIf="comment.myVote?.vote !== 1" name="heart-outline">
       </ion-icon>
-      <ion-icon [style.padding-left]="comment.loves ? '.4em' : 0" *ngIf="comment.iLoved" name="heart"></ion-icon>
+      <ion-icon [style.padding-left]="comment.upvotes ? '.4em' : 0" *ngIf="comment.myVote?.vote === 1" name="heart"></ion-icon>
     </button>
-    <!-- Is top level comment? -->
-    <button *ngIf="comment.isTopLevelComment" ion-button clear icon-only>
+    <!-- Replying is only possible to top-level comments -->
+    <button *ngIf="!comment.parentId" ion-button clear icon-only (click)="reply()">
       <ion-icon name="ios-undo"></ion-icon>
     </button>
 

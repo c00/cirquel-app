@@ -39,14 +39,20 @@ export class SupportModalComponent {
     private viewCtrl: ViewController,
     private dialogs: DialogService,
   ) {
+
+    this.init();
+  }
+
+  private async init() {
     //Setup the form
     this.form = this.formBuilder.group({
-      name:        ['', [Validators.required, Validators.maxLength(100)] ],
-      email:       ['', [Validators.required, Validators.email] ],
-      reason:      ['', Validators.required],
-      subject:     ['', Validators.required],
+      name: ['', [Validators.required, Validators.maxLength(100)]],
+      email: ['', [Validators.required, Validators.email]],
+      reason: ['', Validators.required],
+      subject: ['', Validators.required],
       description: '',
-      itemId:      '',
+      itemId: '',
+      commentId: '',
       contentReason: '',
     });
 
@@ -54,19 +60,24 @@ export class SupportModalComponent {
     this.form.get('reason').setValue(this.navParams.get('reason'));
     const itemId = this.navParams.get('itemId');
     this.form.get('itemId').setValue(itemId);
+
+    const commentId = this.navParams.get('commentId');
+    this.form.get('commentId').setValue(commentId);
+    
     if (itemId) {
       this.isReport = true;
       this.form.get('subject').setValue("Report content");
+    } else if (commentId) {
+      this.isReport = true;
+      this.form.get('subject').setValue("Report comment");
     }
 
-    userService.ready()
-    .then(() => userService.isLoggedInWithReject())
-    .then(() => {
+    await this.userService.ready();
+    if (this.userService.loggedIn) {
       this.loggedIn = true;
       this.form.get('email').setValue(this.userService.user.email);
       this.form.get('name').setValue(this.userService.user.userName);
-    })
-    .catch(() => {/* fine. */});
+    }
   }
 
   public add() {
@@ -78,19 +89,19 @@ export class SupportModalComponent {
 
     this.dialogs.showLoader();
     this.userService.sendSupport(this.form.value)
-    .then(() => {
-      this.dialogs.showToast('support-modal.request-received', 3000);
-      this.dialogs.dismissLoader();
-      this.dismiss();
-    })
-    .catch(() => {
-      this.dialogs.dismissLoader();
-      this.dialogs.showToast('support-modal.request-error');
-    });
+      .then(() => {
+        this.dialogs.showToast('support-modal.request-received', 3000);
+        this.dialogs.dismissLoader();
+        this.dismiss();
+      })
+      .catch(() => {
+        this.dialogs.dismissLoader();
+        this.dialogs.showToast('support-modal.request-error');
+      });
 
 
   }
-  
+
   public dismiss() {
     this.viewCtrl.dismiss();
   }

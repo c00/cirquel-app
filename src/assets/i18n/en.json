@@ -53,6 +53,25 @@
         "follow-toast": "Following {{user}}!",
         "follow-error-toast": "Something went wrong... Try again or report this!"
     },
+    "time": {
+        "seconds": "{{seconds}} sec",
+        "minutes": "{{minutes}} min",
+        "hours": "{{hours}}h, {{minutes}}min",
+        "days": "{{days}}d, {{hours}}h",
+        "n-a": "n/a",
+        "today": "today, {{time}}",
+        "yesterday": "yesterday, {{time}}",
+        "tomorrow": "tomorrow",
+        "seconds-ago": "just now",
+        "minutes-ago": "{{minutes}}m ago",
+        "hours-ago": "{{hours}}h and {{minutes}}m ago",
+        "days-ago": "{{days}}d ago, {{time}}",
+        "in-days": "in {{days}}",
+        "in-months": "in {{months}} month",
+        "in-half-year": "in half a year",
+        "in-one-year": "in one year",
+        "in-years": "in {{years}} years"
+    },
     "loading": {
         "title": "Hold on..."
     },
@@ -62,7 +81,8 @@
     "comment": {
         "read-more": "Read {{commentCount}} more comments",
         "downvote": "Unhelpful",
-        "report": "Report comment"
+        "report": "Report comment",
+        "vote-failed": "Your vote couldn't be registered... Please try again, or report it if it keeps happening!"
     },
     "agreement": {
         "title": "User agreement",

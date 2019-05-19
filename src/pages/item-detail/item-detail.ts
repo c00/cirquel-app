@@ -63,10 +63,6 @@ export class ItemDetailPage {
     if (this.item) this.search();
   }
 
-  /* public async ionViewCanEnter() {
-    this.loggedIn = this.userService.loggedIn;
-  } */
-
   public async ionViewWillEnter() {
     //Load item.
     const itemId = this.navParams.get('itemId');

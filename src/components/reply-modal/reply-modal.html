@@ -1,0 +1,18 @@
+<ion-header>
+    <ion-navbar>
+      <ion-buttons right>
+        <button ion-button icon-only (click)="dismiss()">
+          <ion-icon name="close"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title>
+        {{ 'comment.thread-title' | translate : comment }}
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+    <comment [comment]="comment"></comment>
+    <comment-thread [comment]="comment"></comment-thread>
+  </ion-content>
+  

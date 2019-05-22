@@ -1,4 +1,5 @@
 comment {
+  display: block;
   .comment-text {
     white-space: pre-wrap;
   }
@@ -16,6 +17,22 @@ comment {
   .bottom-row {
     > * {
       vertical-align: middle;
+    }
+  }
+
+  .comment-text {
+    $lines: 4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $lines; /* number of lines to show */
+    line-height: 1em;             /* fallback */
+    max-height: 1em*$lines;       /* fallback */
+    .show-all {
+      -webkit-line-clamp: initial; /* number of lines to show */
+      line-height: initial;             /* fallback */
+      max-height: initial;       /* fallback */
     }
   }
 }

@@ -3,4 +3,5 @@ export interface Environment {
     api: string;
     itemImgRoot: string;
     shareRoot: string;
+    disableVideosForDevelopment?: boolean;
 }

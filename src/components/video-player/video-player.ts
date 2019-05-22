@@ -1,4 +1,5 @@
 import { Component, ElementRef, Input, NgZone, ViewChild } from '@angular/core';
+import { ENV } from '@app/env';
 import { Platform } from 'ionic-angular';
 
 import { CirqueTouchEvent } from '../../directives/touching';
@@ -35,6 +36,7 @@ export class VideoPlayerComponent {
   //For Shaka, we don't load until someone clicks the play button.
   //todo preload on wifi? Make configurable
   preloaded = false;
+  private settings = ENV;
   
   
   constructor(
@@ -50,6 +52,8 @@ export class VideoPlayerComponent {
     
     this.setupPlayerEvents();
 
+    if (this.settings.disableVideosForDevelopment) return;
+    
     if (!this.platform.is('ios')){
       this.setupShaka();
     } else {

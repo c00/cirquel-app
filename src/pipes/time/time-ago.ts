@@ -16,10 +16,7 @@ export class TimeAgoPipe implements PipeTransform {
     const now = moment();
     //A positive number of days, means says in the future. Negative means the past.
     const days = value.diff(now, 'days');
-
     const time = value.format('H:mm');
-
-    console.log(days);
 
     if (days < -30) {
       return value.format('ll LT')

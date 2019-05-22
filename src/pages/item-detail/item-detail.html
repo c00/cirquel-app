@@ -95,10 +95,7 @@
       <p class="description">{{item.description}}</p>
       <hr class="clear">
 
-      <ion-list class="comments-list">
-        <comment *ngFor="let c of item?.comments" [comment]="c"></comment>
-      </ion-list>
-
+      <comment-thread [item]="item"></comment-thread>
 
     </div>
   </div>

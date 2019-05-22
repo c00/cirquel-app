@@ -5,11 +5,11 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { PhotoResource } from 'model/Resources';
 
 import { AdvancedSearchResult, UserItemsResult } from '../model/ApiResult';
+import { Comment } from '../model/Comment';
 import { Dictionary, Item, ItemInfo, ItemName } from '../model/Item';
 import { Search } from '../model/Search';
 import { ApiProvider } from './api';
 import { UserSettingsProvider } from './user-settings';
-import { Comment } from '../model/Comment';
 
 @Injectable()
 export class ItemService {
@@ -148,12 +148,24 @@ export class ItemService {
   }
 
   public vote(type: string, itemId: number, vote) {
+    //todo add type to vote param
     console.log("vote is type: ", typeof vote);
     return this.api.post('u/vote', { itemId, type, vote });
   }
 
   public voteForComment(comment: Comment, vote: number) {
     return this.api.post('u/vote-for-comment', { id: comment.id, vote });
+  }
+
+  public async sendComment(text: string, itemId: number, parentId?: number): Promise<Comment> {
+    const result = await this.api.post('u/comment', { itemId, text, parentId });
+    return result.comment;
+  }
+
+  public async getCommentThread(commentId: number) {
+    const result = await this.api.get(`comment-thread/${commentId}`);
+
+    return result.comments;
   }
 
   public getItemInfo(itemId: number): Promise<ItemInfo> {

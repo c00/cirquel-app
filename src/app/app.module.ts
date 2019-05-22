@@ -80,6 +80,9 @@ import { MyApp } from './app.component';
 import { LocalImagePipe } from '../pipes/image/localImage';
 import { CommentComponent } from '../components/comment/comment';
 import { TimeAgoPipe } from '../pipes/time/time-ago';
+import { CommentThreadComponent } from '../components/comment-thread/comment-thread';
+import { AutoResize } from '../directives/auto-resize';
+import { ReplyModalComponent } from '../components/reply-modal/reply-modal';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -104,6 +107,7 @@ const PAGES_AND_MODALS = [
   OtherNameModalComponent,
   VoteModalComponent,
   AnnouncementModalComponent,
+  ReplyModalComponent,
 ];
 
 @NgModule({
@@ -130,6 +134,8 @@ const PAGES_AND_MODALS = [
     GrowerComponent,
     UploadProgressComponent,
     LoginComponent,
+    CommentThreadComponent,
+    AutoResize,
     SignupComponent,
     SearchValueComponent,
     SubsBannerComponent,

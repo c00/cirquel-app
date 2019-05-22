@@ -1,0 +1,13 @@
+<ion-item class="reply-box">
+  <ion-avatar item-start>
+    <img class="avatar" [src]="myUser.imgBase | image">
+  </ion-avatar>
+  <ion-textarea max="500" [autoResize]="replyText" [disabled]="sending" [(ngModel)]="replyText" rows="1" [placeholder]="coment ? 'comment.reply-placeholder' : 'comment.comment-placeholder' | translate"></ion-textarea>
+  <button [disabled]="!replyText || sending" ion-button clear icon-only item-end (click)="sendReply()"><ion-icon name="send"></ion-icon></button>
+</ion-item>
+
+<ion-spinner *ngIf="!initialLoadDone"></ion-spinner>
+
+<ion-list class="comments-list" *ngIf="initialLoadDone">  
+  <comment @slideIn *ngFor="let c of comments" [comment]="c"></comment>
+</ion-list>

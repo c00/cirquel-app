@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ModalController } from 'ionic-angular';
+import { ModalController, NavController } from 'ionic-angular';
 
 import { Comment } from '../../model/Comment';
 import { DialogService } from '../../providers/dialogs';
@@ -7,6 +7,8 @@ import { ItemService } from '../../providers/item-service';
 import { UserService } from '../../providers/user-service';
 import { ContextMenuItem } from '../context-menu/context-menu';
 import { SupportModalComponent } from '../support-modal/support-modal';
+import { ReplyModalComponent } from '../reply-modal/reply-modal';
+import { UserItemsPage } from '../../pages/user-items/user-items';
 
 @Component({
   selector: 'comment',
@@ -22,6 +24,7 @@ export class CommentComponent {
     private dialogs: DialogService,
     private userService: UserService,
     private modalCtrl: ModalController,
+    private nav: NavController,
   ) {
     this.loggedIn = this.userService.loggedIn;
   }
@@ -67,4 +70,15 @@ export class CommentComponent {
 
   }
 
+  public toProfile() {
+    this.nav.push(UserItemsPage, { userName: this.comment.author.userName });
+  }
+
+  public reply() {
+    //Can't reply to replies (= sub comments) .
+    if (this.comment.parentId) return;
+
+    //open reply modal
+    this.modalCtrl.create(ReplyModalComponent, { comment: this.comment }).present();
+  }
 }

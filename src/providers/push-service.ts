@@ -58,7 +58,6 @@ export class PushService {
     //New notifications
     this.notificationOpen = this.fcm.onNotification().subscribe((n: PushNotification) => {
       console.log("Received notification", n);
-      //this.fcm.setBadgeNumber(0);
       this.zone.run(() => {
         this.updates.emit(n);
       });

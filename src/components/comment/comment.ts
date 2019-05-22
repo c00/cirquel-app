@@ -20,7 +20,6 @@ export class CommentComponent implements OnInit {
   @Input() comment: Comment;
   @Input('showFullComment') showAllOverride?: boolean;
   @Input() disableReply: boolean = false;
-  private loggedIn: boolean;
   
   public hasOverflow: boolean;
   public showAll = false;
@@ -32,7 +31,7 @@ export class CommentComponent implements OnInit {
     private modalCtrl: ModalController,
     private nav: NavController,
   ) {
-    this.loggedIn = this.userService.loggedIn;
+
   }
 
   public ngOnInit() {

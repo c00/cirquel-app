@@ -2,13 +2,15 @@ export const PushType = {
   LOVE: 'love',
   FOLLOW: 'follow',
   NEW_ITEM_FROM_SUB: 'new-from-sub',
-  VIDEO_PROCESSED: 'video-processed'
+  VIDEO_PROCESSED: 'video-processed',
+  NEW_COMMENT: 'new-comment'
 }
 
 export interface PushNotification {
   wasTapped: boolean;
   userId: number;
   itemId?: number;
+  commentId?: number;
   type: string;
 
   body?: string;

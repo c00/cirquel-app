@@ -81,9 +81,9 @@ export class MyApp {
       if (!announcement) return;
 
       //Show announcement modal
-      this.modalCtrl.create(AnnouncementModalComponent, {announcement}).present();
+      this.modalCtrl.create(AnnouncementModalComponent, { announcement }).present();
     })
-    
+
   }
 
   private async initSettings() {
@@ -110,7 +110,7 @@ export class MyApp {
         });
         modal.present();
       });
-    } 
+    }
     return;
   }
 
@@ -168,7 +168,7 @@ export class MyApp {
         this.dialogs.showToast("error.login-required", 3000);
         return;
       }
-      
+
     }
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
@@ -247,7 +247,7 @@ export class MyApp {
 
   private setupNotifications() {
     this.push.updates
-      .subscribe((n: PushNotification) => {
+      .subscribe(async (n: PushNotification) => {
         console.log("Trying to deal", n);
 
         if (!n.wasTapped) {
@@ -256,29 +256,24 @@ export class MyApp {
         }
 
         //Navigate to the correct page
-        if (n.type === PushType.LOVE) {
+        if (n.type === PushType.LOVE || n.type === PushType.NEW_ITEM_FROM_SUB || n.type === PushType.VIDEO_PROCESSED) {
           this.dialogs.showLoader();
-          this.items.getItem(n.itemId)
-            .then((item) => {
-              this.dialogs.dismissLoader();
-              this.nav.push(ItemDetailPage, { item })
-            })
-            .catch((err) => {
-              this.dialogs.dismissLoader();
-              throw err;
-            });
-        } else if (n.type === PushType.NEW_ITEM_FROM_SUB) {
-          console.log(n);
+          try {
+            const item = await this.items.getItem(n.itemId);
+            this.nav.push(ItemDetailPage, { item });
+          } catch (err) {
+            console.error(err);
+          }
+          this.dialogs.dismissLoader();
+        } else if (n.type === PushType.NEW_COMMENT) {
           this.dialogs.showLoader();
-          this.items.getItem(n.itemId)
-            .then((item) => {
-              this.dialogs.dismissLoader();
-              this.nav.push(ItemDetailPage, { item })
-            })
-            .catch((err) => {
-              this.dialogs.dismissLoader();
-              throw err;
-            });
+          try {
+            const item = await this.items.getItem(n.itemId);
+            this.nav.push(ItemDetailPage, { item });
+          } catch (err) {
+            console.error(err);
+          }
+          this.dialogs.dismissLoader();
         } else {
           //todo add video processed route.
           console.warn("Unknown notification type", n)

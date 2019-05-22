@@ -81,8 +81,8 @@ export class HomePage {
       this.state = items.length === 0 ? PageState.EMPTY : PageState.SHOWING;
 
       //DEBUG
-      const item = this.items.find(i => i.id === 151);
-      this.navCtrl.push(ItemDetailPage, {item});
+      /* const item = this.items.find(i => i.id === 151);
+      this.navCtrl.push(ItemDetailPage, {item}); */
     })
     .catch((err) => {
       this.state = PageState.ERROR;

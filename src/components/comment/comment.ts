@@ -1,23 +1,29 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalController, NavController } from 'ionic-angular';
 
 import { Comment } from '../../model/Comment';
+import { UserItemsPage } from '../../pages/user-items/user-items';
 import { DialogService } from '../../providers/dialogs';
 import { ItemService } from '../../providers/item-service';
 import { UserService } from '../../providers/user-service';
 import { ContextMenuItem } from '../context-menu/context-menu';
-import { SupportModalComponent } from '../support-modal/support-modal';
 import { ReplyModalComponent } from '../reply-modal/reply-modal';
-import { UserItemsPage } from '../../pages/user-items/user-items';
+import { SupportModalComponent } from '../support-modal/support-modal';
 
 @Component({
   selector: 'comment',
   templateUrl: 'comment.html'
 })
-export class CommentComponent {
+export class CommentComponent implements OnInit {
 
+  @ViewChild('commentText') commentTextEl: ElementRef;
   @Input() comment: Comment;
-  loggedIn: boolean;
+  @Input('showFullComment') showAllOverride?: boolean;
+  @Input() disableReply: boolean = false;
+  private loggedIn: boolean;
+  
+  public hasOverflow: boolean;
+  public showAll = false;
 
   constructor(
     private itemservice: ItemService,
@@ -27,6 +33,12 @@ export class CommentComponent {
     private nav: NavController,
   ) {
     this.loggedIn = this.userService.loggedIn;
+  }
+
+  public ngOnInit() {
+    setTimeout(() => {
+      this.hasOverflow = (this.commentTextEl.nativeElement.clientHeight + 4) < this.commentTextEl.nativeElement.scrollHeight;
+    });
   }
 
   public async openMenu(e: MouseEvent) {
@@ -74,11 +86,11 @@ export class CommentComponent {
     this.nav.push(UserItemsPage, { userName: this.comment.author.userName });
   }
 
-  public reply() {
+  public reply(focusOnInput?: boolean) {
     //Can't reply to replies (= sub comments) .
-    if (this.comment.parentId) return;
+    if (this.comment.parentId || this.disableReply) return;
 
     //open reply modal
-    this.modalCtrl.create(ReplyModalComponent, { comment: this.comment }).present();
+    this.modalCtrl.create(ReplyModalComponent, { comment: this.comment, focusOnInput }).present();
   }
 }

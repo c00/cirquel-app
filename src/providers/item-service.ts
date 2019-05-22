@@ -158,12 +158,26 @@ export class ItemService {
   }
 
   public async sendComment(text: string, itemId: number, parentId?: number): Promise<Comment> {
+    text = text.trim();
     const result = await this.api.post('u/comment', { itemId, text, parentId });
     return result.comment;
   }
 
   public async getCommentThread(commentId: number) {
     const result = await this.api.get(`comment-thread/${commentId}`);
+
+    return result.comments;
+  }
+
+  public async loadMoreComments(offset: number, amount: number, commentId?: number, itemId?: number) {
+    if (!itemId && !commentId) throw new Error("I need some context");
+    
+    let result;
+    if (commentId) {
+      result = await this.api.get(`comment-thread/${commentId}?offset=${offset}&amount=${amount}`);  
+    } else {
+      result = await this.api.get(`item-comment-thread/${itemId}?offset=${offset}&amount=${amount}`);
+    }    
 
     return result.comments;
   }

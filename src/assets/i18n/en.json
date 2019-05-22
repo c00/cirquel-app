@@ -85,7 +85,11 @@
         "reply-placeholder": "Add a public reply...",
         "comment-placeholder": "Add a public comment...",
         "report": "Report comment",
-        "vote-failed": "Your vote couldn't be registered... Please try again, or report it if it keeps happening!"
+        "vote-failed": "Your vote couldn't be registered... Please try again, or report it if it keeps happening!",
+        "show-more": "more...",
+        "show-less": "less...",
+        "load-more-comments": "more comments...",
+        "login-to-comment": "Login first to make comments!"
     },
     "agreement": {
         "title": "User agreement",

@@ -1,7 +1,8 @@
 comment {
   display: block;
-  .comment-text {
-    white-space: pre-wrap;
+
+  .name {
+    font-weight: 500;
   }
   
   ion-avatar {
@@ -9,6 +10,7 @@ comment {
   }
 
   .date {
+    font-weight: normal;
     font-size: .8em;
     white-space: nowrap;
     color: color($colors, 'lighter');
@@ -22,17 +24,23 @@ comment {
 
   .comment-text {
     $lines: 4;
+    white-space: pre-wrap;
+    //color: colors($colors, 'dark');
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: $lines; /* number of lines to show */
-    line-height: 1em;             /* fallback */
-    max-height: 1em*$lines;       /* fallback */
-    .show-all {
+    line-height: 1.1em;             /* fallback */
+    max-height: 1.1em * $lines;       /* fallback */
+    
+    &.show-all {
       -webkit-line-clamp: initial; /* number of lines to show */
-      line-height: initial;             /* fallback */
       max-height: initial;       /* fallback */
     }
+  }
+
+  .more-button {
+    display: block;
   }
 }

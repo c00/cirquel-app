@@ -27,6 +27,7 @@ export interface Item {
   
   iLoved?: boolean; 
   comments?: Comment[];
+  commentCount: number;
 }
 
 export interface ItemName {

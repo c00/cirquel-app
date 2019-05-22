@@ -11,7 +11,7 @@ export const SlideInAnimation = trigger('slideIn', [
 ]);
 
 export const SlideInFromTop = trigger('slideIn', [
-  transition('void => true', [
+  transition('void => *', [
     style({ transform: 'translateX(-100%)' }),
     animate('.3s ease', style({transform: 'translateX(0%)' }))
   ]),

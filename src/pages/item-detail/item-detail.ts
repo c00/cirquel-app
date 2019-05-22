@@ -86,8 +86,6 @@ export class ItemDetailPage {
     }
 
     if (info.comments) this.item.comments = info.comments;
-    console.log(this.item);
-    //todo something about large amounts of comments.
   }
 
   public getLoveText(): string {

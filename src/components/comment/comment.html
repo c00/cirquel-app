@@ -3,9 +3,11 @@
     <img [src]="comment.author.imgBase | image">
   </ion-avatar>
   <div tappable (click)="reply()">
-    <h2>{{comment.author.userName}}</h2>
-    <p class="comment-text">{{comment.text}} <span class="date">{{comment.created | timeAgo}}</span></p>
+    <h2 class="name">{{comment.author.userName}} <span class="date">{{comment.created | timeAgo}}</span></h2>
+    <span #commentText [class.show-all]="showAll || showAllOverride" class="comment-text">{{comment.text}} </span>
+    
   </div>
+  <a *ngIf="hasOverflow" class="ng-link more-button" (click)="showAll = !showAll">{{ (showAll ? 'comment.show-less' : 'comment.show-more') | translate }}</a>
 
   <div class="bottom-row" text-right>
     <button ion-button clear (click)="tryVote()">
@@ -15,7 +17,7 @@
       <ion-icon [style.padding-left]="comment.upvotes ? '.4em' : 0" *ngIf="comment.myVote?.vote === 1" name="heart"></ion-icon>
     </button>
     <!-- Replying is only possible to top-level comments -->
-    <button *ngIf="!comment.parentId" ion-button clear icon-only (click)="reply()">
+    <button *ngIf="!comment.parentId && !disableReply" ion-button clear icon-only (click)="reply(true)">
       <ion-icon name="ios-undo"></ion-icon>
     </button>
 
@@ -23,7 +25,7 @@
       <ion-icon name="more"></ion-icon>
     </button>
   </div>
-  <div class="more-row" *ngIf="comment.commentCount > 0">
+  <div class="more-row" *ngIf="comment.commentCount > 0 && !disableReply">
     <button (click)="reply()" block ion-button clear>{{ 'comment.read-more' | translate : comment }}</button>
   </div>
 

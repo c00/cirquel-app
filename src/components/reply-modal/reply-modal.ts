@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NavParams, ViewController } from 'ionic-angular';
 
 import { Comment } from '../../model/Comment';
@@ -7,17 +7,23 @@ import { Comment } from '../../model/Comment';
   selector: 'reply-modal',
   templateUrl: 'reply-modal.html'
 })
-export class ReplyModalComponent {
+export class ReplyModalComponent implements OnInit {
   comment: Comment;
+  @ViewChild('input') input: ElementRef;
+  focusOnInput: boolean;
 
   constructor(
     navParams: NavParams,
     private viewCtrl: ViewController,
   ) {
     this.comment = navParams.get('comment');
+    this.focusOnInput = navParams.get('focusOnInput');
   }
 
-  dismiss() {
+  public ngOnInit() {
+  }
+
+  public dismiss() {
     this.viewCtrl.dismiss();
   }
 

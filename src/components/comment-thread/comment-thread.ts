@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { TextInput } from 'ionic-angular';
 
 import { SlideInFromTop } from '../../model/Animations';
 import { Comment } from '../../model/Comment';
 import { Item } from '../../model/Item';
-import { User } from '../../model/User';
+import { DialogService } from '../../providers/dialogs';
 import { ItemService } from '../../providers/item-service';
 import { UserService } from '../../providers/user-service';
 
@@ -12,9 +13,6 @@ import { UserService } from '../../providers/user-service';
   templateUrl: 'comment-thread.html',
   animations: [
     SlideInFromTop,
-    /* trigger('blockInitialRenderAnimation', [
-      transition('void => * ', []),
-    ]) */
   ]
 })
 export class CommentThreadComponent implements OnInit {
@@ -36,16 +34,29 @@ export class CommentThreadComponent implements OnInit {
    */
   @Input() item?: Item;
 
-  //comments: Comment[] = [];
-  myUser: User;
+  @Input() focusOnInput: boolean = false;
+  @ViewChild('input') input: TextInput;
+
   replyText = '';
   sending = false;
   initialLoadDone = false;
+  
+  get loggedIn(): boolean {
+    return this.userService.loggedIn;
+  }
+
+  get imgBase(): string {
+    return this.userService.user.imgBase;
+  };
 
   get isMainThread(): boolean {
     return Boolean(!this.comment);
   }
 
+  get commentCount(): number {
+    if (this.isMainThread) return this.item.commentCount;
+    return this.comment.commentCount;
+  }
   get itemId(): number {
     if (this.isMainThread) return this.item.id;
     return this.comment.itemId;
@@ -56,11 +67,12 @@ export class CommentThreadComponent implements OnInit {
 
     return this.item.comments;
   }
+
   constructor(
-    userServcie: UserService,
+    private userService: UserService,
     private itemService: ItemService,
+    private dialogs: DialogService,
   ) {
-    this.myUser = userServcie.user;
   }
 
   public async ngOnInit() { 
@@ -70,19 +82,42 @@ export class CommentThreadComponent implements OnInit {
       this.comment.comments = await this.itemService.getCommentThread(this.comment.id);
     }
     this.initialLoadDone = true;
+
+    if (this.focusOnInput) {
+      console.log("Set focus to input", this.input);
+      setTimeout(() => {
+        if (this.input) this.input.setFocus();
+      }, 500)
+    }
+  }
+
+  public async login() {
+    try {
+      await this.dialogs.showLoginModal();
+    } catch (err) {
+      //not logged in
+      this.dialogs.showToast('error.login-required', 3000);
+    }
+    
+  }
+
+  public async loadNext() {
+    const commentId = this.comment ? this.comment.id : null;
+    const itemId = this.item ? this.item.id : null;
+
+    const offset = this.comments.length;
+    const amount = 10;
+
+    const comments = await this.itemService.loadMoreComments(offset, amount, commentId, itemId);
+    this.comments.push.apply(this.comments, comments);
   }
 
   public async sendReply() {
     this.sending = true;
     const parent = this.comment ? this.comment.id : undefined;
     try {
-      console.log(this.comment);
       const comment = await this.itemService.sendComment(this.replyText, this.itemId, parent);
-      if (this.comment) {
-        this.comment.comments.unshift(comment);
-      } else {
-        this.item.comments.unshift(comment);
-      }
+      this.comments.unshift(comment);
       this.replyText = '';
     } catch (err) {
       //cry

@@ -1,13 +1,22 @@
-<ion-item class="reply-box">
+<ion-item class="reply-box" *ngIf="loggedIn">
   <ion-avatar item-start>
-    <img class="avatar" [src]="myUser.imgBase | image">
+    <img class="avatar" [src]="imgBase | image">
   </ion-avatar>
-  <ion-textarea max="500" [autoResize]="replyText" [disabled]="sending" [(ngModel)]="replyText" rows="1" [placeholder]="coment ? 'comment.reply-placeholder' : 'comment.comment-placeholder' | translate"></ion-textarea>
+  <ion-textarea #input max="500" [autoResize]="replyText" [disabled]="sending" [(ngModel)]="replyText" rows="1" [placeholder]="coment ? 'comment.reply-placeholder' : 'comment.comment-placeholder' | translate"></ion-textarea>
   <button [disabled]="!replyText || sending" ion-button clear icon-only item-end (click)="sendReply()"><ion-icon name="send"></ion-icon></button>
 </ion-item>
+
+<button *ngIf="!loggedIn" ion-item (click)="login()">
+  <ion-avatar item-start>
+    <img class="avatar" [src]="'blank_avatar' | image">
+  </ion-avatar>
+  <p class="login-message">{{ 'comment.login-to-comment' | translate }}</p>
+  <button disabled ion-button clear icon-only item-end><ion-icon name="send"></ion-icon></button>
+</button>
 
 <ion-spinner *ngIf="!initialLoadDone"></ion-spinner>
 
 <ion-list class="comments-list" *ngIf="initialLoadDone">  
   <comment @slideIn *ngFor="let c of comments" [comment]="c"></comment>
 </ion-list>
+<button class="button-load-more" *ngIf="commentCount > comments.length" round small ion-button outline (click)="loadNext()">{{ 'comment.load-more-comments' | translate }}</button>

@@ -1,10 +1,12 @@
 comment-thread {
-  .reply-box {
-    /* .avatar {
-      height: 30px;
-      width: 30px;
-      border-radius: 50%;
-    } */
+  .button-load-more {
+    display: block;
+    margin: auto;
+  }
+
+  .login-message {
+    color: color($colors, lighter);
+    font-style: italic;
   }
 
   textarea {

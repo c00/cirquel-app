@@ -293,6 +293,7 @@ export class MyApp {
 
   private async showNotificationToast(n: PushNotification) {
     const result = await this.dialogs.showToastWithButton(`notification.toast.${n.type}`, n);
+    console.log("toast", n);
     if (result === 'button') {
       console.log("pressed");
     }

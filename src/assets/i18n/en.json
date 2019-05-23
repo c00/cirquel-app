@@ -339,9 +339,12 @@
     },
     "notification": {
         "toast": {
-            "love": "{{userName}} just loved your trick '{{trickName}}!'",
-            "new-from-sub": "{{userName}} just posted a new trick called {{trickName}}!",
-            "video-processed": "Your video is done processing!"
+            "love": "{{userName}} just loved your trick '{{trickName}}'!",
+            "new-from-sub": "{{userName}} just posted a new trick called '{{trickName}}'!",
+            "video-processed": "Your video is done processing!",
+            "comment-on-item": "{{userName}} commented on your trick '{{trickName}}'!",
+            "comment-on-comment": "{{userName}} replied to your comment!",
+            "comment-love": "{{userName}} loves your comment!"
         }
     },
     "subs-banner": {

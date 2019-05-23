@@ -23,13 +23,13 @@ Go through all menu buttons. Find glaring issues.
 
 - Try love
 - Try comment
-- Try share
+- Share
 - Notice that votes are ony visible when logged in.
 - Try add a name
 - Try vote for skill levels
 - Report
-- Try add comment
 - See that related tricks are loaded
+- Try Reply to comment
 
 ## User page
 
@@ -85,3 +85,7 @@ Delete all app data first.
 ## Login with existing account
 
 Delete all app data first.
+
+## Try profile page
+
+Change image

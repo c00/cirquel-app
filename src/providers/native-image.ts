@@ -1,35 +1,38 @@
 import { Injectable } from '@angular/core';
 import { Camera } from '@ionic-native/camera';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Injectable()
 export class NativeImageProvider {
 
   constructor(
     private camera: Camera,
+    private sanitize: DomSanitizer,
   ) {
 
   }
 
-  public getPicture(fromCamera: boolean, video?: boolean) {    
+  public async getPicture(fromCamera: boolean, video?: boolean) {    
     const options = this.getOptions(fromCamera, video);
     
-    return this.camera.getPicture(options)
-    .then(result => {
-      return result;
-    }) 
-    .catch((err) => {
+    try {
+      const result = await this.camera.getPicture(options);
+      //Sanitize
+      return this.sanitize.bypassSecurityTrustUrl(result);
+      //return result;
+    }
+    catch (err) {
       if (err === 'cordova_not_available') {
         console.info("Can't pick image on Web. returning fake string ");
-        
         //Resolve testing result.
         return "assets/imgs/test-silk.jpg";
-
-      } else {
+      }
+      else {
         //Probably selection canceled
         console.warn(err);
-        Promise.reject(err);
+        throw err;
       }
-    });
+    }
   }
 
   private getOptions(fromCamera?: boolean, video?: boolean) {

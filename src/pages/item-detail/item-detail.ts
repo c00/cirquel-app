@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ENV } from '@app/env';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { TranslateService } from '@ngx-translate/core';
-import { InfiniteScroll, ModalController, NavController, NavParams } from 'ionic-angular';
+import { InfiniteScroll, ModalController, NavController, NavParams, Content } from 'ionic-angular';
 
 import { ContextMenuItem } from '../../components/context-menu/context-menu';
 import { SupportModalComponent } from '../../components/support-modal/support-modal';
@@ -44,9 +44,12 @@ export class ItemDetailPage {
   relatedItems: Item[] = [];
   page = 0;
   state = PageState.LOADING;
+  commentsLoaded = false;
+
+  @ViewChild('content') content: Content;
 
   constructor(
-    public navCtrl: NavController,
+    private navCtrl: NavController,
     public navParams: NavParams,
     private itemService: ItemService,
     private userService: UserService,
@@ -61,6 +64,7 @@ export class ItemDetailPage {
     this.settingsProvider.get().then(s => this.settings = s);
 
     if (this.item) this.search();
+    
   }
 
   public async ionViewWillEnter() {
@@ -86,6 +90,19 @@ export class ItemDetailPage {
     }
 
     if (info.comments) this.item.comments = info.comments;
+    this.commentsLoaded = true;
+    this.scrollToHighlight();
+  }
+
+  private scrollToHighlight() {
+    if (this.navParams.data.replyId || !this.navParams.data.commentId) return;
+
+    setTimeout(() => {
+      const elements = this.content.getNativeElement().getElementsByClassName('highlight');
+      if (!elements || elements.length === 0) return; 
+      const offset = elements[0].offsetTop;
+      this.content.scrollTo(0, offset);
+    });
   }
 
   public getLoveText(): string {

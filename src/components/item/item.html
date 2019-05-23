@@ -34,6 +34,11 @@
       <ion-icon [style.padding-left]="item.loves ? '.4em' : 0" name="heart"></ion-icon>
     </button>
 
+    <button (click)="more()" class="love-button" round ion-button color="grey2" outline icon-right>
+      <span *ngIf="item.commentCount > 0">{{item.commentCount}}</span>
+      <ion-icon [style.padding-left]="item.commentCount ? '.4em' : 0" name="chatbubbles"></ion-icon>
+    </button>
+
 
     <span class="buttons-right">
       <follow-button [author]="item.author"></follow-button>

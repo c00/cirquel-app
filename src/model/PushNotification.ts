@@ -3,7 +3,9 @@ export const PushType = {
   FOLLOW: 'follow',
   NEW_ITEM_FROM_SUB: 'new-from-sub',
   VIDEO_PROCESSED: 'video-processed',
-  NEW_COMMENT: 'new-comment'
+  COMMENT_ON_ITEM: 'comment-on-item',
+  COMMENT_ON_COMMENT: 'comment-on-comment',
+  COMMENT_LOVE: 'comment-love',
 }
 
 export interface PushNotification {
@@ -11,6 +13,7 @@ export interface PushNotification {
   userId: number;
   itemId?: number;
   commentId?: number;
+  parentId?: number;
   type: string;
 
   body?: string;

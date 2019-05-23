@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { TextInput } from 'ionic-angular';
+import { ModalController, TextInput } from 'ionic-angular';
 
 import { SlideInFromTop } from '../../model/Animations';
 import { Comment } from '../../model/Comment';
@@ -7,6 +7,7 @@ import { Item } from '../../model/Item';
 import { DialogService } from '../../providers/dialogs';
 import { ItemService } from '../../providers/item-service';
 import { UserService } from '../../providers/user-service';
+import { ReplyModalComponent } from '../reply-modal/reply-modal';
 
 @Component({
   selector: 'comment-thread',
@@ -33,6 +34,9 @@ export class CommentThreadComponent implements OnInit {
    * @memberof CommentThreadComponent
    */
   @Input() item?: Item;
+
+  @Input('highlight') highlightCommentId?: number;
+  @Input('highlightReply') highlightReplyId?: number;
 
   @Input() focusOnInput: boolean = false;
   @ViewChild('input') input: TextInput;
@@ -72,6 +76,7 @@ export class CommentThreadComponent implements OnInit {
     private userService: UserService,
     private itemService: ItemService,
     private dialogs: DialogService,
+    private modalCtrl: ModalController,
   ) {
   }
 
@@ -82,6 +87,13 @@ export class CommentThreadComponent implements OnInit {
       this.comment.comments = await this.itemService.getCommentThread(this.comment.id);
     }
     this.initialLoadDone = true;
+
+    if (this.highlightReplyId) {      
+      //open reply modal
+      const comment = this.comments.find(c => c.id === this.highlightCommentId);
+      if (!comment) return;
+      this.modalCtrl.create(ReplyModalComponent, { comment, highlight: this.highlightReplyId }).present();
+    }
 
     if (this.focusOnInput) {
       console.log("Set focus to input", this.input);

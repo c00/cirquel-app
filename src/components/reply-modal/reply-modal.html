@@ -13,6 +13,6 @@
   
   <ion-content padding>
     <comment [disableReply]="true" [showFullComment]="true" [comment]="comment"></comment>
-    <comment-thread [focusOnInput]="focusOnInput" [comment]="comment"></comment-thread>
+    <comment-thread [focusOnInput]="focusOnInput" [highlight]="navParams.data.highlight" [comment]="comment"></comment-thread>
   </ion-content>
   

@@ -95,7 +95,7 @@
       <p class="description">{{item.description}}</p>
       <hr class="clear">
 
-      <comment-thread [item]="item"></comment-thread>
+      <comment-thread *ngIf="commentsLoaded" [highlight]="navParams.data.commentId" [highlightReply]="navParams.data.replyId" [item]="item"></comment-thread>
 
     </div>
   </div>

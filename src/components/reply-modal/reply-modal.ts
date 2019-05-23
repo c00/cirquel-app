@@ -13,11 +13,12 @@ export class ReplyModalComponent implements OnInit {
   focusOnInput: boolean;
 
   constructor(
-    navParams: NavParams,
+    public navParams: NavParams,
     private viewCtrl: ViewController,
   ) {
     this.comment = navParams.get('comment');
     this.focusOnInput = navParams.get('focusOnInput');
+    console.log(navParams);
   }
 
   public ngOnInit() {

@@ -6,14 +6,13 @@ import { SlideInAnimation } from '../../model/Animations';
 import { Item } from '../../model/Item';
 import { PageState } from '../../model/PageState';
 import { ValueResult } from '../../model/ValueResult';
+import { Cache } from '../../providers/cache';
 import { DialogService } from '../../providers/dialogs';
 import { ItemService } from '../../providers/item-service';
 import { UserService } from '../../providers/user-service';
 import { UserSettingsProvider } from '../../providers/user-settings';
 import { AddItemPage } from '../add-item/add-item';
 import { SearchPage } from '../search/search';
-import { Cache } from '../../providers/cache';
-import { ItemDetailPage } from '../item-detail/item-detail';
 
 @Component({
   selector: 'page-home',
@@ -82,7 +81,7 @@ export class HomePage {
 
       //DEBUG
       /* const item = this.items.find(i => i.id === 151);
-      this.navCtrl.push(ItemDetailPage, {item}); */
+      this.navCtrl.push(ItemDetailPage, { item, commentId: 2, replyId: 4 }); */
     })
     .catch((err) => {
       this.state = PageState.ERROR;

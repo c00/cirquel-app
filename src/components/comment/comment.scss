@@ -1,6 +1,10 @@
 comment {
   display: block;
 
+  &.highlight {
+    background-color: #fff;    
+  }
+
   .name {
     font-weight: 500;
   }

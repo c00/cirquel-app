@@ -265,11 +265,18 @@ export class MyApp {
             console.error(err);
           }
           this.dialogs.dismissLoader();
-        } else if (n.type === PushType.NEW_COMMENT) {
+        } else if (n.type === PushType.COMMENT_ON_ITEM || n.type === PushType.COMMENT_ON_COMMENT || n.type === PushType.COMMENT_LOVE) {
           this.dialogs.showLoader();
           try {
             const item = await this.items.getItem(n.itemId);
-            this.nav.push(ItemDetailPage, { item });
+            const data = { item, commentId: Number(n.commentId), replyId: undefined };
+            if (n.parentId){
+              data.commentId = Number(n.parentId);
+              data.replyId = Number(n.commentId);
+            }
+
+            console.log("Pushing data", data);
+            this.nav.push(ItemDetailPage, data);
           } catch (err) {
             console.error(err);
           }

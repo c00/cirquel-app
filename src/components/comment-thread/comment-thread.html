@@ -17,6 +17,6 @@
 <ion-spinner *ngIf="!initialLoadDone"></ion-spinner>
 
 <ion-list class="comments-list" *ngIf="initialLoadDone">  
-  <comment @slideIn *ngFor="let c of comments" [comment]="c"></comment>
+  <comment @slideIn *ngFor="let c of comments" [class.highlight]="c.id === highlightCommentId" [comment]="c"></comment>
 </ion-list>
 <button class="button-load-more" *ngIf="commentCount > comments.length" round small ion-button outline (click)="loadNext()">{{ 'comment.load-more-comments' | translate }}</button>

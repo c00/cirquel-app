@@ -40,15 +40,9 @@ export class PushService {
       return;
     }
 
-    console.log("Starting push service");
-
-    this.checkPermissions();
-
     //Get token initially
-    
     const token = await this.fcm.getToken();
     this.sendToken(token);
-    
 
     //Refreshes
     this.tokenRefresh = this.fcm.onTokenRefresh().subscribe(token => {
@@ -57,7 +51,6 @@ export class PushService {
 
     //New notifications
     this.notificationOpen = this.fcm.onNotification().subscribe((n: PushNotification) => {
-      console.log("Received notification", n);
       this.zone.run(() => {
         this.updates.emit(n);
       });
@@ -75,22 +68,6 @@ export class PushService {
     if (this.notificationOpen) this.notificationOpen.unsubscribe();
     if (this.tokenRefresh) this.tokenRefresh.unsubscribe();
     
-  }
-
-  private async checkPermissions(): Promise<any> {
-    if (!this.platform.is('ios')) return;
-
-    // todo check that this works on ios.
-    /* try {
-      const data = await this.fcm.hasPermission();
-      if (!data.isEnabled) {
-        return this.fcm.grantPermission();
-      }
-    }
-    catch (err) {
-      console.log("Something went wrong trying to get permissions for push notifications.");
-      throw err;
-    } */
   }
 
   private async sendToken(token: string) {

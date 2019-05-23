@@ -8,6 +8,17 @@ export const PushType = {
   COMMENT_LOVE: 'comment-love',
 }
 
+export abstract class PushHelper {
+  static commentNotifications = [
+    PushType.COMMENT_ON_ITEM,
+    PushType.COMMENT_ON_COMMENT,
+    PushType.COMMENT_LOVE,
+  ]
+  public static forComment(n: PushNotification): boolean {
+    return (PushHelper.commentNotifications.indexOf(n.type) > -1);
+  }
+}
+
 export interface PushNotification {
   wasTapped: boolean;
   userId: number;

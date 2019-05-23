@@ -1,8 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { ENV } from '@app/env';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { TranslateService } from '@ngx-translate/core';
-import { InfiniteScroll, ModalController, NavController, NavParams, Content } from 'ionic-angular';
+import { Content, InfiniteScroll, ModalController, NavController, NavParams } from 'ionic-angular';
+import { Subscription } from 'rxjs/Rx';
 
 import { ContextMenuItem } from '../../components/context-menu/context-menu';
 import { SupportModalComponent } from '../../components/support-modal/support-modal';
@@ -11,11 +12,13 @@ import { VoteOptions } from '../../components/vote/vote';
 import { CategoryHelper } from '../../model/Category';
 import { Item, ItemInfo, ItemName, VoteInfo } from '../../model/Item';
 import { PageState } from '../../model/PageState';
+import { PushType } from '../../model/PushNotification';
 import { Search } from '../../model/Search';
 import { UserSettings } from '../../model/UserSettings';
 import { UserItemsPage } from '../../pages/user-items/user-items';
 import { DialogService } from '../../providers/dialogs';
 import { ItemService } from '../../providers/item-service';
+import { PushService } from '../../providers/push-service';
 import { UserService } from '../../providers/user-service';
 import { UserSettingsProvider } from '../../providers/user-settings';
 
@@ -23,7 +26,7 @@ import { UserSettingsProvider } from '../../providers/user-settings';
   selector: 'page-item-detail',
   templateUrl: 'item-detail.html',
 })
-export class ItemDetailPage {
+export class ItemDetailPage implements OnDestroy {
   item: Item;
   votes: VoteInfo;
   skillVoteOptions: VoteOptions = {
@@ -45,6 +48,7 @@ export class ItemDetailPage {
   page = 0;
   state = PageState.LOADING;
   commentsLoaded = false;
+  private sub: Subscription;
 
   @ViewChild('content') content: Content;
 
@@ -57,6 +61,7 @@ export class ItemDetailPage {
     private modalCtrl: ModalController,
     private translate: TranslateService,
     private sharing: SocialSharing,
+    private push: PushService,
     private settingsProvider: UserSettingsProvider,
   ) {
     this.loggedIn = this.userService.loggedIn;
@@ -65,6 +70,18 @@ export class ItemDetailPage {
 
     if (this.item) this.search();
     
+    this.sub = this.push.updates
+    .filter((n) => n.type === PushType.COMMENT_ON_ITEM && this.item && n.itemId == this.item.id)
+    .subscribe((n) => {
+      this.getInfo();
+    });
+  }
+
+  public ngOnDestroy() {
+    if (this.sub) {
+      this.sub.unsubscribe();
+      this.sub = null;
+    }
   }
 
   public async ionViewWillEnter() {

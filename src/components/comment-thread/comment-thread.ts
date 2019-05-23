@@ -1,11 +1,14 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ModalController, TextInput } from 'ionic-angular';
+import { Subscription } from 'rxjs/Rx';
 
 import { SlideInFromTop } from '../../model/Animations';
 import { Comment } from '../../model/Comment';
 import { Item } from '../../model/Item';
+import { PushType } from '../../model/PushNotification';
 import { DialogService } from '../../providers/dialogs';
 import { ItemService } from '../../providers/item-service';
+import { PushService } from '../../providers/push-service';
 import { UserService } from '../../providers/user-service';
 import { ReplyModalComponent } from '../reply-modal/reply-modal';
 
@@ -16,7 +19,7 @@ import { ReplyModalComponent } from '../reply-modal/reply-modal';
     SlideInFromTop,
   ]
 })
-export class CommentThreadComponent implements OnInit {
+export class CommentThreadComponent implements OnInit, OnDestroy {
   /**
    * Parent comment (optional)
    * When empty, the item main thread will be shown.
@@ -44,6 +47,7 @@ export class CommentThreadComponent implements OnInit {
   replyText = '';
   sending = false;
   initialLoadDone = false;
+  sub: Subscription;
   
   get loggedIn(): boolean {
     return this.userService.loggedIn;
@@ -75,17 +79,28 @@ export class CommentThreadComponent implements OnInit {
   constructor(
     private userService: UserService,
     private itemService: ItemService,
+    private push: PushService,
     private dialogs: DialogService,
     private modalCtrl: ModalController,
   ) {
+    this.sub = this.push.updates
+    .filter((n) => n.type === PushType.COMMENT_ON_COMMENT && this.comment && n.parentId == this.comment.id)
+    .subscribe((n) => {
+      this.refreshThread();
+    });
+  }
+
+  public ngOnDestroy() {
+    if (this.sub) {
+      this.sub.unsubscribe();
+      this.sub = null;
+    }
   }
 
   public async ngOnInit() { 
     if (!this.item && !this.comment) throw new Error("Can't have a comment thread without either an item of comment for context.");    
 
-    if (this.comment) {
-      this.comment.comments = await this.itemService.getCommentThread(this.comment.id);
-    }
+    await this.refreshThread();
     this.initialLoadDone = true;
 
     if (this.highlightReplyId) {      
@@ -101,6 +116,13 @@ export class CommentThreadComponent implements OnInit {
         if (this.input) this.input.setFocus();
       }, 500)
     }
+  }
+
+  private async refreshThread() {
+    if (this.comment) {
+      this.comment.comments = await this.itemService.getCommentThread(this.comment.id);
+    }
+    //If we're in the main thread, the parent component will take care of it.
   }
 
   public async login() {

@@ -18,7 +18,6 @@ export class ReplyModalComponent implements OnInit {
   ) {
     this.comment = navParams.get('comment');
     this.focusOnInput = navParams.get('focusOnInput');
-    console.log(navParams);
   }
 
   public ngOnInit() {

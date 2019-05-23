@@ -1,25 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Camera } from '@ionic-native/camera';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Injectable()
 export class NativeImageProvider {
 
   constructor(
-    private camera: Camera,
-    private sanitize: DomSanitizer,
+    private camera: Camera
   ) {
 
   }
 
-  public async getPicture(fromCamera: boolean, video?: boolean) {    
+  public async getPicture(fromCamera: boolean, video?: boolean): Promise<string> {    
     const options = this.getOptions(fromCamera, video);
     
     try {
       const result = await this.camera.getPicture(options);
-      //Sanitize
-      return this.sanitize.bypassSecurityTrustUrl(result);
-      //return result;
+      return result;
     }
     catch (err) {
       if (err === 'cordova_not_available') {

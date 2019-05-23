@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { TranslateService } from '@ngx-translate/core';
 import { NavController, NavParams, Platform } from 'ionic-angular';
@@ -33,6 +34,7 @@ export class ProfilePage {
     private translate: TranslateService,
     private sharing: SocialSharing,
     private platform: Platform,
+    private sanitize: DomSanitizer,
   ) {
     
   }
@@ -83,7 +85,7 @@ export class ProfilePage {
       url = this.form.get('imgUri').value;
       
       //Fix for IOS file url stuff
-      const li = new LocalImagePipe(this.platform);
+      const li = new LocalImagePipe(this.platform, this.sanitize);
       url = li.transform(url);
   
     } else if (this.form.get('imgBase').value) {

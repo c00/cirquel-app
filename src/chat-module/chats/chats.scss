@@ -1,0 +1,23 @@
+page-chats {
+  .item {
+    h2 {
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    .right-hand {
+      text-align: right;
+    }
+
+    .badge-md {
+      border-radius: 10px;
+    }
+
+    .time {
+      color: color($colors, lighter);
+      display: block;
+      margin-bottom: 2px;
+    }
+  }
+  
+}

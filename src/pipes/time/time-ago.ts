@@ -19,9 +19,8 @@ export class TimeAgoPipe implements PipeTransform {
     const time = value.format('H:mm');
 
     if (days < -30) {
-      return value.format('ll LT')
-      //return this.tr.instant('time.months-ago', { months: now.diff(value, 'months') });
-    } else if (days < -1) {
+      return value.format('ll')
+    } else if (days < -1) {      
       return this.tr.instant('time.days-ago', { days: Math.abs(days), time });
     } else if (days === -1) {
       return this.tr.instant('time.yesterday', { time });

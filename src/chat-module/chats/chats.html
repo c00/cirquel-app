@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ 'chats.title' | translate }}</ion-title>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+
+    <!-- <ion-item-divider>{{ "chats.new" | translate }}</ion-item-divider> -->
+
+    <button (click)="open(c)" ion-item *ngFor="let c of chats" [class.new-chat]="c.new"
+      [color]="c.newCount ? 'white' : ''">
+      <ion-avatar item-start>
+        <img [src]="c.other.imgBase | image">
+      </ion-avatar>
+      <h2>{{ c.other.userName }}</h2>
+      <p>{{ c.lastMessage.text }}</p>
+
+      <div class="right-hand" item-right>
+        <small class="time">{{ c.lastMessage.created | timeAgo }}</small>
+        <ion-badge *ngIf="c.newCount" color="silks">{{ c.newCount }}</ion-badge>
+      </div>
+    </button>
+
+    <!-- <ion-item-divider>{{ "chats.old" | translate }}</ion-item-divider> -->
+
+
+
+
+
+
+  </ion-list>
+</ion-content>

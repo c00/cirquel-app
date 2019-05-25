@@ -7,6 +7,7 @@ import { MenuController, ModalController, Nav, Platform, PopoverController } fro
 import { User } from 'model/User';
 
 import { AgreementModalComponent } from '../components/agreement-modal/agreement-modal';
+import { AnnouncementModalComponent } from '../components/announcement-modal/announcement-modal';
 import { SelectCategoryModalComponent } from '../components/select-category-modal/select-category-modal';
 import { SupportModalComponent } from '../components/support-modal/support-modal';
 import { Category } from '../model/Category';
@@ -20,13 +21,13 @@ import { ProfilePage } from '../pages/profile/profile';
 import { SearchPage } from '../pages/search/search';
 import { SubsPage } from '../pages/subs/subs';
 import { UserItemsPage } from '../pages/user-items/user-items';
+import { AnnouncementService } from '../providers/announcement-service';
 import { DialogService } from '../providers/dialogs';
 import { ItemService } from '../providers/item-service';
 import { PushService } from '../providers/push-service';
 import { UserService } from '../providers/user-service';
 import { UserSettingsProvider } from '../providers/user-settings';
-import { AnnouncementService } from '../providers/announcement-service';
-import { AnnouncementModalComponent } from '../components/announcement-modal/announcement-modal';
+import { ChatsPage } from '../chat-module/chats/chats';
 
 @Component({
   templateUrl: 'app.html'
@@ -38,6 +39,7 @@ export class MyApp {
   pages: MenuItem[] = [
     { id: 1, icon: "time", title: 'menu.recent', component: HomePage, isRoot: true, selected: true },
     { id: 2, icon: "bookmark", title: 'menu.dictionary', component: DictionaryPage, isRoot: true, selected: false },
+    { id: 7, icon: "chatbubbles", title: 'menu.chat', component: ChatsPage, isRoot: true, selected: false },
     { id: 6, icon: "person-add", title: 'menu.subs', component: SubsPage, isRoot: true, selected: false, requireLogin: true },
     { id: 3, icon: "heart", title: 'menu.favorites', component: FavoritesPage, isRoot: true, selected: false, requireLogin: true },
     { id: 4, icon: "contact", title: 'menu.my-contributions', component: UserItemsPage, isRoot: false, selected: false, data: { mine: true }, requireLogin: true },

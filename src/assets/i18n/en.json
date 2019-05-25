@@ -59,13 +59,13 @@
         "hours": "{{hours}}h, {{minutes}}min",
         "days": "{{days}}d, {{hours}}h",
         "n-a": "n/a",
-        "today": "today, {{time}}",
-        "yesterday": "yesterday, {{time}}",
+        "today": "{{time}}",
+        "yesterday": "yesterday",
         "tomorrow": "tomorrow",
         "seconds-ago": "just now",
         "minutes-ago": "{{minutes}}m ago",
         "hours-ago": "{{hours}}h and {{minutes}}m ago",
-        "days-ago": "{{days}}d ago, {{time}}",
+        "days-ago": "{{days}}d ago",
         "in-days": "in {{days}}",
         "in-months": "in {{months}} month",
         "in-half-year": "in half a year",
@@ -161,6 +161,7 @@
         "dictionary": "Dictionary A-Z",
         "search": "Search",
         "favorites": "Saved tricks",
+        "chat": "Chats",
         "subs": "People following",
         "logout": "Logout",
         "support": "Support and Feedback",
@@ -349,5 +350,10 @@
     },
     "subs-banner": {
         "onboarding": "Users you are following"
+    },
+    "chats": {
+        "new": "New messages",
+        "old": "",
+        "title": "Messages"
     }
 }

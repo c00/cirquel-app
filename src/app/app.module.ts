@@ -60,8 +60,6 @@ import { ProfilePage } from '../pages/profile/profile';
 import { SearchPage } from '../pages/search/search';
 import { SubsPage } from '../pages/subs/subs';
 import { UserItemsPage } from '../pages/user-items/user-items';
-import { ImagePipe } from '../pipes/image/image';
-import { TimePipe } from '../pipes/time/time';
 import { AnnouncementService } from '../providers/announcement-service';
 import { ApiProvider } from '../providers/api';
 import { Cache } from '../providers/cache';
@@ -83,6 +81,8 @@ import { TimeAgoPipe } from '../pipes/time/time-ago';
 import { CommentThreadComponent } from '../components/comment-thread/comment-thread';
 import { AutoResize } from '../directives/auto-resize';
 import { ReplyModalComponent } from '../components/reply-modal/reply-modal';
+import { ChatModule } from '../chat-module/chat.module';
+import { PipesModule } from '../pipes/pipes.module';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -118,10 +118,6 @@ const PAGES_AND_MODALS = [
     SearchSummaryComponent,
     GrowChildComponent,
     UserCardComponent,
-    ImagePipe,
-    TimePipe,
-    TimeAgoPipe,
-    LocalImagePipe,
     ContextMenuComponent,
     EmptyPlaceholderComponent,
     CommentComponent,
@@ -163,6 +159,8 @@ const PAGES_AND_MODALS = [
     }),
     IonicStorageModule.forRoot(),
     ReactiveFormsModule,
+    ChatModule,
+    PipesModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

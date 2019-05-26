@@ -1,15 +1,22 @@
 import { NgModule } from '@angular/core';
-import { ChatService } from './chat-service';
-import { ChatsPage } from './chats/chats';
-import { ChatPage } from './chat/chat';
 import { TranslateModule } from '@ngx-translate/core';
 import { IonicPageModule } from 'ionic-angular';
-import { ImagePipe } from '../pipes/image/image';
-import { PipesModule } from '../pipes/pipes.module';
+
+import { SharedModule } from '../shared.module';
+import { ChatService } from './chat-service';
+import { ChatPage } from './chat/chat';
+import { ChatsPage } from './chats/chats';
+import { ChatFooterComponent } from './chat-footer/chat-footer';
+import { ChatBubbleComponent } from './chat-bubble/chat-bubble';
 
 const PAGES = [
-	ChatsPage, 
+	ChatsPage,
 	ChatPage
+];
+
+const COMPONENTS = [
+	ChatFooterComponent,
+	ChatBubbleComponent,
 ];
 
 function getImports() {
@@ -21,13 +28,16 @@ function getImports() {
 }
 
 @NgModule({
-	declarations: PAGES,
+	declarations: [
+		...PAGES,
+		...COMPONENTS,
+	],
 	providers: [ChatService],
 	imports: [
 		...getImports(),
 		TranslateModule.forChild({}),
-		PipesModule,
+		SharedModule,
 	],
 	exports: PAGES
 })
-export class ChatModule {}
+export class ChatModule { }

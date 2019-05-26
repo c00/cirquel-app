@@ -14,6 +14,8 @@ export class ChatPage implements OnDestroy {
   chat: Chat;
   messages: Message[] = [];
   sub: Subscription;
+  text: string;
+
 
   constructor(
     //public navCtrl: NavController, 
@@ -43,10 +45,15 @@ export class ChatPage implements OnDestroy {
     }
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     if (this.sub) {
       this.sub.unsubscribe();
       this.sub = undefined;
     }
+  }
+
+  public send(m: Message) {
+    //todo send stuff to the API
+    this.messages.push(m);
   }
 }

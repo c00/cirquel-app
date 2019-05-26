@@ -26,6 +26,9 @@ export class ChatsPage {
         { id: 3, other: { userName: 'Marie', imgBase: 'blank_avatar', contribCount: 0, followers: 0 }, lastMessage: { text: "And now: Angry ticks fire out of my nipples", created: 1557777523594, fromMe: false, id: 1, type: 'text'} },
         { id: 5, other: { userName: 'Joost', imgBase: 'blank_avatar', contribCount: 0, followers: 0 }, lastMessage: { text: "Well \n Okay then.", created: 0, fromMe: false, id: 1, type: 'text'} },
       ];
+
+      //debug 
+      this.open(this.chats[0]);
     }, 1);
   }
 

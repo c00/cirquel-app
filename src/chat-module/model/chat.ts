@@ -9,7 +9,7 @@ export interface Chat {
 }
 
 export interface Message {
-  id: number;
+  id?: number;
   text: string;
   fromMe: boolean;
   author?: Author;
@@ -17,4 +17,5 @@ export interface Message {
   edited?: number;
   deleted?: number;
   type: string; //text/image/whatever
+  showTail?: boolean;
 }

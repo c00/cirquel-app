@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppVersion } from '@ionic-native/app-version';
 import { Camera } from '@ionic-native/camera';
 import { Deeplinks } from '@ionic-native/deeplinks';
+import { FCM } from '@ionic-native/fcm';
 import { File } from '@ionic-native/file';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { Network } from '@ionic-native/network';
@@ -14,16 +15,18 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { VideoEditor } from '@ionic-native/video-editor';
-import { FCM } from '@ionic-native/fcm';
 import { IonicStorageModule } from '@ionic/storage';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { InlineSVGModule } from 'ng-inline-svg';
 
+import { ChatModule } from '../chat-module/chat.module';
 import { AgreementModalComponent } from '../components/agreement-modal/agreement-modal';
 import { AnnouncementModalComponent } from '../components/announcement-modal/announcement-modal';
 import { AvatarComponent } from '../components/avatar/avatar';
+import { CommentThreadComponent } from '../components/comment-thread/comment-thread';
+import { CommentComponent } from '../components/comment/comment';
 import { ContextMenuComponent } from '../components/context-menu/context-menu';
 import { EmptyPlaceholderComponent } from '../components/empty-placeholder/empty-placeholder';
 import { EndOfStreamComponent } from '../components/end-of-stream/end-of-stream';
@@ -38,6 +41,7 @@ import { LoginModalComponent } from '../components/login-modal/login-modal';
 import { LoginComponent } from '../components/login/login';
 import { NameVoteComponent } from '../components/name-vote/name-vote';
 import { OtherNameModalComponent } from '../components/other-name-modal/other-name-modal';
+import { ReplyModalComponent } from '../components/reply-modal/reply-modal';
 import { SearchSummaryComponent } from '../components/search-summary/search-summary';
 import { SearchValueComponent } from '../components/search-value/search-value';
 import { SelectCategoryModalComponent } from '../components/select-category-modal/select-category-modal';
@@ -74,15 +78,8 @@ import { UploadProvider } from '../providers/upload';
 import { UserService } from '../providers/user-service';
 import { UserSettingsProvider } from '../providers/user-settings';
 import { VideoService } from '../providers/video-service';
+import { SharedModule } from '../shared.module';
 import { MyApp } from './app.component';
-import { LocalImagePipe } from '../pipes/image/localImage';
-import { CommentComponent } from '../components/comment/comment';
-import { TimeAgoPipe } from '../pipes/time/time-ago';
-import { CommentThreadComponent } from '../components/comment-thread/comment-thread';
-import { AutoResize } from '../directives/auto-resize';
-import { ReplyModalComponent } from '../components/reply-modal/reply-modal';
-import { ChatModule } from '../chat-module/chat.module';
-import { PipesModule } from '../pipes/pipes.module';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -131,7 +128,6 @@ const PAGES_AND_MODALS = [
     UploadProgressComponent,
     LoginComponent,
     CommentThreadComponent,
-    AutoResize,
     SignupComponent,
     SearchValueComponent,
     SubsBannerComponent,
@@ -160,7 +156,7 @@ const PAGES_AND_MODALS = [
     IonicStorageModule.forRoot(),
     ReactiveFormsModule,
     ChatModule,
-    PipesModule,
+    SharedModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

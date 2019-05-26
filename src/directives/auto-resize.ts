@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, OnChanges, SimpleChanges, HostBinding } from '@angular/core';
 import { Content } from 'ionic-angular';
 
 
@@ -13,6 +13,9 @@ export class AutoResize implements OnChanges {
 	onInput(ta: HTMLTextAreaElement) {
 		this.adjust('input');
 	}
+
+	@HostBinding('class')
+  elementClass = 'auto-resize';
 
 	//We can either watch the input for changes, or watch the "watchValue".
 	private mode = 'input';

@@ -49,3 +49,8 @@ ion-textarea textarea.text-input-md {
     opacity: .5;
   }
 }
+
+//Scrollbars in auto resizing textareas
+.auto-resize textarea, textarea.auto-resize {
+  overflow: scroll !important;
+}

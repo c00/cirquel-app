@@ -1,0 +1,82 @@
+chat-bubble {
+  $leftColor: #fff;
+  $leftText: color($colors, lighter);
+  $rightColor: color($colors, silks);
+  $rightText: #fff;
+  $radius: 8px;
+
+  .bubble {
+    position: relative;
+    margin: .8em 1em 0;
+    border-radius: $radius;
+    padding: .4em .5em;
+    display: inline-block;
+
+    .time {
+      float: right;
+      margin: .3em 0 .2em .2em;
+      font-weight: 300;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: 0;
+      height: 0;
+      border: 10px solid transparent;
+      border-top: 0;
+    }
+  }
+
+  &.left {
+    + .left .bubble {
+      margin-top: .3em;
+      border-top-left-radius: $radius;
+      &::after {
+        content: none;
+      }
+    }
+
+    .bubble {
+      background-color: $leftColor;
+      color: $leftText;
+      margin-right: 3em;
+      border-top-left-radius: 0;
+
+      &::after {
+        left: -10px;
+        border-right-color: $leftColor;
+        border-left: 0;
+      }
+    }
+  }
+
+  &.right {
+    + .right .bubble {
+      margin-top: .3em;
+      border-top-right-radius: $radius;
+      &::after {
+        content: none;
+      }
+    }
+
+    .bubble-container {
+      text-align: right;
+    }
+
+    .bubble {  
+      background-color: $rightColor;
+      color: $rightText;
+      margin-right: 1em;
+      margin-left: 3em;
+      border-top-right-radius: 0;
+
+      &::after {
+        right: -10px;
+        border-left-color: $rightColor;
+        border-right: 0;
+      }
+    }
+  }
+}

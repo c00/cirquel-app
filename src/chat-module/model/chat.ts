@@ -17,5 +17,4 @@ export interface Message {
   edited?: number;
   deleted?: number;
   type: string; //text/image/whatever
-  showTail?: boolean;
 }

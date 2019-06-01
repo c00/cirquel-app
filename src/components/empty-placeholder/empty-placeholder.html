@@ -1,8 +1,12 @@
 <div *ngIf="category">
-  <div class="grey image" [inlineSVG]="category.icon" ></div> 
+  <div class="grey image" [inlineSVG]="category.icon"></div>
   <h1>
     {{ 'empty.title' | translate : category }}
   </h1>
-  <p *ngIf="category.name === 'all'">{{ 'empty.message-all' | translate }}</p>
-  <p *ngIf="category.name !== 'all'">{{ 'empty.message-sport' | translate : category }}</p>
+  <p *ngIf="message">{{ message | translate }}</p>
+  <div *ngIf="!message">
+    <p *ngIf="category.name === 'all'">{{ 'empty.message-all' | translate }}</p>
+    <p *ngIf="category.name !== 'all'">{{ 'empty.message-sport' | translate : category }}</p>
+  </div>
+
 </div>

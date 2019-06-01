@@ -79,7 +79,7 @@ export class ProfilePage {
   }
   
   public getImage() {
-    let url;
+    let url: any;
 
     if (this.form.get('imgUri').value) {
       url = this.form.get('imgUri').value;

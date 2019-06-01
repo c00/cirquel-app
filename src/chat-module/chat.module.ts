@@ -8,10 +8,15 @@ import { ChatPage } from './chat/chat';
 import { ChatsPage } from './chats/chats';
 import { ChatFooterComponent } from './chat-footer/chat-footer';
 import { ChatBubbleComponent } from './chat-bubble/chat-bubble';
+import { SendMessageModalComponent } from './send-message-modal/send-message-modal';
 
 const PAGES = [
 	ChatsPage,
 	ChatPage
+];
+
+const MODALS = [
+	SendMessageModalComponent,
 ];
 
 const COMPONENTS = [
@@ -31,12 +36,16 @@ function getImports() {
 	declarations: [
 		...PAGES,
 		...COMPONENTS,
+		...MODALS,
 	],
 	providers: [ChatService],
 	imports: [
 		...getImports(),
 		TranslateModule.forChild({}),
 		SharedModule,
+	],
+	entryComponents: [
+		...MODALS,
 	],
 	exports: PAGES
 })

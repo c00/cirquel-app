@@ -354,6 +354,7 @@
     "chats": {
         "new": "New messages",
         "old": "",
-        "title": "Messages"
+        "title": "Messages",
+        "empty-placeholder": "You don't have any chats yet. You can send someone a message by clicking on their profile image!"
     }
 }

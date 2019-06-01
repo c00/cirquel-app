@@ -28,7 +28,6 @@ import { AvatarComponent } from '../components/avatar/avatar';
 import { CommentThreadComponent } from '../components/comment-thread/comment-thread';
 import { CommentComponent } from '../components/comment/comment';
 import { ContextMenuComponent } from '../components/context-menu/context-menu';
-import { EmptyPlaceholderComponent } from '../components/empty-placeholder/empty-placeholder';
 import { EndOfStreamComponent } from '../components/end-of-stream/end-of-stream';
 import { FollowButtonComponent } from '../components/follow-button/follow-button';
 import { ForgotPasswordModalComponent } from '../components/forgot-password-modal/forgot-password-modal';
@@ -36,7 +35,6 @@ import { GrowChildComponent } from '../components/grow-child/grow-child';
 import { GrowerComponent } from '../components/grower/grower';
 import { ItemListComponent } from '../components/item-list/item-list';
 import { ItemComponent } from '../components/item/item';
-import { LoaderComponent } from '../components/loader/loader';
 import { LoginModalComponent } from '../components/login-modal/login-modal';
 import { LoginComponent } from '../components/login/login';
 import { NameVoteComponent } from '../components/name-vote/name-vote';
@@ -116,11 +114,9 @@ const PAGES_AND_MODALS = [
     GrowChildComponent,
     UserCardComponent,
     ContextMenuComponent,
-    EmptyPlaceholderComponent,
     CommentComponent,
     EndOfStreamComponent,
     VoteComponent,
-    LoaderComponent,
     NameVoteComponent,
     TouchingDirective,
     VideoPlayerComponent,

@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, Input } from '@angular/core';
 
 import { Category } from '../../model/Category';
 import { UserSettingsProvider } from '../../providers/user-settings';
@@ -8,7 +8,7 @@ import { UserSettingsProvider } from '../../providers/user-settings';
   templateUrl: 'empty-placeholder.html'
 })
 export class EmptyPlaceholderComponent implements OnDestroy {
-
+  @Input() message?: string;
   category: Category;
   sub;
 

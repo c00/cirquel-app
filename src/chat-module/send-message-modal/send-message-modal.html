@@ -1,0 +1,27 @@
+<ion-content>
+  <ion-grid no-padding class="full-height">
+    <ion-row align-items-center class="full-height">
+      <div class="my-backdrop" tappable (click)="dismiss()"></div>
+      <ion-col>
+
+        <ion-card>
+          <ion-card-header text-wrap>
+            <button ion-button small icon-only color="light" round class="float-right close-button" (click)="dismiss()">
+              <ion-icon name="close"></ion-icon>
+            </button>
+            Header text
+          </ion-card-header>
+
+          <ion-item>
+            <ion-textarea></ion-textarea>
+          </ion-item>
+
+          <ion-card-content>
+            <button ion-button round outline small block (click)="doVote()">{{ 'ok' | translate }}</button>
+          </ion-card-content>
+        </ion-card>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

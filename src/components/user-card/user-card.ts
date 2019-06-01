@@ -1,11 +1,12 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { TranslateService } from '@ngx-translate/core';
+import { ModalController } from 'ionic-angular';
 
+import { SendMessageModalComponent } from '../../chat-module/send-message-modal/send-message-modal';
 import { ENV } from '../../environments/environment';
 import { Author } from '../../model/Author';
 import { ImagePipe } from '../../pipes/image/image';
-import { DialogService } from '../../providers/dialogs';
 import { UserService } from '../../providers/user-service';
 
 @Component({
@@ -18,10 +19,10 @@ export class UserCardComponent implements OnChanges {
   isMe: boolean;
 
   constructor(
-    private dialogs: DialogService,
     private sharing: SocialSharing,
     private translate: TranslateService,
     private userService: UserService,
+    private modalCtrl: ModalController,
   ) {
 
   }
@@ -41,8 +42,10 @@ export class UserCardComponent implements OnChanges {
     return `url(${url})`;
   }
 
-  public comingSoon() {
-    this.dialogs.showAlert('user.coming-soon-message', 'user.coming-soon-title');
+  public sendMessage() {
+    //todo Check if we already have a conversation
+
+    this.modalCtrl.create(SendMessageModalComponent, { author: this.author }, {cssClass: 'modal-sm'}).present();
   }
 
   public share() {

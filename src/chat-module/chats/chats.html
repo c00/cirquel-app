@@ -9,6 +9,9 @@
 </ion-header>
 
 <ion-content>
+  <empty-placeholder message="chats.empty-placeholder" *ngIf="!loading && chats.length === 0"></empty-placeholder>
+  <loader *ngIf="loading"></loader>
+
   <ion-list>
 
     <!-- <ion-item-divider>{{ "chats.new" | translate }}</ion-item-divider> -->

@@ -10,11 +10,13 @@ export class ChatService {
 
   private cache: { [chatId: number]: Message[] } = {};
 
-  constructor(private api: ApiProvider) {
-    this.addTestMessages();
+  constructor(
+    private api: ApiProvider,
+  ) {
+    //this.addTestMessages();
   }
 
-  private addTestMessages() {
+  /* private addTestMessages() {
     this.cache[1] = [
       { text: "There's this new place you check out! It's got silks and hoops and straps and all the stuff you know you reall love!", created: 0, fromMe: false, id: 1, type: 'text' },
       { text: "Is it Aerial Factory? \nI love Ploy", created: 1557777523594, fromMe: true, id: 2, type: 'text' },
@@ -22,6 +24,12 @@ export class ChatService {
       { text: "Man, I booked my classes already!", created: 1558778423594, fromMe: true, id: 4, type: 'text' },
       { text: "I'll see you there.", created: 1558778513594, fromMe: true, id: 5, type: 'text' },
     ]
+  } */
+
+  public async getChats() {
+    const result = await this.api.get('u/chats');
+
+    return result.chats;
   }
 
   public getMessages(chat: Chat) {
@@ -37,13 +45,16 @@ export class ChatService {
   }
 
   private async getNewMessages() {
-    //todo make real things.
-    const result: NewMessagesResult[] = [
+
+    const result: NewMessagesResult[] = await this.api.get('u/new-messages');
+    console.log("New messages", result);
+
+    /* const result: NewMessagesResult[] = [
       { chatId: 1, added: [
         { text: "Great!", created: 1558778513594, fromMe: false, id: 5, type: 'text' },
       ], updated: [] },
     ];
-
+ */
     for (let r of result) {
       if (!this.cache[r.chatId]) this.cache[r.chatId] = [];
 

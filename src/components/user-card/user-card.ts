@@ -1,13 +1,14 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { TranslateService } from '@ngx-translate/core';
-import { ModalController } from 'ionic-angular';
+import { ModalController, NavController } from 'ionic-angular';
 
 import { SendMessageModalComponent } from '../../chat-module/send-message-modal/send-message-modal';
 import { ENV } from '../../environments/environment';
 import { Author } from '../../model/Author';
 import { ImagePipe } from '../../pipes/image/image';
 import { UserService } from '../../providers/user-service';
+import { ChatPage } from '../../chat-module/chat/chat';
 
 @Component({
   selector: 'user-card',
@@ -23,6 +24,7 @@ export class UserCardComponent implements OnChanges {
     private translate: TranslateService,
     private userService: UserService,
     private modalCtrl: ModalController,
+    private navCtrl: NavController,
   ) {
 
   }
@@ -45,7 +47,13 @@ export class UserCardComponent implements OnChanges {
   public sendMessage() {
     //todo Check if we already have a conversation
 
-    this.modalCtrl.create(SendMessageModalComponent, { author: this.author }, {cssClass: 'modal-sm'}).present();
+    const modal = this.modalCtrl.create(SendMessageModalComponent, { author: this.author }, {cssClass: 'modal-sm'});
+    modal.onDidDismiss(result => {
+      if (result.message) {
+        this.navCtrl.push(ChatPage, { author: this.author });
+      }
+    });
+    modal.present();
   }
 
   public share() {

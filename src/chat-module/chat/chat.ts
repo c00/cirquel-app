@@ -1,16 +1,17 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IonicPage, NavParams } from 'ionic-angular';
 import { Subscription } from 'rxjs';
 
 import { ChatService } from '../chat-service';
 import { Chat, Message } from '../model/chat';
+import { Author } from '../../model/Author';
 
 @IonicPage()
 @Component({
   selector: 'page-chat',
   templateUrl: 'chat.html',
 })
-export class ChatPage implements OnDestroy {
+export class ChatPage implements OnDestroy, OnInit {
   chat: Chat;
   messages: Message[] = [];
   sub: Subscription;
@@ -22,17 +23,32 @@ export class ChatPage implements OnDestroy {
     private navParams: NavParams,
     private chatService: ChatService,
   ) {
-    this.chat = this.navParams.data.chat;
+  }
 
+  public async ngOnInit() {
+    this.chat = this.navParams.data.chat;
+    const author: Author = this.navParams.data.author;
+
+    if (!this.chat && !author) throw new Error("No chat or user!");
+
+    if (!this.chat) {
+      this.chat = await this.chatService.getChatFromUserName(author.userName);
+      this.messages = this.chat.messages;
+      this.setupSub();
+    } else {
+      this.setupSub();
+      //Get all messages in cache, and trigger a refresh
+      this.messages = this.chatService.getMessages(this.chat);
+    }
+  }
+
+  private setupSub() {
     //Respond to new messages
     this.sub = this.chatService.messagesUpdate
-    .filter(result => result.chatId === this.chat.id)
-    .subscribe((update) => {
-      this.processMessages(update.added, update.updated);
-    });
-
-    //Get all messages in cache, and trigger a refresh
-    this.messages = this.chatService.getMessages(this.chat);
+      .filter(result => result.chatId === this.chat.id)
+      .subscribe((update) => {
+        this.processMessages(update.added, update.updated);
+      });
   }
 
   private processMessages(added: Message[], updated: Message[]) {

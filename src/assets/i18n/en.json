@@ -355,6 +355,14 @@
         "new": "New messages",
         "old": "",
         "title": "Messages",
-        "empty-placeholder": "You don't have any chats yet. You can send someone a message by clicking on their profile image!"
+        "empty-placeholder": "You don't have any chats yet. You can send someone a message by clicking on their profile image!",
+        "text-placeholder": "Tap to type...",
+        "empty-chat": "No messages yet...",
+        "new-chat-badge": "new!",
+        "new-modal": {
+            "title": "To: {{userName}}",
+            "send": "Send",
+            "text-placeholder": "Make it a nice one!"
+        }
     }
 }

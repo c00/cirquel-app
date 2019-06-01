@@ -1,5 +1,5 @@
 <ion-row no-padding>
-  <ion-col col-auto no-padding>
+  <ion-col col-auto no-padding *ngIf="showAddButton">
     <button class="add-button" ion-button clear icon-only item-start>
       <ion-icon name="add"></ion-icon>
     </button>
@@ -7,7 +7,7 @@
 
   <ion-col no-padding>
     <ion-item no-padding no-lines>
-      <ion-textarea [(ngModel)]="text" [autoResize]="text" [content]="content" rows="1"></ion-textarea>
+      <ion-textarea [(ngModel)]="text" [autoResize]="text" [content]="content" [placeholder]="placeholder | translate" rows="1"></ion-textarea>
     </ion-item>
   </ion-col>
 

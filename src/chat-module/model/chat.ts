@@ -6,10 +6,12 @@ export interface Chat {
   //lastMessageId: number; //not relevent to the frontend
   lastMessage: Message;
   newCount?: number
+  messages?: Message[];
 }
 
 export interface Message {
   id?: number;
+  chatId?: number;
   text: string;
   fromMe: boolean;
   author?: Author;

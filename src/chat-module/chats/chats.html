@@ -22,10 +22,12 @@
         <img [src]="c.other.imgBase | image">
       </ion-avatar>
       <h2>{{ c.other.userName }}</h2>
-      <p>{{ c.lastMessage.text }}</p>
+      <p *ngIf="c.lastMessage">{{ c.lastMessage.text }}</p>
+      <p class="italics" *ngIf="!c.lastMessage">{{ 'chats.empty-chat' | translate }}</p>
 
       <div class="right-hand" item-right>
-        <small class="time">{{ c.lastMessage.created | timeAgo }}</small>
+        <ion-badge *ngIf="!c.lastMessage" color="lighter">{{ 'chats.new-chat-badge' | translate }}</ion-badge>
+        <small class="time" *ngIf="c.lastMessage">{{ c.lastMessage.created | timeAgo }}</small>
         <ion-badge *ngIf="c.newCount" color="silks">{{ c.newCount }}</ion-badge>
       </div>
     </button>

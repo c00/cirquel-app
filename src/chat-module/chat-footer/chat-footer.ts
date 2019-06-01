@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 
 import { Message } from '../model/chat';
 
@@ -8,6 +8,8 @@ import { Message } from '../model/chat';
 })
 export class ChatFooterComponent {
   text: string = '';
+  @Input() placeholder = "chats.text-placeholder";
+  @Input() showAddButton = true;
 
   @Output() sendMessage = new EventEmitter<Message>();
   

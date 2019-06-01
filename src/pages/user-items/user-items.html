@@ -10,12 +10,6 @@
 
 <ion-content #content>
   <upload-progress></upload-progress>
-
   <user-card [author]="author"></user-card>
-  <!-- <div class="author-info">
-    <div class="author-image" [style.background-image]="getImage(author?.imgBase)"></div>
-  </div> -->
-
   <item-list (nextPage)="loadNextPage($event)" [state]="state" [items]="items"></item-list>
-
 </ion-content>

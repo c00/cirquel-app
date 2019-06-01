@@ -5,20 +5,19 @@
       <ion-col>
 
         <ion-card>
-          <ion-card-header text-wrap>
+          <ion-item class="header" color="white">
             <button ion-button small icon-only color="light" round class="float-right close-button" (click)="dismiss()">
               <ion-icon name="close"></ion-icon>
             </button>
-            Header text
-          </ion-card-header>
 
-          <ion-item>
-            <ion-textarea></ion-textarea>
+            <ion-avatar item-start>
+              <img [src]="author.imgBase | image">
+            </ion-avatar>
+
+            <h2>{{ 'chats.new-modal.title' | translate : author }}</h2>
           </ion-item>
 
-          <ion-card-content>
-            <button ion-button round outline small block (click)="doVote()">{{ 'ok' | translate }}</button>
-          </ion-card-content>
+          <chat-footer (sendMessage)="send($event)" [showAddButton]="false"></chat-footer>
         </ion-card>
 
       </ion-col>

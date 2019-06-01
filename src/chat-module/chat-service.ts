@@ -13,48 +13,60 @@ export class ChatService {
   constructor(
     private api: ApiProvider,
   ) {
-    //this.addTestMessages();
+    
   }
 
-  /* private addTestMessages() {
-    this.cache[1] = [
-      { text: "There's this new place you check out! It's got silks and hoops and straps and all the stuff you know you reall love!", created: 0, fromMe: false, id: 1, type: 'text' },
-      { text: "Is it Aerial Factory? \nI love Ploy", created: 1557777523594, fromMe: true, id: 2, type: 'text' },
-      { text: "Yeah everyone there is so amazing.", created: 1558768523594, fromMe: false, id: 3, type: 'text' },
-      { text: "Man, I booked my classes already!", created: 1558778423594, fromMe: true, id: 4, type: 'text' },
-      { text: "I'll see you there.", created: 1558778513594, fromMe: true, id: 5, type: 'text' },
-    ]
-  } */
+  public async send(m: Message, toUserName?: string): Promise<Message> {
+    //todo check type of message.
+    const result = await this.api.post('u/text-message', { text: m.text, to: toUserName, chatId: m.chatId });
 
-  public async getChats() {
+    return result.message;
+  }
+
+  public async getChats(): Promise<Chat[]> {
     const result = await this.api.get('u/chats');
 
     return result.chats;
   }
 
-  public getMessages(chat: Chat) {
-    //Return what's in cache, and fire off a refresh
-    this.getNewMessages();
+  public async getChatFromUserName(userName: string): Promise<Chat> {
+    const result = await this.api.get(`u/chat-from-user/${userName}`);
 
+    return result.chat;
+  }
+
+  public async getChat(chatId: number): Promise<Chat> {
+    const result = await this.api.get(`u/chat/${chatId}`);
+
+    return result.chat;
+  }
+
+  public getMessages(chat: Chat): Message[] {
     if (this.cache[chat.id]) {
+      //Return what's in cache, and fire off a refresh
+      this.getNewMessages();
       return this.cache[chat.id];
     } else {
+      this.getAllMessages(chat.id);
+      //Nothing in cache. Get all.
       return [];
     }
 
   }
 
+  private async getAllMessages(chatId: number) {
+    const result = await this.api.get(`u/chat/${chatId}`);
+    this.cache[result.chat.id] = result.chat.messages;
+    this.messagesUpdate.next({ chatId: result.chat.id, added: result.chat.messages, updated: []});
+    return result.chat.messages;
+  }
+
   private async getNewMessages() {
 
+    //todo fix API side.
     const result: NewMessagesResult[] = await this.api.get('u/new-messages');
     console.log("New messages", result);
 
-    /* const result: NewMessagesResult[] = [
-      { chatId: 1, added: [
-        { text: "Great!", created: 1558778513594, fromMe: false, id: 5, type: 'text' },
-      ], updated: [] },
-    ];
- */
     for (let r of result) {
       if (!this.cache[r.chatId]) this.cache[r.chatId] = [];
 

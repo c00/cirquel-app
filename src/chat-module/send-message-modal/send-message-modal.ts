@@ -26,12 +26,7 @@ export class SendMessageModalComponent {
   }
 
   public async send(m: Message) {
-    console.log("Sending", m);
     const message = await this.chatService.send(m, this.author.userName);
-
-    //dismiss modal, navigate to chat screen
     this.dismiss({status: 'ok', message});
-    //this.navCtrl.push(ChatPage, { author: this.author });
-    //this.navCtrl.setRoot(ChatsPage);
   }
 }

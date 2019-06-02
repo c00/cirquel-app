@@ -68,8 +68,10 @@ export class ChatPage implements OnDestroy, OnInit {
     }
   }
 
-  public send(m: Message) {
-    //todo send stuff to the API
+  public async send(m: Message) {
+    m.chatId = this.chat.id;
     this.messages.push(m);
+    const message = await this.chatService.send(m);
+    m.id = message.id;
   }
 }

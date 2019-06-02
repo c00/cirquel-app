@@ -64,10 +64,10 @@ export class ChatService {
   private async getNewMessages() {
 
     //todo fix API side.
-    const result: NewMessagesResult[] = await this.api.get('u/new-messages');
-    console.log("New messages", result);
+    const response = await this.api.get('u/new-messages');
+    const results = response.results;
 
-    for (let r of result) {
+    for (let r of results) {
       if (!this.cache[r.chatId]) this.cache[r.chatId] = [];
 
       //Add new messages

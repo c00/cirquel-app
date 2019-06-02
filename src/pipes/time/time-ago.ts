@@ -18,13 +18,16 @@ export class TimeAgoPipe implements PipeTransform {
     const days = value.diff(now, 'days');
     const time = value.format('H:mm');
 
+    const isToday = value.isSame(now, 'day'); //today?
+    const isYesterday = value.isSame(now.subtract(1, 'day'), 'day');
+
     if (days < -30) {
       return value.format('ll')
     } else if (days < -1) {      
       return this.tr.instant('time.days-ago', { days: Math.abs(days), time });
-    } else if (days === -1) {
+    } else if (isYesterday) {
       return this.tr.instant('time.yesterday', { time });
-    } else if (days === 0) {
+    } else if (isToday) {
       return this.tr.instant('time.today', { time });
     }
   }

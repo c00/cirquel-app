@@ -29,5 +29,14 @@ page-chat {
   ion-footer {
     background-color: #f3f3f3;
   }
-  
+
+  .scroll-content {
+    overflow: auto;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .message-container {
+    padding-bottom: 8px;
+  }
 }

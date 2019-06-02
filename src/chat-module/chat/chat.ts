@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { IonicPage, NavParams } from 'ionic-angular';
+import { NavParams } from 'ionic-angular';
 import { Subscription } from 'rxjs';
 
+import { Author } from '../../model/Author';
 import { ChatService } from '../chat-service';
 import { Chat, Message } from '../model/chat';
-import { Author } from '../../model/Author';
+import { NewMessagesResult } from 'model/ApiResult';
 
-@IonicPage()
 @Component({
   selector: 'page-chat',
   templateUrl: 'chat.html',
@@ -33,12 +33,12 @@ export class ChatPage implements OnDestroy, OnInit {
 
     if (!this.chat) {
       this.chat = await this.chatService.getChatFromUserName(author.userName);
-      this.messages = this.chat.messages;
+      this.messages = [...this.chat.messages];
       this.setupSub();
     } else {
       this.setupSub();
       //Get all messages in cache, and trigger a refresh
-      this.messages = this.chatService.getMessages(this.chat);
+      this.messages = [...this.chatService.getMessages(this.chat)];
     }
   }
 
@@ -46,9 +46,12 @@ export class ChatPage implements OnDestroy, OnInit {
     //Respond to new messages
     this.sub = this.chatService.messagesUpdate
       .filter(result => result.chatId === this.chat.id)
-      .subscribe((update) => {
-        this.processMessages(update.added, update.updated);
+      .subscribe((result: NewMessagesResult) => {
+        console.log("chat.ts sub", result);
+        this.processMessages(result.added, result.updated);
       });
+
+    this.chatService.openChatId = this.chat.id;
   }
 
   private processMessages(added: Message[], updated: Message[]) {
@@ -66,6 +69,7 @@ export class ChatPage implements OnDestroy, OnInit {
       this.sub.unsubscribe();
       this.sub = undefined;
     }
+    this.chatService.openChatId = null;
   }
 
   public async send(m: Message) {

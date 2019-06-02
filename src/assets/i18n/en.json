@@ -345,7 +345,8 @@
             "video-processed": "Your video is done processing!",
             "comment-on-item": "{{userName}} commented on your trick '{{trickName}}'!",
             "comment-on-comment": "{{userName}} replied to your comment!",
-            "comment-love": "{{userName}} loves your comment!"
+            "comment-love": "{{userName}} loves your comment!",
+            "message-activity": "{{userName}} says: {{text}}"
         }
     },
     "subs-banner": {

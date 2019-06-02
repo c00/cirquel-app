@@ -7,7 +7,7 @@ import { Platform } from 'ionic-angular';
 import { Subscription } from 'rxjs/Rx';
 
 import { Device } from '../model/Device';
-import { PushNotification } from '../model/PushNotification';
+import { PushNotification, PushHelper } from '../model/PushNotification';
 import { ApiProvider } from './api';
 import { Store } from './store';
 
@@ -52,6 +52,8 @@ export class PushService {
     //New notifications
     this.notificationOpen = this.fcm.onNotification().subscribe((n: PushNotification) => {
       this.zone.run(() => {
+        PushHelper.fixTypes(n);
+        console.log(n);
         this.updates.emit(n);
       });
     });

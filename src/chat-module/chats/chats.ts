@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 
+import { UserService } from '../../providers/user-service';
+import { ChatService } from '../chat-service';
 import { ChatPage } from '../chat/chat';
 import { Chat } from '../model/chat';
-import { ChatService } from '../chat-service';
-import { UserService } from '../../providers/user-service';
+import { PushService } from '../../providers/push-service';
+import { PushHelper, PushNotification } from '../../model/PushNotification';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'page-chats',
@@ -14,31 +17,34 @@ export class ChatsPage {
 
   chats: Chat[] = [];
   loading = true;
+  private sub: Subscription;
 
   constructor(
     private navCtrl: NavController,
     private chatService: ChatService, 
     private userService: UserService,
+    private push: PushService,
   ) {
-    this.init();
-    //Mock stuff
-    /* setTimeout(() => {
-      this.chats = [
-        { id: 1, newCount: 4, other: { userName: 'Pietje', imgBase: 'blank_avatar', contribCount: 0, followers: 0 }, lastMessage: { text: "I live in a giant bucket", created: 1558778513594, fromMe: false, id: 1, type: 'text'} },
-        { id: 2, newCount: 129, other: { userName: 'Karel', imgBase: 'blank_avatar', contribCount: 0, followers: 0 }, lastMessage: { text: "Smile!", created: 1558778423594, fromMe: false, id: 1, type: 'text'} },
-        { id: 4, other: { userName: 'Die bitch met die lange naam', imgBase: 'blank_avatar', contribCount: 0, followers: 0 }, lastMessage: { text: "Life is like an ocean voyage, and our body are the ships.", created: 1558768523594, fromMe: false, id: 1, type: 'text'} },
-        { id: 3, other: { userName: 'Marie', imgBase: 'blank_avatar', contribCount: 0, followers: 0 }, lastMessage: { text: "And now: Angry ticks fire out of my nipples", created: 1557777523594, fromMe: false, id: 1, type: 'text'} },
-        { id: 5, other: { userName: 'Joost', imgBase: 'blank_avatar', contribCount: 0, followers: 0 }, lastMessage: { text: "Well \n Okay then.", created: 0, fromMe: false, id: 1, type: 'text'} },
-      ];
-
-      //debug 
-      this.open(this.chats[0]);
-    }, 1); */
   }
-  private async init() {
+
+  public async ionViewWillEnter() {
     await this.userService.ready();
     this.chats = await this.chatService.getChats();
     this.loading = false;
+  }
+
+  public async ionViewWillLoad() {
+    this.sub = this.push.updates.filter(n => PushHelper.forChat(n))
+    .subscribe(async (n: PushNotification) => {
+      this.chats = await this.chatService.getChats();
+    });
+  }
+
+  public ionViewWillUnload() {
+    if (this.sub){
+      this.sub.unsubscribe();
+      this.sub = undefined;
+    }
   }
 
   public open(chat: Chat) {

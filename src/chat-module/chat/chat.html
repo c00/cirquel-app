@@ -15,9 +15,9 @@
 
 </ion-header>
 <ion-content #content>
-
-  <chat-bubble *ngFor="let m of messages" [message]="m"></chat-bubble>
-
+  <div class="message-container"> <!-- Purely exists to offset the flex direction reverse. -->
+    <chat-bubble *ngFor="let m of messages" [message]="m"></chat-bubble>
+  </div>
 </ion-content>
 
 <ion-footer>

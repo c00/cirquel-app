@@ -28,6 +28,7 @@ import { PushService } from '../providers/push-service';
 import { UserService } from '../providers/user-service';
 import { UserSettingsProvider } from '../providers/user-settings';
 import { ChatsPage } from '../chat-module/chats/chats';
+import { ChatService } from '../chat-module/chat-service';
 
 @Component({
   templateUrl: 'app.html'
@@ -64,6 +65,7 @@ export class MyApp {
     private dialogs: DialogService,
     private items: ItemService,
     private as: AnnouncementService,
+    private chats: ChatService,
   ) {
     this.initializeApp();
   }
@@ -293,13 +295,22 @@ export class MyApp {
       });
   }
 
+  /**
+   * Show in-app toast message for a new notification.
+   *
+   * @private
+   * @param {PushNotification} n
+   * @memberof MyApp
+   */
   private async showNotificationToast(n: PushNotification) {
-    const result = await this.dialogs.showToastWithButton(`notification.toast.${n.type}`, n);
-    console.log("toast", n);
-    if (result === 'button') {
-      console.log("pressed");
-    }
+    if (this.chats.shouldShowToast(n) && !n.silent) {
+      const result = await this.dialogs.showToastWithButton(`notification.toast.${n.type}`, n);
 
+      if (result === 'button') {
+        //I guess this could be something some day.
+        console.log("pressed");
+      }
+    }
   }
 }
 

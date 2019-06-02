@@ -1,19 +1,36 @@
 import { Injectable } from '@angular/core';
-import { ApiProvider } from '../providers/api';
 import { Subject } from 'rxjs';
-import { Message, Chat } from './model/chat';
+
 import { NewMessagesResult } from '../model/ApiResult';
+import { PushType, PushNotification, PushHelper } from '../model/PushNotification';
+import { ApiProvider } from '../providers/api';
+import { PushService } from '../providers/push-service';
+import { Chat, Message } from './model/chat';
 
 @Injectable()
 export class ChatService {
   public messagesUpdate = new Subject<NewMessagesResult>();
-
+  public openChatId: number = null;
   private cache: { [chatId: number]: Message[] } = {};
 
   constructor(
     private api: ApiProvider,
+    push: PushService,
   ) {
-    
+    push.updates
+      .filter(n => n.type === PushType.MESSAGE_ACTIVITY)
+      .subscribe(() => {
+        console.log("Received new Message notification. Time to get some new mesages");
+        this.getNewMessages();
+      });
+
+      push.updates
+      .filter(n => n.type === PushType.CHAT_ACTIVITY)
+      .subscribe(() => {
+        console.log("Received new Chat notification. Update a chat?");
+        //this.getNewMessages();
+      });
+
   }
 
   public async send(m: Message, toUserName?: string): Promise<Message> {
@@ -54,16 +71,26 @@ export class ChatService {
 
   }
 
+  public shouldShowToast(n: PushNotification) {
+    console.log('shouldShowToast', n);
+    if (!PushHelper.forChat(n)) return true;
+    console.log("1")
+    if (n.chatId && n.chatId === this.openChatId) return false;
+    console.log("2")
+    return true;
+  }
+
   private async getAllMessages(chatId: number) {
+    console.log("Getting all messages");
     const result = await this.api.get(`u/chat/${chatId}`);
     this.cache[result.chat.id] = result.chat.messages;
-    this.messagesUpdate.next({ chatId: result.chat.id, added: result.chat.messages, updated: []});
+    this.messagesUpdate.next({ chatId: result.chat.id, added: result.chat.messages, updated: [] });
     return result.chat.messages;
   }
 
   private async getNewMessages() {
-
-    //todo fix API side.
+    console.log("Getting NEW messages");
+    
     const response = await this.api.get('u/new-messages');
     const results = response.results;
 

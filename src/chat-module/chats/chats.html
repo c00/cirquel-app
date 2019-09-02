@@ -14,8 +14,6 @@
 
   <ion-list>
 
-    <!-- <ion-item-divider>{{ "chats.new" | translate }}</ion-item-divider> -->
-
     <button (click)="open(c)" ion-item *ngFor="let c of chats" [class.new-chat]="c.new"
       [color]="c.newCount ? 'white' : ''">
       <ion-avatar item-start>
@@ -31,12 +29,6 @@
         <ion-badge *ngIf="c.newCount" color="silks">{{ c.newCount }}</ion-badge>
       </div>
     </button>
-
-    <!-- <ion-item-divider>{{ "chats.old" | translate }}</ion-item-divider> -->
-
-
-
-
 
 
   </ion-list>

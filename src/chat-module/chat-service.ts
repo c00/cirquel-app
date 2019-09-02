@@ -67,7 +67,7 @@ export class ChatService {
   public getMessages(chat: Chat): Message[] {
     if (this.cache[chat.id]) {
       //Return what's in cache, and fire off a refresh
-      this.getNewMessages();
+      this.getNewMessages(chat.id);
       return this.cache[chat.id];
     } else {
       this.getAllMessages(chat.id);
@@ -94,10 +94,12 @@ export class ChatService {
     return result.chat.messages;
   }
 
-  private async getNewMessages() {
-    console.log("Getting NEW messages");
+  private async getNewMessages(activeChat?: number) {
+    console.log("Getting new messages");
+
+    const params = activeChat ? `?activeChat=${activeChat}` : '';
     
-    const response = await this.api.get('u/new-messages');
+    const response = await this.api.get(`u/new-messages${params}`);
     const results = response.results;
 
     for (let r of results) {

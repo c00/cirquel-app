@@ -19,4 +19,12 @@ export interface Message {
   edited?: number;
   deleted?: number;
   type: string; //text/image/whatever
+  isNew?: boolean;
+  status?: string;
 }
+
+export const MESSAGE_STATUS = {
+  SENDING: 'sending',
+  SENT: null,
+  FAILED: 'failed'
+};

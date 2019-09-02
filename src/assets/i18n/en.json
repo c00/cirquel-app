@@ -364,6 +364,7 @@
             "title": "To: {{userName}}",
             "send": "Send",
             "text-placeholder": "Make it a nice one!"
-        }
+        },
+        "send-error": "Message not sent. Tap to retry..."
     }
 }

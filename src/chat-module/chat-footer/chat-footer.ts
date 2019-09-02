@@ -13,13 +13,19 @@ export class ChatFooterComponent {
 
   @Output() sendMessage = new EventEmitter<Message>();
   
-
   constructor() {
   }
 
   public sendText() {
+    if (!this.text) return;
     this.sendMessage.next({ text: this.text, created: + new Date(), fromMe: true, type: "text" });
     this.text = "";
+  }
+
+  public keyPress(event: KeyboardEvent) {
+    if (event.ctrlKey && event.keyCode === 10) {
+      this.sendText();
+    }
   }
 
 }

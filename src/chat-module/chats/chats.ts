@@ -8,6 +8,7 @@ import { Chat } from '../model/chat';
 import { PushService } from '../../providers/push-service';
 import { PushHelper, PushNotification } from '../../model/PushNotification';
 import { Subscription } from 'rxjs';
+import { DialogService } from '../../providers/dialogs';
 
 @Component({
   selector: 'page-chats',
@@ -24,7 +25,14 @@ export class ChatsPage {
     private chatService: ChatService, 
     private userService: UserService,
     private push: PushService,
+    private dialogs: DialogService,
   ) {
+  }
+
+  public ionViewCanEnter(){
+    if (this.userService.loggedIn) return true;
+    
+    return this.dialogs.showLoginModal();
   }
 
   public async ionViewWillEnter() {

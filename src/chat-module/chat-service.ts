@@ -5,7 +5,7 @@ import { NewMessagesResult } from '../model/ApiResult';
 import { PushType, PushNotification, PushHelper } from '../model/PushNotification';
 import { ApiProvider } from '../providers/api';
 import { PushService } from '../providers/push-service';
-import { Chat, Message } from './model/chat';
+import { Chat, Message, MESSAGE_STATUS } from './model/chat';
 
 @Injectable()
 export class ChatService {
@@ -20,7 +20,7 @@ export class ChatService {
     push.updates
       .filter(n => n.type === PushType.MESSAGE_ACTIVITY)
       .subscribe(() => {
-        console.log("Received new Message notification. Time to get some new mesages");
+        console.log("Received new Message notification. Time to get some new messages");
         this.getNewMessages();
       });
 
@@ -35,9 +35,15 @@ export class ChatService {
 
   public async send(m: Message, toUserName?: string): Promise<Message> {
     //todo check type of message.
-    const result = await this.api.post('u/text-message', { text: m.text, to: toUserName, chatId: m.chatId });
-
-    return result.message;
+    m.status = MESSAGE_STATUS.SENDING;
+    try {
+      const result = await this.api.post('u/text-message', { text: m.text, to: toUserName, chatId: m.chatId }, true); 
+      m.status = MESSAGE_STATUS.SENT;
+      return result.message;
+    } catch (ex) {
+      m.status = MESSAGE_STATUS.FAILED;
+      return m;
+    }
   }
 
   public async getChats(): Promise<Chat[]> {

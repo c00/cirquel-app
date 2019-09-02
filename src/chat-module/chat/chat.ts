@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavParams } from 'ionic-angular';
+import { NewMessagesResult } from 'model/ApiResult';
 import { Subscription } from 'rxjs';
 
 import { Author } from '../../model/Author';
 import { ChatService } from '../chat-service';
 import { Chat, Message } from '../model/chat';
-import { NewMessagesResult } from 'model/ApiResult';
 
 @Component({
   selector: 'page-chat',

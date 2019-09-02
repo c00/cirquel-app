@@ -86,12 +86,12 @@ export class ApiProvider {
     .then(res => JSON.parse(res.response));
   }
   
-  public post(path: string, body: any): Promise<any> {
+  public post(path: string, body: any, silentError = false): Promise<any> {
     
     return this.http.post(this.settings.api + path, body, { headers: this.headers })
     .map((res: Response) => { return res.json(); })
     .catch((err: Response, obs: Observable<any>) => {
-      return this.handleError(err, obs);
+      return this.handleError(err, obs, silentError);
     })
     .toPromise();
   }
@@ -153,15 +153,15 @@ export class ApiProvider {
     })
   }
   
-  private handleError(err, obs: Observable<any>){
+  private handleError(err, obs: Observable<any>, silentError = false){
     
     console.log("error", err);
     
     //Show a message Toast if appropriate
     if (err.status !== undefined && this.errorMessages[err.status]) {
-      this.dialogs.showToast(this.errorMessages[err.status]);
+      if (!silentError) this.dialogs.showToast(this.errorMessages[err.status]);
     } else if (err.name === 'TimeoutError') {
-      this.dialogs.showToast(this.errorMessages.timeout);
+      if (!silentError) this.dialogs.showToast(this.errorMessages.timeout);
     } else if (err.status === 401) {
       //Logout?
     }

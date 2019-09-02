@@ -79,4 +79,9 @@ chat-bubble {
       }
     }
   }
+
+  .send-error {
+    margin-right: 20px;
+    color: color($colors, 'danger');
+  }
 }

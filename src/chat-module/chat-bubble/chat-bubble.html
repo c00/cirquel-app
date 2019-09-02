@@ -1,7 +1,18 @@
-<div class="bubble-container">
+<div class="bubble-container" tappable (click)="retrySending()">
   <div class="bubble">
     <span class="text">{{message.text}}</span>
-    <small class="time">{{message.created | timeAgo}}</small>
-    <!-- <span class="send-error">{{ 'chat.send-error' | translate }}</span> -->
+    <small class="time">
+      {{message.created | timeAgo}}
+      <span *ngIf="message.fromMe">
+        <ion-icon *ngIf="!message.status" color="grey2" name="checkmark"></ion-icon>
+        <ion-icon *ngIf="message.status === 'failed'" color="danger" name="alert"></ion-icon>
+        <ion-icon *ngIf="message.status === 'sending'" color="grey2" name="paper-plane"></ion-icon>
+      </span>
+    </small>
   </div>
+
+  <div *ngIf="message.fromMe && message.status === 'failed'" class="send-error">
+    {{ 'chats.send-error' | translate }}
+  </div>
+
 </div>

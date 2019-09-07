@@ -19,8 +19,9 @@ export interface Message {
   edited?: number;
   deleted?: number;
   type: string; //text/image/whatever
-  isNew?: boolean;
+  read?: boolean;
   status?: string;
+  selected?: boolean;
 }
 
 export const MESSAGE_STATUS = {

@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnInit, EventEmitter, Output } from '@angular/core';
 
 import { ChatService } from '../chat-service';
 import { Message, MESSAGE_STATUS } from '../model/chat';
@@ -11,10 +11,15 @@ export class ChatBubbleComponent implements OnInit {
 
   @Input() message: Message;
   @HostBinding('class') class: string;
-  //@Output() retry = new EventEmitter<Message>();
+  @Output() onSelect = new EventEmitter<boolean>();
 
   constructor(private chatService: ChatService) {
     
+  }
+
+  toggleSelect() {
+    this.message.selected = !this.message.selected;
+    this.onSelect.emit(this.message.selected);
   }
 
   ngOnInit() {

@@ -365,6 +365,8 @@
             "send": "Send",
             "text-placeholder": "Make it a nice one!"
         },
-        "send-error": "Message not sent. Tap to retry..."
+        "send-error": "Message not sent. Tap to retry...",
+        "new-messages-line": "New messages",
+        "selected": "{{ count }} selected"
     }
 }

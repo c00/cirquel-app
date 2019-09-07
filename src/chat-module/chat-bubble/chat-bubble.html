@@ -1,4 +1,4 @@
-<div class="bubble-container" tappable (click)="retrySending()">
+<div tappable (click)="toggleSelect()" class="bubble-container" [class.selected]="message.selected" tappable (click)="retrySending()">
   <div class="bubble">
     <span class="text">{{message.text}}</span>
     <small class="time">

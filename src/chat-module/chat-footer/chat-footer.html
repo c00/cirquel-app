@@ -7,7 +7,7 @@
 
   <ion-col no-padding>
     <ion-item no-padding no-lines>
-      <ion-textarea (keypress)="keyPress($event)" [(ngModel)]="text" [autoResize]="text" [content]="content" [placeholder]="placeholder | translate" rows="1"></ion-textarea>
+      <ion-textarea maxlength="1000" #ta (click)="setFocus($event)" (keypress)="keyPress($event)" [(ngModel)]="text" [autoResize]="text" [content]="content" [placeholder]="placeholder | translate" rows="1"></ion-textarea>
     </ion-item>
   </ion-col>
 

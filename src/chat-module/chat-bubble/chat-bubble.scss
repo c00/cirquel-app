@@ -5,9 +5,13 @@ chat-bubble {
   $rightText: #fff;
   $radius: 8px;
 
+  .bubble-container.selected {
+    background: rgba(color($colors, "secondary"), .2);
+  }
+
   .bubble {
     position: relative;
-    margin: .8em 1em 0;
+    margin: .4em 1em;
     border-radius: $radius;
     padding: .4em .5em;
     display: inline-block;

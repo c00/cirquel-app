@@ -1,22 +1,35 @@
 <ion-header>
+  <ion-navbar [hideBackButton]="selectedCount">
+    <span *ngIf="selectedCount === 0">
+      <ion-title>
+        <img class="avatar" [src]="chat?.other.imgBase | image">
+        <span class="text">
+          {{ chat?.other.userName }}
+        </span>
 
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>
-      <img class="avatar" [src]="chat?.other.imgBase | image">
-      <span class="text">
-        {{ chat?.other.userName }}
-      </span>
+      </ion-title>
+    </span>
 
-    </ion-title>
+    <span *ngIf="selectedCount > 0">
+      <ion-title>
+        <span class="text">
+          {{ 'chats.selected' | translate : { count: selectedCount } }}
+        </span>
+
+      </ion-title>
+    </span>
   </ion-navbar>
 
 </ion-header>
 <ion-content #content>
-  <div class="message-container"> <!-- Purely exists to offset the flex direction reverse. -->
-    <chat-bubble *ngFor="let m of messages" [message]="m"></chat-bubble>
+  <div class="message-container">
+    <!-- Purely exists to offset the flex direction reverse. -->
+    <span *ngFor="let m of messages">
+      <div class="unread-line" *ngIf="m.id === firstUnread">
+        {{ 'chats.new-messages-line' | translate }}
+      </div>
+      <chat-bubble (onSelect)="select(m, $event)" [message]="m"></chat-bubble>
+    </span>
   </div>
 </ion-content>
 

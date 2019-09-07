@@ -39,4 +39,18 @@ page-chat {
   .message-container {
     padding-bottom: 8px;
   }
+
+  .unread-line {
+    padding: 8px;
+    border-top: 1px solid color($colors, "grey2");
+    border-bottom: 1px solid color($colors, "grey2");
+    background: rgba(#fff, .5);
+
+    margin-top: 8px;
+    font-weight: bold;
+    font-style: italic;
+    color: color($colors, 'lighter');
+    text-align: center;
+    
+  }
 }

@@ -16,7 +16,9 @@ export class ChatPage implements OnDestroy, OnInit {
   messages: Message[] = [];
   sub: Subscription;
   text: string;
+  firstUnread: number;
 
+  selectedCount = 0;
 
   constructor(
     //public navCtrl: NavController, 
@@ -40,6 +42,7 @@ export class ChatPage implements OnDestroy, OnInit {
       //Get all messages in cache, and trigger a refresh
       this.messages = [...this.chatService.getMessages(this.chat)];
     }
+    this.setFirstNewMessage();
   }
 
   private setupSub() {
@@ -54,6 +57,15 @@ export class ChatPage implements OnDestroy, OnInit {
     this.chatService.openChatId = this.chat.id;
   }
 
+  private setFirstNewMessage() {
+    const message = this.messages.find((m: Message) => {
+      return !m.read;
+    });
+
+    console.log("firstUnread", message);
+    this.firstUnread = message ? message.id : null;
+  }
+
   private processMessages(added: Message[], updated: Message[]) {
     this.messages.push.apply(this.messages, added);
 
@@ -61,6 +73,16 @@ export class ChatPage implements OnDestroy, OnInit {
       const index = this.messages.findIndex(current => current.id === m.id);
       if (index === -1) continue;
       this.messages[index] = m;
+    }
+
+    this.setFirstNewMessage();
+  }
+
+  public select(m: Message, selected: boolean) {
+    if (selected) {
+      this.selectedCount++;
+    } else {
+      this.selectedCount--;
     }
   }
 
@@ -73,6 +95,8 @@ export class ChatPage implements OnDestroy, OnInit {
   }
 
   public async send(m: Message) {
+    this.firstUnread = null;
+
     m.chatId = this.chat.id;
     this.messages.push(m);
     const message = await this.chatService.send(m);

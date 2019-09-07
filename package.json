@@ -56,6 +56,7 @@
     "cordova-plugin-x-socialsharing": "5.4.1",
     "cordova-sqlite-storage": "^3.2.0",
     "es6-promise-plugin": "4.2.2",
+    "hammerjs": "^2.0.8",
     "ionic-angular": "3.9.2",
     "ionic-plugin-deeplinks": "1.0.17",
     "ionicons": "3.0.0",

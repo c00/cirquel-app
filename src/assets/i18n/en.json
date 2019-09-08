@@ -367,6 +367,10 @@
         },
         "send-error": "Message not sent. Tap to retry...",
         "new-messages-line": "New messages",
-        "selected": "{{ count }} selected"
+        "selected": "{{ count }} selected",
+        "confirm-delete": "Really delete {{ count }} message(s)?",
+        "confirm-delete-title": "Are you sure?",
+        "delete-button": "Delete",
+        "copied": "Message(s) copied"
     }
 }

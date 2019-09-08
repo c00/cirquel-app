@@ -6,6 +6,7 @@ import { PushType, PushNotification, PushHelper } from '../model/PushNotificatio
 import { ApiProvider } from '../providers/api';
 import { PushService } from '../providers/push-service';
 import { Chat, Message, MESSAGE_STATUS } from './model/chat';
+import { Cache } from '../providers/cache';
 
 @Injectable()
 export class ChatService {
@@ -16,6 +17,7 @@ export class ChatService {
   constructor(
     private api: ApiProvider,
     push: PushService,
+    private cacheProvider: Cache
   ) {
     push.updates
       .filter(n => n.type === PushType.MESSAGE_ACTIVITY)
@@ -24,7 +26,7 @@ export class ChatService {
         this.getNewMessages();
       });
 
-      push.updates
+    push.updates
       .filter(n => n.type === PushType.CHAT_ACTIVITY)
       .subscribe(() => {
         console.log("Received new Chat notification. Update a chat?");
@@ -37,7 +39,7 @@ export class ChatService {
     //todo check type of message.
     m.status = MESSAGE_STATUS.SENDING;
     try {
-      const result = await this.api.post('u/text-message', { text: m.text, to: toUserName, chatId: m.chatId }, true); 
+      const result = await this.api.post('u/text-message', { text: m.text, to: toUserName, chatId: m.chatId }, true);
       m.status = MESSAGE_STATUS.SENT;
       return result.message;
     } catch (ex) {
@@ -77,17 +79,18 @@ export class ChatService {
 
   }
 
+  public async delete(messages: Message[]) {
+    const idString = messages.map(m => m.id).join(',');
+    await this.api.delete(`u/messages/${idString}`);
+  }
+
   public shouldShowToast(n: PushNotification) {
-    console.log('shouldShowToast', n);
     if (!PushHelper.forChat(n)) return true;
-    console.log("1")
     if (n.chatId && n.chatId === this.openChatId) return false;
-    console.log("2")
     return true;
   }
 
   private async getAllMessages(chatId: number) {
-    console.log("Getting all messages");
     const result = await this.api.get(`u/chat/${chatId}`);
     this.cache[result.chat.id] = result.chat.messages;
     this.messagesUpdate.next({ chatId: result.chat.id, added: result.chat.messages, updated: [] });
@@ -95,12 +98,11 @@ export class ChatService {
   }
 
   private async getNewMessages(activeChat?: number) {
-    console.log("Getting new messages");
-
     const params = activeChat ? `?activeChat=${activeChat}` : '';
-    
+
     const response = await this.api.get(`u/new-messages${params}`);
     const results = response.results;
+    this.cacheProvider.newMessageCount = response.newMessageCount;
 
     for (let r of results) {
       if (!this.cache[r.chatId]) this.cache[r.chatId] = [];

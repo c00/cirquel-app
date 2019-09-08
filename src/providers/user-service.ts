@@ -157,6 +157,7 @@ export class UserService {
     this.api.setToken(this.user.session.token);
     this.push.start();
     this.cache.userSubscriptions = res.subscriptions;
+    this.cache.newMessageCount = res.newMessageCount;
     if (res.announcements) this.as.processAnouncements(res.announcements);
 
     this.saveUserToStorage(this.user);

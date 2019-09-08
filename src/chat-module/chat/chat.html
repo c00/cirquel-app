@@ -1,35 +1,43 @@
 <ion-header>
-  <ion-navbar [hideBackButton]="selectedCount">
-    <span *ngIf="selectedCount === 0">
-      <ion-title>
-        <img class="avatar" [src]="chat?.other.imgBase | image">
-        <span class="text">
-          {{ chat?.other.userName }}
-        </span>
-
-      </ion-title>
-    </span>
-
-    <span *ngIf="selectedCount > 0">
-      <ion-title>
-        <span class="text">
-          {{ 'chats.selected' | translate : { count: selectedCount } }}
-        </span>
-
-      </ion-title>
-    </span>
+  <ion-navbar>
+    <ion-title>
+      <img class="avatar" [src]="chat?.other.imgBase | image">
+      <span class="text">
+        {{ chat?.other.userName }}
+      </span>
+    </ion-title>
   </ion-navbar>
+
+  <ion-toolbar [@slideInToolbar]="selectedCount > 0" class="slide-in-toolbar">
+    <ion-buttons left>
+      <button ion-button icon-only (click)="clearSelection()">
+        <ion-icon name="checkmark-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      {{ 'chats.selected' | translate : { count: selectedCount } }}
+    </ion-title>
+    <ion-buttons right>
+      <button ion-button icon-only (click)="copyText()">
+        <ion-icon name="copy"></ion-icon>
+      </button>
+
+      <button *ngIf="canDelete && selectedCount" ion-button icon-only (click)="deleteSelected()">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
 
 </ion-header>
 <ion-content #content>
   <div class="message-container">
     <!-- Purely exists to offset the flex direction reverse. -->
-    <span *ngFor="let m of messages">
+    <ng-container *ngFor="let m of messages">
       <div class="unread-line" *ngIf="m.id === firstUnread">
         {{ 'chats.new-messages-line' | translate }}
       </div>
-      <chat-bubble (onSelect)="select(m, $event)" [message]="m"></chat-bubble>
-    </span>
+      <chat-bubble *ngIf="!m.deleted" (onSelect)="select(m, $event)" [message]="m"></chat-bubble>
+    </ng-container>
   </div>
 </ion-content>
 

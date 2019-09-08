@@ -5,11 +5,18 @@ import { Subscription } from 'rxjs';
 
 import { Author } from '../../model/Author';
 import { ChatService } from '../chat-service';
-import { Chat, Message } from '../model/chat';
+import { Chat, Message, MESSAGE_STATUS } from '../model/chat';
+import * as moment from 'moment';
+import { DialogService } from '../../providers/dialogs';
+import { Clipboard } from '@ionic-native/clipboard';
+import { SlideInToolbar } from '../../model/Animations';
 
 @Component({
   selector: 'page-chat',
   templateUrl: 'chat.html',
+  animations: [
+    SlideInToolbar,
+  ]
 })
 export class ChatPage implements OnDestroy, OnInit {
   chat: Chat;
@@ -19,11 +26,14 @@ export class ChatPage implements OnDestroy, OnInit {
   firstUnread: number;
 
   selectedCount = 0;
+  canDelete = true;
 
   constructor(
     //public navCtrl: NavController, 
     private navParams: NavParams,
     private chatService: ChatService,
+    private dialogs: DialogService,
+    private clip: Clipboard,
   ) {
   }
 
@@ -50,7 +60,6 @@ export class ChatPage implements OnDestroy, OnInit {
     this.sub = this.chatService.messagesUpdate
       .filter(result => result.chatId === this.chat.id)
       .subscribe((result: NewMessagesResult) => {
-        console.log("chat.ts sub", result);
         this.processMessages(result.added, result.updated);
       });
 
@@ -62,7 +71,6 @@ export class ChatPage implements OnDestroy, OnInit {
       return !m.read;
     });
 
-    console.log("firstUnread", message);
     this.firstUnread = message ? message.id : null;
   }
 
@@ -78,11 +86,76 @@ export class ChatPage implements OnDestroy, OnInit {
     this.setFirstNewMessage();
   }
 
+  public copyText() {
+    this.dialogs.showToast("chats.copied", 1000);
+    let text: string;
+
+    const messages = this.messages.filter(m => m.selected);
+    if (messages.length === 0) return;
+    
+    if (messages.length === 1) {
+      text = messages[0].text;
+    } else {
+      const texts = [];
+      for (let m of messages) {
+        texts.push(m.text);
+      }
+      text = texts.join("\n");
+    }
+
+    this.clip.copy(text);
+    console.log(text);
+
+    this.clearSelection();
+  }
+
   public select(m: Message, selected: boolean) {
     if (selected) {
       this.selectedCount++;
+      if (!m.fromMe) this.canDelete = false;
     } else {
       this.selectedCount--;
+
+      if (!m.fromMe) this.checkCanDelete();
+    }
+  }
+
+  private checkCanDelete() {
+    const m = this.messages.find(m => m.selected && !m.fromMe);
+    this.canDelete = !Boolean(m);
+  }
+
+  public clearSelection() {
+    for (let m of this.messages) {
+      m.selected = false;
+    }
+    this.selectedCount = 0;
+  }
+
+  public async deleteSelected() {
+
+    //Are you sure?
+    const sure = await this.dialogs.showConfirm("chats.confirm-delete", "chats.confirm-delete-title", "chats.delete-button", undefined, { count: this.selectedCount })
+    if (!sure) return;
+
+    const selected = this.messages.filter(m => m.selected);
+    for (let s of selected) {
+      s.status = MESSAGE_STATUS.DELETING;
+    }
+
+    try {
+      await this.chatService.delete(selected);
+      for (let s of selected) {
+        s.status = MESSAGE_STATUS.DELETED;
+        s.deleted = + moment();
+        s.text = '';
+      }
+
+      this.clearSelection();
+    } catch(ex) {
+      for (let s of selected) {
+        s.status = MESSAGE_STATUS.SENT;
+      }
     }
   }
 

@@ -59,13 +59,6 @@ ion-menu {
             color: color($colors, 'dark');
         }
         
-        /* h3 {
-            position: relative;
-            font-weight: normal;
-            font-size: 1.1em;
-            color: darken(#fff, 15%);
-        } */
-        
         .circle-initials {
             border: 1px solid #fff;
             background-color: color($colors, 'primary');
@@ -109,6 +102,10 @@ ion-menu {
 
     .item-md.selected {
         font-weight: 600;
+    }
+
+    .badge-md {
+        border-radius: 10px;
     }
 }
 

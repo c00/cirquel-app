@@ -29,6 +29,7 @@ import { UserService } from '../providers/user-service';
 import { UserSettingsProvider } from '../providers/user-settings';
 import { ChatsPage } from '../chat-module/chats/chats';
 import { ChatService } from '../chat-module/chat-service';
+import { Cache } from '../providers/cache';
 
 @Component({
   templateUrl: 'app.html'
@@ -66,6 +67,7 @@ export class MyApp {
     private items: ItemService,
     private as: AnnouncementService,
     private chats: ChatService,
+    private cache: Cache,
   ) {
     this.initializeApp();
   }
@@ -77,6 +79,7 @@ export class MyApp {
     this.setupLanguage();
     this.setupNotifications();
     this.setupDeeplinks();
+    this.setupMessageCountIcon();
 
     this.settings = await this.userSettingsProvider.get();
     await this.initSettings();
@@ -86,8 +89,14 @@ export class MyApp {
 
       //Show announcement modal
       this.modalCtrl.create(AnnouncementModalComponent, { announcement }).present();
-    })
+    });
 
+  }
+
+  private setupMessageCountIcon() {
+    this.cache.newMessageCountChange.subscribe((value) => {
+      this.pages[2].data = { count: value };
+    });
   }
 
   private async initSettings() {

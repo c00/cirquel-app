@@ -27,5 +27,7 @@ export interface Message {
 export const MESSAGE_STATUS = {
   SENDING: 'sending',
   SENT: null,
-  FAILED: 'failed'
+  FAILED: 'failed',
+  DELETING: 'deleting',
+  DELETED: 'deleted'
 };

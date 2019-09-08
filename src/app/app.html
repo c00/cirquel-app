@@ -19,6 +19,7 @@
       <button menuClose ion-item (click)="openPage(p)" *ngFor="let p of pages" [ngClass]="{selected: p.selected}">
         <ion-icon [name]="p.icon" item-start></ion-icon>
         {{p.title | translate }}
+        <ion-badge item-end color="secondary" *ngIf="p.data?.count">{{p.data.count}}</ion-badge>
       </button>
     </ion-list>
   </ion-content>

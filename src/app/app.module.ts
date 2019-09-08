@@ -6,6 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppVersion } from '@ionic-native/app-version';
 import { Camera } from '@ionic-native/camera';
+import { Clipboard } from '@ionic-native/clipboard';
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { FCM } from '@ionic-native/fcm';
 import { File } from '@ionic-native/file';
@@ -175,6 +176,7 @@ const PAGES_AND_MODALS = [
     ItemService,
     Camera,
     UploadProvider,
+    Clipboard,
     NativeImageProvider,
     VideoEditor,
     VideoService,

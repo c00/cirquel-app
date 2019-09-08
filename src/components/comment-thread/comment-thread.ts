@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ModalController, TextInput } from 'ionic-angular';
 import { Subscription } from 'rxjs/Rx';
 
-import { SlideInFromTop } from '../../model/Animations';
+import { SlideInFromSide } from '../../model/Animations';
 import { Comment } from '../../model/Comment';
 import { Item } from '../../model/Item';
 import { PushType } from '../../model/PushNotification';
@@ -16,7 +16,7 @@ import { ReplyModalComponent } from '../reply-modal/reply-modal';
   selector: 'comment-thread',
   templateUrl: 'comment-thread.html',
   animations: [
-    SlideInFromTop,
+    SlideInFromSide,
   ]
 })
 export class CommentThreadComponent implements OnInit, OnDestroy {

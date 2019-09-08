@@ -36,6 +36,7 @@ export interface SessionResult {
   user: User;
   subscriptions: UserSubscription[];
   announcements?: Announcement[];
+  newMessageCount: number;
 }
 
 export interface NewMessagesResult {

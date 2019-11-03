@@ -9,6 +9,10 @@ chat-bubble {
     background: rgba(color($colors, "secondary"), .2);
   }
 
+  .text {
+    white-space: pre;
+  }
+
   .bubble {
     position: relative;
     margin: .4em 1em;

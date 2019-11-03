@@ -94,6 +94,9 @@ export class ChatService {
     const result = await this.api.get(`u/chat/${chatId}`);
     this.cache[result.chat.id] = result.chat.messages;
     this.messagesUpdate.next({ chatId: result.chat.id, added: result.chat.messages, updated: [] });
+
+    this.cacheProvider.newMessageCount = result.newMessageCount;
+
     return result.chat.messages;
   }
 

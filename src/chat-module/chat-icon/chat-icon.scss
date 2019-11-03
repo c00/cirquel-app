@@ -1,0 +1,15 @@
+chat-icon {
+  position: relative;
+
+  .button {
+    contain: inherit;
+    overflow: visible;
+  }
+
+  .badge-md {
+    position: absolute;
+    right: -5px;
+    top: -2px;
+    border-radius: 10px;
+  }
+}

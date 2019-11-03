@@ -17,10 +17,11 @@ import { BehaviorSubject } from 'rxjs';
 export class Cache {
   userSubscriptions: UserSubscription[] = [];
 
-  public newMessageCountChange = new BehaviorSubject<Number>(0);
+  public newMessageCountChange = new BehaviorSubject<number>(0);
   private _newMessageCount = 0;
   set newMessageCount(value: number) {
-    if (value !== this._newMessageCount);
+    if (value === this._newMessageCount) return;
+    
     this._newMessageCount = value;
     this.newMessageCountChange.next(value);
   }

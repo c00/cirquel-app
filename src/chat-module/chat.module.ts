@@ -9,6 +9,7 @@ import { ChatsPage } from './chats/chats';
 import { ChatFooterComponent } from './chat-footer/chat-footer';
 import { ChatBubbleComponent } from './chat-bubble/chat-bubble';
 import { SendMessageModalComponent } from './send-message-modal/send-message-modal';
+import { ChatIconComponent } from './chat-icon/chat-icon';
 
 const PAGES = [
 	ChatsPage,
@@ -24,6 +25,10 @@ const COMPONENTS = [
 	ChatBubbleComponent,
 ];
 
+const SHARED_COMPONENTS = [
+	ChatIconComponent
+];
+
 function getImports() {
 	const modules = [];
 	for (let p of PAGES) {
@@ -37,6 +42,7 @@ function getImports() {
 		...PAGES,
 		...COMPONENTS,
 		...MODALS,
+		...SHARED_COMPONENTS,
 	],
 	providers: [ChatService],
 	imports: [
@@ -47,6 +53,6 @@ function getImports() {
 	entryComponents: [
 		...MODALS,
 	],
-	exports: PAGES
+	exports: [...PAGES, ...SHARED_COMPONENTS]
 })
 export class ChatModule { }
